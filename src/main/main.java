@@ -15,5 +15,9 @@ public class main {
 		
 		System.out.println("Zolti");
 	}
+	
+	public int add(int a, int b){
+		return a+b;
+	}
 
 }
