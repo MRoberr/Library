@@ -9,7 +9,8 @@ public class main {
 
 		System.out.println("Our git repo ;)");
 		System.out.println("sjozsef");
-
+		
+		System.out.println("Zolti");
 	}
 	
 	public int add(int a, int b){
