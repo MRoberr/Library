@@ -3,17 +3,25 @@
   <groupId>msg.Library</groupId>
   <artifactId>Library</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+      <dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  	    <version>4.12</version>
+  	    <scope>test</scope>
+    </dependency>
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
-      <plugin>
+      <plugin>        
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.6.0</version>
         <configuration>
           <source/>
           <target/>
         </configuration>
       </plugin>
     </plugins>
-  </build>
+  </build>  
 </project>
