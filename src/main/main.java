@@ -6,7 +6,7 @@ public class main {
 		System.out.println("Our git repo ;)");
 		System.out.println("Jocso");
 		System.out.println("Nagyz");
-		System.out.println("Nagyzdddssdd3");
+		System.out.println("Nagyzdddssdsdd3");
 	}
 
 }
