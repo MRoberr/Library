@@ -11,14 +11,10 @@ public class main {
 		System.out.println("Jocso");
 		System.out.println("Nagyz");
 		System.out.println("sjozsef");
-		
-<<<<<<< HEAD
+
 		System.out.println("Zolti");
 
-=======
-		System.out.println("Zolti");
-		
->>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
+
 	}
 
 }
