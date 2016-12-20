@@ -3,10 +3,28 @@
   <groupId>msg.Library</groupId>
   <artifactId>Library</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+<<<<<<< HEAD
+  <dependencies>  
+  	<!-- https://mvnrepository.com/artifact/junit/junit -->
+	<dependency>
+    	<groupId>junit</groupId>
+    	<artifactId>junit</artifactId>
+    	<version>4.12</version>
+	</dependency>
+=======
+  <dependencies>
+      <dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  	    <version>4.12</version>
+  	    <scope>test</scope>
+    </dependency>
+>>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
+  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
-      <plugin>
+      <plugin>        
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.6.0</version>
         <configuration>
@@ -15,5 +33,5 @@
         </configuration>
       </plugin>
     </plugins>
-  </build>
+  </build>  
 </project>

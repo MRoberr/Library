@@ -5,6 +5,9 @@ public class main {
 	public static void main(String[] args) {
 
 		//System.out.println("Our git repo ;)");
+
+		System.out.println("Kati - new branch");
+		
 		System.out.println("Kati");
 
 		System.out.println("Our git repo ;)");
@@ -15,6 +18,10 @@ public class main {
 		System.out.println("Zolti");
 
 
+	}
+	
+	public int add(int a, int b){
+		return a+b;
 	}
 
 }
