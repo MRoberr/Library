@@ -4,7 +4,7 @@ public class main {
 
 	public static void main(String[] args) {
 		System.out.println("Our git repo ;)");
-		System.out.println("sjozsef123");
+		System.out.println("sjozsef");
 	}
 
 }
