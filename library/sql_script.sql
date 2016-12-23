@@ -8,6 +8,8 @@ CREATE TABLE `library`.`library_users` (
   `uuid` VARCHAR(80) NOT NULL,
   `name` VARCHAR(45) NULL,
   `user_type` TINYINT,
+  `loyality_index` INT(2),
+   `password` VARCHAR(80),
   PRIMARY KEY (`uuid`),
   UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC)); 
   
@@ -17,6 +19,7 @@ CREATE TABLE `library`.`library_users` (
   `title` VARCHAR(45) NOT NULL,
   `publisher` VARCHAR(45),  
   `release_date` INT(5),
+  `copies_left` INT(5),
   PRIMARY KEY (`uuid`),
   UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC)); 
   
@@ -34,6 +37,7 @@ CREATE TABLE `library`.`library_users` (
   `article_title` VARCHAR(45),
   `publisher` VARCHAR(45),  
   `release_date` DATE,
+  `copies_left` INT(5),
   PRIMARY KEY (`uuid`),
   UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC)); 
   
@@ -44,6 +48,7 @@ Drop table if exists  `library`.`magazines`;
   `article_title` VARCHAR(45),
   `publisher` VARCHAR(45),  
   `release_date` DATE,
+  `copies_left` INT(5),
   PRIMARY KEY (`uuid`),
   UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC)); 
   
@@ -51,4 +56,8 @@ Drop table if exists  `library`.`magazines`;
   CREATE TABLE `library`.`publications_authors` (
   `publications_uuid` VARCHAR(80) NOT NULL,
   `authors_uuid` VARCHAR(80) NOT NULL,
+   `borrowing_date` DATE,
+   `returning_date` DATE,
 PRIMARY KEY (`publications_uuid`,`authors_uuid`)); 
+
+
