@@ -2,6 +2,7 @@ CREATE SCHEMA if not exists library;
 
 CREATE USER if not exists 'library_admin'@'localhost' IDENTIFIED BY 'library_admin_pass';
 GRANT ALL privileges on library.* to 'library_admin'@'localhost';
+#comment
 
 Drop table if exists  `library`.`library_users`;
 CREATE TABLE `library`.`library_users` (
