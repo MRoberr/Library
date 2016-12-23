@@ -1,4 +1,4 @@
-package edu.msg.library_server.backend.model;
+package edu.msg.library_common.model;
 
 import java.util.UUID;
 

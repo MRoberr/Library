@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.msg.library_server.backend.model.Entity;
-import edu.msg.library_server.backend.model.User;
+import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.User;
 
 public class SqlHandler {
 	private static final String DBURL = "jdbc:mysql://localhost:3306/library";
