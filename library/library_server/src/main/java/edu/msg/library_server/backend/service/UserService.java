@@ -15,7 +15,6 @@ import edu.msg.library_server.backend.repository.SqlHandler;
 
 public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 
-
 	private static final long serialVersionUID = 1L;
 
 	protected UserService() throws RemoteException {

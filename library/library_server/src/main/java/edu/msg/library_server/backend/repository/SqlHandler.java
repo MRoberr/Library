@@ -40,7 +40,7 @@ public class SqlHandler {
 			resultSet = connection.createStatement().executeQuery(select);
 
 			switch (entityType) {
-			case "USER": 
+			case "USER":
 				while (resultSet.next()) {
 					User user = new User();
 					user.setUUID(resultSet.getString("uuid"));
@@ -49,7 +49,14 @@ public class SqlHandler {
 					resultList.add(user);
 				}
 				break;
-			
+			case "":
+				while (resultSet.next()) {
+					// resultList.add();
+				}
+				break;
+			default: {
+				throw new SQLException("Invalid entitytype.");
+			}
 			}
 
 			return resultList;

@@ -10,12 +10,14 @@ import edu.msg.library_common.rmi.UserServiceRmi;
 
 public class BookService extends UnicastRemoteObject implements BookServiceRmi{
 
+	private static final long serialVersionUID = 1L;
+
 	protected BookService() throws RemoteException {
 		super();
 	}
 
 	@Override
-	public List<Entity> getAllBooks() throws RemoteException {
+	public synchronized List<Entity> getAllBooks() throws RemoteException {
 		System.out.println("getBooks");
 		return null;
 	}

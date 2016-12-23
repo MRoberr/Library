@@ -3,7 +3,7 @@ package edu.msg.library_common.model;
 public class Loan extends BaseEntity{
 	
 	private static final long serialVersionUID = 1L;
-	//
+	//private 
 
 	@Override
 	public String getSelect() {
