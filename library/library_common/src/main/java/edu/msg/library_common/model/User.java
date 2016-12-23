@@ -40,7 +40,7 @@ public class User extends BaseEntity {
 		this.loyalityIndex = loyalityIndex;
 	}
 
-	public String getSelect() {
+	public String getSelectAll() {
 		return "select * from library_users";
 	}
 
@@ -61,4 +61,14 @@ public class User extends BaseEntity {
 		return "User [name=" + name + "]";
 	}
 
+	@Override
+	public String getSelectByUUID(String uuid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getSelectByName(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

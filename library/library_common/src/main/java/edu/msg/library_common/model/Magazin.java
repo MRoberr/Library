@@ -70,7 +70,7 @@ public class Magazin extends BaseEntity{
 	}
 
 	@Override
-	public String getSelect() {
+	public String getSelectAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -89,6 +89,12 @@ public class Magazin extends BaseEntity{
 
 	@Override
 	public String getDelete() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSelectByUUID(String uuid) {
 		// TODO Auto-generated method stub
 		return null;
 	}

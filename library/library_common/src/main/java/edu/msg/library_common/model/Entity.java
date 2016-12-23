@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 public interface Entity extends Serializable {
 	
-	String getSelect();
+	String getSelectAll();
 
 	String getInsert();
 
 	String getUpdate();
 
 	String getDelete();
+	
+	String getSelectByUUID(String uuid);
+	
 }

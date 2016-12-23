@@ -4,6 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
 
@@ -13,7 +14,13 @@ public interface BookServiceRmi extends Remote {
 
 	public static final int RMI_PORT = 1099;
 	
-	public List<Entity> getAllBooks() throws RemoteException; //sync
+	public List<Entity> getAllBooks() throws RemoteException; 
+	
+	public boolean insertBook(Book book) throws RemoteException;
+	
+	public boolean updateBook(Book book) throws RemoteException;
+	
+	public boolean deleteBook(Book book) throws RemoteException;
 	
 //
 //	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;

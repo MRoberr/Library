@@ -19,20 +19,42 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 
 	protected UserService() throws RemoteException {
 		super();
-		
+
 	}
 
-	public synchronized List<Entity> getAllUsers() throws RemoteException{
-		
+	public synchronized List<Entity> getAllUsers() throws RemoteException {
+
 		User user = new User();
-		String userSelect = user.getSelect();
+		String userSelect = user.getSelectAll();
 		SqlHandler sqlHandler = SqlHandler.getInstance();
 		return sqlHandler.executeSelect(userSelect, "USER");
-		
+
+	}
+
+	public synchronized boolean insertUser(User user) throws RemoteException {
+		//to do
+		return false;
+	}
+
+	@Override
+	public synchronized boolean updateUser(User user) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
+	@Override
+	public boolean deleteUser(User user) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public List<Entity> getUserByName(String Name) throws RemoteException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-	public synchronized void insertUser(User user) {
-		
-	}
 	
+
 }

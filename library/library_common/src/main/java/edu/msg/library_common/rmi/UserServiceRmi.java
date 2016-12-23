@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.util.List;
 
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.User;
 
 
 public interface UserServiceRmi extends Remote {
@@ -14,6 +15,14 @@ public interface UserServiceRmi extends Remote {
 	public static final int RMI_PORT = 1099;
 	
 	public List<Entity> getAllUsers() throws RemoteException; //sync
+	
+	public boolean insertUser(User user) throws RemoteException;
+	
+	public boolean updateUser(User user) throws RemoteException;
+	
+	public boolean deleteUser(User user) throws RemoteException;
+	
+	public List<Entity> getUserByName(String Name) throws RemoteException;
 	
 //
 //	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;

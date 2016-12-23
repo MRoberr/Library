@@ -9,7 +9,7 @@ public class TestSqlHandler {
 	@Test
 	public void testSelect() {
 		User user = new User();
-		String userSelect = user.getSelect();
+		String userSelect = user.getSelectAll();
 		SqlHandler sqlHandler = SqlHandler.getInstance();
 		sqlHandler.executeSelect(userSelect, "USER").forEach(u -> System.out.println(u));
 		// Assert.assertArrayEquals(new ArrayList<>(),

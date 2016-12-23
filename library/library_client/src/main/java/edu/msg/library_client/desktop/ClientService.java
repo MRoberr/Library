@@ -9,7 +9,9 @@ import edu.msg.library_common.rmi.UserServiceRmi;
 
 public class ClientService {
 
-	public static void initClient(){
+	private String token;
+	
+	public static void initClient(String[] args){
 		try {
 			Registry registry = LocateRegistry.getRegistry("localhost", UserServiceRmi.RMI_PORT);
 			UserServiceRmi uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);			
