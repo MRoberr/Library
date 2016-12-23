@@ -12,8 +12,8 @@ import main.java.edu.msg.library.backend.model.User;
 
 public class SqlHandler {
 	private static final String DBURL = "jdbc:mysql://localhost:3306/library";
-	private static final String USER = "suma";
-	private static final String PASSWORD = "11223348";
+	private static final String USER = "library_admin";
+	private static final String PASSWORD = "library_admin_pass";
 	private Connection connection;
 	private static SqlHandler instance;
 
