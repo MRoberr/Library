@@ -11,7 +11,7 @@ import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.User;
 
 public class SqlHandler {
-	private static final String DBURL = "jdbc:mysql://localhost:3306/library";
+	private static final String DBURL = "jdbc:mysql://localhost:3306/library?useSSL=false";
 	private static final String USER = "library_admin";
 	private static final String PASSWORD = "library_admin_pass";
 	private Connection connection;
@@ -40,7 +40,7 @@ public class SqlHandler {
 			resultSet = connection.createStatement().executeQuery(select);
 
 			switch (entityType) {
-			case "USER": 
+			case "USER":
 				while (resultSet.next()) {
 					User user = new User();
 					user.setUUID(resultSet.getString("uuid"));
@@ -49,7 +49,14 @@ public class SqlHandler {
 					resultList.add(user);
 				}
 				break;
-			
+			case "":
+				while (resultSet.next()) {
+					// resultList.add();
+				}
+				break;
+			default: {
+				throw new SQLException("Invalid entitytype.");
+			}
 			}
 
 			return resultList;
