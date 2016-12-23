@@ -10,7 +10,7 @@ public class Borrowing extends BaseEntity{
 	private Date deadline;
 	private Date returnDate;
 	
-
+//his will be my wok
 	public String getPublicationUuid() {
 		return publicationUuid;
 	}
