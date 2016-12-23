@@ -1,6 +1,8 @@
-package edu.msg.library_server.backend.model;
+package edu.msg.library_common.model;
 
 public class User extends BaseEntity {
+
+	
 	
 	private String name;
 

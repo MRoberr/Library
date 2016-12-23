@@ -2,7 +2,7 @@ package edu.msg.library_server.backend.service;
 
 import org.junit.Test;
 
-import edu.msg.library_server.backend.model.User;
+import edu.msg.library_common.model.User;
 import edu.msg.library_server.backend.repository.SqlHandler;
 
 public class TestSqlHandler {
