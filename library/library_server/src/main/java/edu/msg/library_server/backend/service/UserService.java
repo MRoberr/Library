@@ -32,18 +32,8 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 		
 	}
 	
-	public void insertUser(User user) {
+	public synchronized void insertUser(User user) {
 		
 	}
-
-	public static void main(String[] args) {
-		try {
-			Registry registry = LocateRegistry.createRegistry(UserServiceRmi.RMI_PORT);
-			UserService oKonyvtarKiszolgalo = new UserService();
-			registry.rebind(UserServiceRmi.RMI_NAME, oKonyvtarKiszolgalo);
-			System.out.println("Server online");
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
+	
 }

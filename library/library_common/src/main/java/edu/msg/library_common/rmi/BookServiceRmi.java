@@ -7,13 +7,13 @@ import java.util.List;
 import edu.msg.library_common.model.Entity;
 
 
-public interface UserServiceRmi extends Remote {
+public interface BookServiceRmi extends Remote {
 
-	public static final String RMI_NAME = "User";
+	public static final String RMI_NAME = "Book";
 
 	public static final int RMI_PORT = 1099;
 	
-	public List<Entity> getAllUsers() throws RemoteException; //sync
+	public List<Entity> getAllBooks() throws RemoteException; //sync
 	
 //
 //	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;
