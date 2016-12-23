@@ -1,12 +1,9 @@
-package test.java;
+package edu.msg.library_server.backend.service;
 
-import java.util.ArrayList;
-
-import org.junit.Assert;
 import org.junit.Test;
 
-import main.java.edu.msg.library.backend.model.User;
-import main.java.edu.msg.library.backend.repository.SqlHandler;
+import edu.msg.library_server.backend.model.User;
+import edu.msg.library_server.backend.repository.SqlHandler;
 
 public class TestSqlHandler {
 	@Test

@@ -1,6 +1,7 @@
-package main.java.edu.msg.library.backend.model;
+package edu.msg.library_server.backend.model;
 
 public class User extends BaseEntity {
+	
 	private String name;
 
 	public String getName() {

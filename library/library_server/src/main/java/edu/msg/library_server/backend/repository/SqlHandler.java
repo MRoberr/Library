@@ -1,4 +1,4 @@
-package main.java.edu.msg.library.backend.repository;
+package edu.msg.library_server.backend.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.edu.msg.library.backend.model.Entity;
-import main.java.edu.msg.library.backend.model.User;
+import edu.msg.library_server.backend.model.Entity;
+import edu.msg.library_server.backend.model.User;
 
 public class SqlHandler {
 	private static final String DBURL = "jdbc:mysql://localhost:3306/library";
@@ -38,8 +38,9 @@ public class SqlHandler {
 		List<Entity> resultList = new ArrayList<>();
 		try {
 			resultSet = connection.createStatement().executeQuery(select);
+
 			switch (entityType) {
-			case "USER": {
+			case "USER": 
 				while (resultSet.next()) {
 					User user = new User();
 					user.setUUID(resultSet.getString("uuid"));
@@ -48,7 +49,7 @@ public class SqlHandler {
 					resultList.add(user);
 				}
 				break;
-			}
+			
 			}
 
 			return resultList;
