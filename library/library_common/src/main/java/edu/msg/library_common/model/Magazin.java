@@ -9,8 +9,9 @@ public class Magazin extends BaseEntity{
 	private String article_title;
 	private String publisher;
 	private List<Author> authors;
-	private int release_date;
-	private int copies_left;
+	private int releaseDate;
+	private int numberOfCopies;
+	private int copiesLeft;
 
 	public String getTitle() {
 		return title;
@@ -44,20 +45,28 @@ public class Magazin extends BaseEntity{
 		this.authors = authors;
 	}
 
-	public int getRelease_date() {
-		return release_date;
+	public int getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setRelease_date(int release_date) {
-		this.release_date = release_date;
+	public void setReleaseDate(int releaseDate) {
+		this.releaseDate = releaseDate;
 	}
 
-	public int getCopies_left() {
-		return copies_left;
+	public int getNumberOfCopies() {
+		return numberOfCopies;
 	}
 
-	public void setCopies_left(int copies_left) {
-		this.copies_left = copies_left;
+	public void setNumberOfCopies(int numberOfCopies) {
+		this.numberOfCopies = numberOfCopies;
+	}
+
+	public int getCopiesLeft() {
+		return copiesLeft;
+	}
+
+	public void setCopiesLeft(int copiesLeft) {
+		this.copiesLeft = copiesLeft;
 	}
 
 	@Override

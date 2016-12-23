@@ -4,9 +4,9 @@ public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
-	// private String password;
-	private int user_type;
-	private int loyality_index;
+	private int userType;
+	private int loyalityIndex;
+	private String password;
 
 	public String getName() {
 		return name;
@@ -16,20 +16,28 @@ public class User extends BaseEntity {
 		this.name = name;
 	}
 
-	public int getLoyality_index() {
-		return loyality_index;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setLoyality_index(int loyality_index) {
-		this.loyality_index = loyality_index;
+	public void setPassword(String password) {
+		this.password = password;
+	}	
+
+	public int getUserType() {
+		return userType;
 	}
 
-	public int getUser_type() {
-		return user_type;
+	public void setUserType(int userType) {
+		this.userType = userType;
 	}
 
-	public void setUser_type(int user_type) {
-		this.user_type = user_type;
+	public int getLoyalityIndex() {
+		return loyalityIndex;
+	}
+
+	public void setLoyalityIndex(int loyalityIndex) {
+		this.loyalityIndex = loyalityIndex;
 	}
 
 	public String getSelect() {

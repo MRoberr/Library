@@ -8,8 +8,9 @@ public class Book extends BaseEntity{
 	private String title;
 	private String publisher;
 	private List<Author> authors;
-	private int release_date;
-	private int copies_left;
+	private int releaseDate;
+	private int numberOfCopies;
+	private int copiesLeft;
 
 	public String getTitle() {
 		return title;
@@ -35,20 +36,20 @@ public class Book extends BaseEntity{
 		this.authors = authors;
 	}
 
-	public int getRelease_date() {
-		return release_date;
+	public int getReleaseDate() {
+		return releaseDate;
 	}
 
-	public void setRelease_date(int release_date) {
-		this.release_date = release_date;
+	public void setReleaseDate(int release_date) {
+		this.releaseDate = release_date;
 	}
 
-	public int getCopies_left() {
-		return copies_left;
+	public int getCopiesLeft() {
+		return copiesLeft;
 	}
 
-	public void setCopies_left(int copies_left) {
-		this.copies_left = copies_left;
+	public void setCopiesLeft(int copies_left) {
+		this.copiesLeft = copies_left;
 	}
 
 	public String getName() {
@@ -59,6 +60,14 @@ public class Book extends BaseEntity{
 		this.title = name;
 	}
 	
+	public int getNumberOfCopies() {
+		return numberOfCopies;
+	}
+
+	public void setNumberOfCopies(int number_of_copies) {
+		this.numberOfCopies = number_of_copies;
+	}
+
 	@Override
 	public String toString() {
 		return "Book [name=" + title + "]";

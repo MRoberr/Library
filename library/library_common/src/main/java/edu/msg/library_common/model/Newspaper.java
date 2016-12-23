@@ -8,8 +8,33 @@ public class Newspaper extends BaseEntity{
 	private String title;
 	private String article_title;
 	private String publisher;
-	private Date release_date;
-	private int copies_left;	
+	private Date releaseDate;
+	private int numberOfCopies;
+	private int copiesLeft;
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public int getNumberOfCopies() {
+		return numberOfCopies;
+	}
+
+	public void setNumberOfCopies(int numberOfCopies) {
+		this.numberOfCopies = numberOfCopies;
+	}
+
+	public int getCopiesLeft() {
+		return copiesLeft;
+	}
+
+	public void setCopiesLeft(int copiesLeft) {
+		this.copiesLeft = copiesLeft;
+	}
 
 	public String getTitle() {
 		return title;
@@ -35,21 +60,7 @@ public class Newspaper extends BaseEntity{
 		this.publisher = publisher;
 	}
 
-	public Date getRelease_date() {
-		return release_date;
-	}
-
-	public void setRelease_date(Date release_date) {
-		this.release_date = release_date;
-	}
-
-	public int getCopies_left() {
-		return copies_left;
-	}
-
-	public void setCopies_left(int copies_left) {
-		this.copies_left = copies_left;
-	}
+	
 
 	@Override
 	public String getSelect() {
