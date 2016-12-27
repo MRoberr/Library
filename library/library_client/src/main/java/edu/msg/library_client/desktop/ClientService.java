@@ -36,7 +36,7 @@ public class ClientService {
 		//LoginCheck();
 		try {
 			Registry registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
-		//	LoginServiceRmi lRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
+			LoginServiceRmi lRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
 			UserServiceRmi uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);			
 			BookServiceRmi bRmi = (BookServiceRmi) registry.lookup(BookServiceRmi.RMI_NAME);
 		//	loginAccess = lRmi.login(username, password);
