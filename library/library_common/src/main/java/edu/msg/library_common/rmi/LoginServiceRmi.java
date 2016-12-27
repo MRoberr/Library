@@ -2,8 +2,6 @@ package edu.msg.library_common.rmi;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
-import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 
 public interface LoginServiceRmi extends Remote{
