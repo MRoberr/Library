@@ -70,14 +70,12 @@ public class Magazin extends BaseEntity{
 	}
 
 	@Override
-	public String getSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getSelectAll() {		
+		return "select * from magazines";
 	}
 
 	@Override
-	public String getInsert() {
-		// TODO Auto-generated method stub
+	public String getInsert() {		
 		return null;
 	}
 

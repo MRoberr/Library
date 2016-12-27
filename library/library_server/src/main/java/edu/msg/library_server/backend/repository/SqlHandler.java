@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.msg.library_common.model.Author;
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
+import edu.msg.library_common.model.Magazin;
 import edu.msg.library_common.model.User;
 
 public class SqlHandler {
@@ -61,6 +63,19 @@ public class SqlHandler {
 					resultList.add(author);
 				}
 				break;
+			case "BOOK":
+				while (resultSet.next()) {
+					Book book = new Book();
+					book.setUUID(resultSet.getString("uuid"));
+					book.setTitle(resultSet.getString("title"));	
+					book.setPublisher(resultSet.getString("publisher"));
+					book.setReleaseDate(resultSet.getInt("release_date"));
+					book.setNumberOfCopies(resultSet.getInt("nr_of_copies"));
+					book.setCopiesLeft(resultSet.getInt("copies_left"));
+
+					resultList.add(book);
+				}
+				break;
 			case "":
 				while (resultSet.next()) {
 					// resultList.add();
@@ -80,18 +95,33 @@ public class SqlHandler {
 		}
 	}
 	
-	public boolean executeInsert(String select, String entityType) {
-		
+	public boolean executeInsert(String select) {
+		try {
+			ResultSet resultSet = connection.createStatement().executeQuery(select);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;		
 	}
 	
-	public boolean executeUpdate(String select, String entityType) {
-		
+	public boolean executeUpdate(String select) {
+		try {
+			ResultSet resultSet = connection.createStatement().executeQuery(select);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;		
 	}
 	
-	public boolean executeDelete(String select, String entityType) {
-		
+	public boolean executeDelete(String select) {
+		try {
+			ResultSet resultSet = connection.createStatement().executeQuery(select);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return false;		
 	}
 	
