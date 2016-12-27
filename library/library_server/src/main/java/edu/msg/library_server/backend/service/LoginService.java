@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.rmi.LoginServiceRmi;
 
 public class LoginService extends UnicastRemoteObject implements LoginServiceRmi {
@@ -15,8 +16,8 @@ public class LoginService extends UnicastRemoteObject implements LoginServiceRmi
 		super();		
 	}
 
-	@Override //Enum {ADMIN, USER, DENIED}
-	public String login(String user, String password) throws RemoteException {
+	@Override 
+	public LoginAccess login(String user, String password) throws RemoteException {
 		//
 		return null;
 	}

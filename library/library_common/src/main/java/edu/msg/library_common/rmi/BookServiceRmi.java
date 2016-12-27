@@ -7,7 +7,6 @@ import java.util.List;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
-
 public interface BookServiceRmi extends Remote {
 
 	public static final String RMI_NAME = "Book";
@@ -22,9 +21,6 @@ public interface BookServiceRmi extends Remote {
 	
 	public boolean deleteBook(Book book) throws RemoteException;
 	
-//
-//	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;
-//
-//	public void kilepes(Session p_session) throws RemoteException;
+	public List<Entity> getBookByUUID(String uuid) throws RemoteException; 
 
 }
