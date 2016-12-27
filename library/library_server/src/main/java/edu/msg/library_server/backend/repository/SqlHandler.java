@@ -110,9 +110,12 @@ public class SqlHandler {
 	
 	public boolean executeUpdate(String select) {
 		try {
-			return connection.createStatement().execute(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;	
 		}			
@@ -120,10 +123,12 @@ public class SqlHandler {
 	
 	public boolean executeDelete(String select) {
 		try {
-			return connection.createStatement().execute(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			return false;	
 		}			
 	}

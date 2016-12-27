@@ -48,6 +48,7 @@ public class BookServiceTest {
 	@Test
 	public void testUpdateBook() {
 		try {
+			book.setTitle("TES");
 			assertTrue(bookService.updateBook(book));
 		} catch (RemoteException e) {
 			fail(e.getMessage());
@@ -56,7 +57,7 @@ public class BookServiceTest {
 
 	@Test
 	public void testDeleteBook() {
-		try {
+		try {			
 			assertTrue(bookService.deleteBook(book));
 		} catch (RemoteException e) {
 			fail(e.getMessage());

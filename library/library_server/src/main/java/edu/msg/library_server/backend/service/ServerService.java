@@ -1,8 +1,10 @@
 package edu.msg.library_server.backend.service;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.rmi.AuthorServiceRmi;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.BorrowingServiceRmi;
@@ -32,7 +34,7 @@ public class ServerService {
 			NewspaperService nService = new NewspaperService();
 			registry.rebind(NewspaperServiceRmi.RMI_NAME, nService);
 			SearchService sService = new SearchService();
-			registry.rebind(SearchServiceRmi.RMI_NAME, sService);
+			registry.rebind(SearchServiceRmi.RMI_NAME, sService);				
 
 			System.out.println("Server online");
 		} catch (Exception ex) {
