@@ -42,9 +42,10 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 	}
 
 	@Override
-	public List<Entity> getUserByName(String Name) throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
+	public Entity getUserByName(String name) throws RemoteException {
+		User user = new User();
+		return SqlHandler.getInstance().executeSingleSelect(user.getSelectByName(name), "USER");
+		
 	}
 
 }
