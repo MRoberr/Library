@@ -28,29 +28,25 @@ public class BookService extends UnicastRemoteObject implements BookServiceRmi{
 
 	@Override
 	public synchronized boolean insertBook(Book book) throws RemoteException {
-		bookTemp = book.getInsert();
-		// SqlHandler.getInstance().executeInsert(bookTemp, "BOOK")
-		return false;
+		bookTemp = book.getInsert();		
+		return SqlHandler.getInstance().executeInsert(bookTemp, "BOOK");
 	}
 
 	@Override
 	public synchronized boolean updateBook(Book book) throws RemoteException {
 		bookTemp = book.getUpdate();
-		// SqlHandler.getInstance().executeUpdate(bookTemp, "BOOK")
-		return false;
+		return SqlHandler.getInstance().executeUpdate(bookTemp, "BOOK");
 	}
 
 	@Override
 	public synchronized boolean deleteBook(Book book) throws RemoteException {
-		bookTemp = book.getDelete();
-		// SqlHandler.getInstance().executeDelete(bookTemp, "BOOK");
-		return false;
+		bookTemp = book.getDelete(); 
+		return SqlHandler.getInstance().executeDelete(bookTemp, "BOOK");
 	}
 
 	@Override
-	public synchronized List<Entity> getBookByUUID(String uuid) throws RemoteException {
-		bookTemp = bookSQL.getSelectByUUID(uuid);
-		// SqlHandler.getInstance().executeSingleSelect(bookTemp, "BOOK");
-		return null;
+	public synchronized Entity getBookByUUID(String uuid) throws RemoteException {
+		bookTemp = bookSQL.getSelectByUUID(uuid);		
+		return SqlHandler.getInstance().executeSingleSelect(bookTemp, "BOOK");
 	}
 }

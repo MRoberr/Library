@@ -21,6 +21,6 @@ public interface BookServiceRmi extends Remote {
 	
 	public boolean deleteBook(Book book) throws RemoteException;
 	
-	public List<Entity> getBookByUUID(String uuid) throws RemoteException; 
+	public Entity getBookByUUID(String uuid) throws RemoteException; 
 
 }

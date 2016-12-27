@@ -21,7 +21,7 @@ public interface NewspaperServiceRmi extends Remote {
 
 	public boolean deleteNewspaper(Newspaper newspaper) throws RemoteException;
 
-	public List<Entity> getNewspaperByUUID(String uuid) throws RemoteException;
+	public Entity getNewspaperByUUID(String uuid) throws RemoteException;
 
 }
 
