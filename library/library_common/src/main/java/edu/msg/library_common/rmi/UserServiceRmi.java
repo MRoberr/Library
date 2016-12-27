@@ -22,7 +22,7 @@ public interface UserServiceRmi extends Remote {
 	
 	public boolean deleteUser(User user) throws RemoteException;
 	
-	public List<Entity> getUserByName(String Name) throws RemoteException;
+	public List<Entity> getUserByName(String name) throws RemoteException;
 	
 //
 //	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;

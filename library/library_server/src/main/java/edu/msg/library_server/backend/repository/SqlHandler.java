@@ -84,7 +84,7 @@ public class SqlHandler {
 		return false;		
 	}
 	
-	public Entity executeSingleSelect(String select, String entityType) {
+	public List<Entity> executeSingleSelect(String select, String entityType) {
 		
 		return null;		
 	}
