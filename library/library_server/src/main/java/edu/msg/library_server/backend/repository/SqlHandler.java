@@ -49,6 +49,13 @@ public class SqlHandler {
 					User user = new User();
 					user.setUUID(resultSet.getString("uuid"));
 					user.setName(resultSet.getString("name"));
+					int userTpyeNum = (resultSet.getInt("user_type"));
+					if(userTpyeNum == 1) {
+						user.setUserType(LoginAccess.ADMIN);
+					} else {
+						user.setUserType(LoginAccess.USER);
+					}
+					user.setLoyalityIndex(resultSet.getInt("loyality_index"));
 
 					resultList.add(user);
 				}

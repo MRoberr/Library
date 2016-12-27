@@ -8,7 +8,7 @@ Drop table if exists  `library`.`library_users`;
 CREATE TABLE `library`.`library_users` (
   `uuid` VARCHAR(80) NOT NULL,
   `name` VARCHAR(45) NULL,
-  `user_type` TINYINT,
+  `user_type` TINYINT(1),
   `loyality_index` INT(2),
    `password` VARCHAR(80),
   PRIMARY KEY (`uuid`),
