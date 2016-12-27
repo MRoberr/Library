@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.msg.library_common.model.Author;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.User;
@@ -50,6 +51,16 @@ public class SqlHandler {
 					resultList.add(user);
 				}
 				break;
+				
+			case "AUTHOR":
+				while (resultSet.next()) {
+					Author author = new Author();
+					author.setUUID(resultSet.getString("uuid"));
+					author.setName(resultSet.getString("name"));
+
+					resultList.add(author);
+				}
+				break;
 			case "":
 				while (resultSet.next()) {
 					// resultList.add();
@@ -84,7 +95,7 @@ public class SqlHandler {
 		return false;		
 	}
 	
-	public List<Entity> executeSingleSelect(String select, String entityType) {
+	public Entity executeSingleSelect(String select, String entityType) {
 		
 		return null;		
 	}
@@ -94,5 +105,5 @@ public class SqlHandler {
 		return null;		
 	}
 	
-	// entityType USER, BORROW, BOOK, MAGAZINE, NEWSPAPER
+	// entityType USER, BORROW, BOOK, MAGAZINE, NEWSPAPER, AUTHOR
 }

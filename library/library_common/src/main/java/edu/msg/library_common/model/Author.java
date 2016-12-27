@@ -12,7 +12,7 @@ public class Author extends BaseEntity {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Author [name=" + name + "]";
@@ -20,32 +20,27 @@ public class Author extends BaseEntity {
 
 	@Override
 	public String getSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from authors";
 	}
 
 	@Override
-	public String getInsert() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getInsert() {		
+		return "insert into authors (uuid, name) " + "values (" + getUUID() + "," + this.name + ")";
 	}
 
 	@Override
 	public String getUpdate() {
-		// TODO Auto-generated method stub
-		return null;
+		return "update authors set name=" + this.name + " where uuid=" + getUUID();
 	}
 
 	@Override
 	public String getDelete() {
-		// TODO Auto-generated method stub
-		return null;
+		return "delete from authors where uuid=" + getUUID();
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from authors where uuid=" + getUUID();
 	}
 
 }
