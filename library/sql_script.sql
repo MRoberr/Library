@@ -65,6 +65,7 @@ PRIMARY KEY (`publications_uuid`,`authors_uuid`));
 Drop table if exists `library`.`publication_borrowings`;
 create table `library`.`publication_borrowings`(
 `publications_uuid` VARCHAR(80) NOT NULL,
+`user_uuid` VARCHAR(80) NOT NULL,
 `uuid` VARCHAR(80) NOT NULL,
 `borrowing_date` DATE,
 `deadline` DATE,

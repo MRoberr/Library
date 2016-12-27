@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.User;
 
 public class SqlHandler {
@@ -66,6 +67,32 @@ public class SqlHandler {
 			System.err.println("Couldn't select users!");
 			return null;
 		}
-
 	}
+	
+	public boolean executeInsert(String select, String entityType) {
+		
+		return false;		
+	}
+	
+	public boolean executeUpdate(String select, String entityType) {
+		
+		return false;		
+	}
+	
+	public boolean executeDelete(String select, String entityType) {
+		
+		return false;		
+	}
+	
+	public List<Entity> executeSingleSelect(String select, String entityType) {
+		
+		return null;		
+	}
+	
+	public LoginAccess executeLoginSelect(String userName, String password) {
+		
+		return null;		
+	}
+	
+	// entityType USER, BORROW, BOOK, MAGAZINE, NEWSPAPER
 }

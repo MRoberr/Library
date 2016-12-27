@@ -2,10 +2,18 @@ package edu.msg.library_common.model;
 
 import java.util.Date;
 
+/**
+ * 
+ * @author gallb
+ *
+ * The representation of book borrowing, assign a book to a user, and stores the relevant dates.
+ */
+
 public class Borrowing extends BaseEntity{
 	
 	private static final long serialVersionUID = 1L;
 	private String publicationUuid;
+	private String userUuid;
 	private Date borrowingDate;
 	private Date deadline;
 	private Date returnDate;
