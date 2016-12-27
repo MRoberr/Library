@@ -17,6 +17,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 	@Override
 	public boolean insertPublication(Entity ent) throws RemoteException {
 		// TODO Auto-generated method stub
+		//valami valtozott
 		return false;
 	}
 
