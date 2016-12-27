@@ -21,6 +21,6 @@ public interface MagazineServiceRmi extends Remote {
 
 	public boolean deleteMagazine(Magazin magazine) throws RemoteException;
 
-	public List<Entity> getMagazineByUUID(String uuid) throws RemoteException;
+	public Entity getMagazineByUUID(String uuid) throws RemoteException;
 
 }

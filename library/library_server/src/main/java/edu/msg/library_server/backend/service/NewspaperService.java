@@ -29,28 +29,24 @@ public class NewspaperService extends UnicastRemoteObject implements NewspaperSe
 	@Override
 	public synchronized boolean insertNewspaper(Newspaper newspaper) throws RemoteException {
 		newspaperTemp = newspaper.getInsert();
-		// SqlHandler.getInstance().executeInsert(newspaperTemp, "NEWSPAPER")
-		return false;
+		return SqlHandler.getInstance().executeInsert(newspaperTemp, "NEWSPAPER");		
 	}
 
 	@Override
 	public synchronized boolean updateNewspaper(Newspaper newspaper) throws RemoteException {
 		newspaperTemp = newspaper.getUpdate();
-		// SqlHandler.getInstance().executeUpdate(newspaperTemp, "NEWSPAPER")
-		return false;
+		return SqlHandler.getInstance().executeUpdate(newspaperTemp, "NEWSPAPER");
 	}
 
 	@Override
 	public synchronized boolean deleteNewspaper(Newspaper newspaper) throws RemoteException {
-		newspaperTemp = newspaper.getDelete();
-		// SqlHandler.getInstance().executeDelete(newspaperTemp, "NEWSPAPER");
-		return false;
+		newspaperTemp = newspaper.getDelete(); 
+		return SqlHandler.getInstance().executeDelete(newspaperTemp, "NEWSPAPER");
 	}
 
 	@Override
-	public synchronized List<Entity> getNewspaperByUUID(String uuid) throws RemoteException {
+	public synchronized Entity getNewspaperByUUID(String uuid) throws RemoteException {
 		newspaperTemp = newspaperSQL.getSelectByUUID(uuid);
-		// SqlHandler.getInstance().executeSingleSelect(newspaperTemp, "NEWSPAPER");
-		return null;
+		return SqlHandler.getInstance().executeSingleSelect(newspaperTemp, "NEWSPAPER");
 	}
 }
