@@ -12,7 +12,19 @@ public interface BorrowingServiceRmi extends Remote {
 	
 //	public List<Entity> getAllPublications() throws RemoteException; 
 	
+	/**
+	 * 
+	 * @param ent - Borrowing object
+	 * @return true if the insert was successful, or false if not
+	 * @throws RemoteException
+	 */
 	public boolean insertPublication(Entity ent) throws RemoteException;
 	
+	/**
+	 * 
+	 * @param ent - Borrowing object
+	 * @return true if the insert was successful, or false if not
+	 * @throws RemoteException
+	 */
 	public boolean updatePublication(Entity ent) throws RemoteException;
 }
