@@ -18,7 +18,7 @@ public class ClientService {
 			BookServiceRmi bRmi = (BookServiceRmi) registry.lookup(BookServiceRmi.RMI_NAME);
 			
 			uRmi.getAllUsers().forEach(u -> System.out.println(((User) u).getName()));
-			bRmi.getAllBooks();
+			//bRmi.getAllBooks();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
