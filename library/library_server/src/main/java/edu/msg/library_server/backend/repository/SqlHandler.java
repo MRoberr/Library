@@ -97,32 +97,40 @@ public class SqlHandler {
 	
 	public boolean executeInsert(String select) {
 		try {
-			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return false;		
+			return false;	
+		}	
 	}
 	
 	public boolean executeUpdate(String select) {
 		try {
-			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return false;		
+			return false;	
+		}			
 	}
 	
 	public boolean executeDelete(String select) {
 		try {
-			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;		
+			return false;	
+		}			
 	}
 	
 	public Entity executeSingleSelect(String select, String entityType) {
