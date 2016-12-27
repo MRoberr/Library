@@ -2,7 +2,7 @@ package edu.msg.library_common.model;
 
 import java.util.List;
 
-public class Book extends BaseEntity{
+public class Book extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	private String title;
@@ -59,7 +59,7 @@ public class Book extends BaseEntity{
 	public void setName(String name) {
 		this.title = name;
 	}
-	
+
 	public int getNumberOfCopies() {
 		return numberOfCopies;
 	}
@@ -75,31 +75,29 @@ public class Book extends BaseEntity{
 
 	@Override
 	public String getSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from books";
 	}
 
 	@Override
 	public String getInsert() {
-		// TODO Auto-generated method stub
-		return null;
+		return "insert into books (uuid, title, publisher, release_date, nr_of_copies, copies_left) " + "values ("
+				+ getUUID() + "," + this.title + "," + this.publisher + "," + this.releaseDate + ","
+				+ this.numberOfCopies + "," + this.copiesLeft + ")";
 	}
 
 	@Override
-	public String getUpdate() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUpdate() {		
+		return "update books set title=" + this.title + ","+ "publisher=" +  this.publisher + "," + "release_date=" + this.releaseDate + "," + "nr_of_copies=" +  this.numberOfCopies + "," + "copies_left=" + this.copiesLeft  
+				+ " where uuid=" + getUUID();
 	}
 
 	@Override
 	public String getDelete() {
-		// TODO Auto-generated method stub
-		return null;
+		return "delete from books where uuid=" + getUUID();
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from books where uuid=" + getUUID();
 	}
 }
