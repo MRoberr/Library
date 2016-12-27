@@ -1,12 +1,9 @@
 package edu.msg.library_server.backend.service;
 
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-
-import javax.management.remote.rmi.RMIIIOPServerImpl;
 
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.User;
@@ -23,30 +20,25 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 	}
 
 	public synchronized List<Entity> getAllUsers() throws RemoteException {
-
 		User user = new User();
-		String userSelect = user.getSelectAll();
-		SqlHandler sqlHandler = SqlHandler.getInstance();
-		return sqlHandler.executeSelect(userSelect, "USER");
+		return SqlHandler.getInstance().executeSelect(user.getSelectAll(), "USER");
 
 	}
 
 	public synchronized boolean insertUser(User user) throws RemoteException {
-		//to do
-		return false;
+
+		return SqlHandler.getInstance().executeInsert(user.getInsert(), "USER");
 	}
 
 	@Override
 	public synchronized boolean updateUser(User user) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+
+		return SqlHandler.getInstance().executeUpdate(user.getUpdate(), "USER");
 	}
 
-	
 	@Override
 	public boolean deleteUser(User user) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		return SqlHandler.getInstance().executeDelete(user.getDelete(), "USER");
 	}
 
 	@Override
@@ -54,7 +46,5 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 
 }

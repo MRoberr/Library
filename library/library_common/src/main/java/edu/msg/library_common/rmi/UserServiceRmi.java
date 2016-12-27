@@ -14,7 +14,7 @@ public interface UserServiceRmi extends Remote {
 
 	public static final int RMI_PORT = 1099;
 	
-	public List<Entity> getAllUsers() throws RemoteException; //sync
+	public List<Entity> getAllUsers() throws RemoteException; 
 	
 	public boolean insertUser(User user) throws RemoteException;
 	
