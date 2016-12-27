@@ -1,11 +1,11 @@
-package edu.msg.library_server.backend.service;
+package edu.msg.library_server.backend.repository;
 
 import org.junit.Test;
 
 import edu.msg.library_common.model.User;
 import edu.msg.library_server.backend.repository.SqlHandler;
 
-public class TestSqlHandler {
+public class SqlHandlerTest {
 	@Test
 	public void testSelect() {
 		User user = new User();
