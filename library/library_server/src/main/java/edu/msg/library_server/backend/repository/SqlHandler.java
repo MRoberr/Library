@@ -38,7 +38,7 @@ public class SqlHandler {
 		return instance;
 	}
 
-	public List<Entity> executeSelect(String select, String entityType) {
+	private List<Entity> returnEntityOfExecute() {
 		ResultSet resultSet = null;
 		List<Entity> resultList = new ArrayList<>();
 		try {
@@ -124,6 +124,12 @@ public class SqlHandler {
 			System.err.println("Couldn't select users!");
 			return null;
 		}
+		return resultList;
+	}
+
+	public List<Entity> executeSelect(String select, String entityType) {
+		return returnEntityOfExecute();
+
 	}
 
 	public boolean executeInsert(String select) {
@@ -165,8 +171,11 @@ public class SqlHandler {
 	}
 
 	public Entity executeSingleSelect(String select, String entityType) {
-
-		return null;
+		if (returnEntityOfExecute().size() == 1) {
+			return (Entity) returnEntityOfExecute();
+		} else {
+			return null;
+		}
 	}
 
 	public LoginAccess executeLoginSelect(String userName, String password) {
