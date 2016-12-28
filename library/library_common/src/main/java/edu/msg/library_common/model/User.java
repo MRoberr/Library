@@ -57,24 +57,20 @@ public class User extends BaseEntity {
 	}
 
 	public String getUpdate() {
-		return "update library_users set name=" + this.name + " where uuid=" + getUUID();
+		return "update library_users set name='" + this.name + "' where uuid='" + getUUID() +"'";
 	}
 
 	public String getDelete() {
-		return "delete from library_users where uuid=" + getUUID();
+		return "delete from library_users where uuid='" + getUUID() +"'";
 	}
 
-	@Override
-	public String toString() {
-		return "User [name=" + name + "]";
-	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from library_users where uuid=" + uuid;
+		return "select * from library_users where uuid='" + uuid +"'";
 	}
 
 	public String getSelectByName(String name) {
-		return "select * from library_users where uuid=" + getName();
+		return "select * from library_users where uuid='" + getName() + "'";
 	}
 }

@@ -37,15 +37,21 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 	}
 
 	@Override
-	public boolean deleteUser(User user) throws RemoteException {
+	public synchronized boolean deleteUser(User user) throws RemoteException {
 		return SqlHandler.getInstance().executeDelete(user.getDelete());
 	}
 
 	@Override
-	public Entity getUserByName(String name) throws RemoteException {
+	public synchronized Entity getUserByName(String name) throws RemoteException {
 		User user = new User();
 		return SqlHandler.getInstance().executeSingleSelect(user.getSelectByName(name), "USER");
 		
+	}
+
+	@Override
+	public synchronized Entity getUserByUUUID(String uuid) throws RemoteException {
+		User user = new User();
+		return SqlHandler.getInstance().executeSingleSelect(user.getSelectByUUID(uuid), "USER");
 	}
 
 }
