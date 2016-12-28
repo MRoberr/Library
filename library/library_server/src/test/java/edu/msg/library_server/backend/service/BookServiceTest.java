@@ -20,8 +20,8 @@ public class BookServiceTest {
 	public BookServiceTest() {
 		book = new Book();
 		book.setUUID("d21d441c-0494-4b6e-9af8-1c0bc27299cb");
-		book.setTitle("Tests");
-		book.setPublisher("ujsd");
+		book.setTitle("Book");
+		book.setPublisher("NA");
 		book.setReleaseDate(2016);
 		book.setNumberOfCopies(5);
 		book.setCopiesLeft(4);

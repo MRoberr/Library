@@ -25,7 +25,7 @@ public class Author extends BaseEntity {
 
 	@Override
 	public String getInsert() {
-		return "insert into authors (uuid, name) " + "values (" + getUUID() + ",'" + this.name + "')";
+		return "insert into authors (uuid, name) " + "values ('" + getUUID() + "','" + this.name + "')";
 	}
 
 	@Override

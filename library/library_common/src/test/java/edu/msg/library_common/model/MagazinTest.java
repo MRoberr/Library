@@ -27,7 +27,7 @@ public class MagazinTest {
 		System.out.println("insert: " + insert);
 		assertEquals(
 				"insert into magazines (uuid, title, article_title, publisher, release_date, nr_of_copies, copies_left)"
-						+ "values(456456,'magazin','cikk','publisher','2015-12-01',5,6)",
+						+ "values('456456','magazin','cikk','publisher','2015-12-01',5,6)",
 				insert);
 	}
 
