@@ -88,7 +88,7 @@ public class Newspaper extends BaseEntity{
 
 	@Override
 	public String getSelectByUUID(String uuid) {	
-		return "select * from newspapers where uuid='" + getUUID() + "'";
+		return "select * from newspapers where uuid='" + uuid + "'";
 	}
 
 }

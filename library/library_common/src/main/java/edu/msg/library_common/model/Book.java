@@ -80,8 +80,8 @@ public class Book extends BaseEntity {
 
 	@Override
 	public String getInsert() {
-		return "insert into books (uuid, title, publisher, release_date, nr_of_copies, copies_left) " + "values ("
-				+ getUUID() + ",'" + this.title + "','" + this.publisher + "'," + this.releaseDate + ","
+		return "insert into books (uuid, title, publisher, release_date, nr_of_copies, copies_left) " + "values ('"
+				+ getUUID() + "','" + this.title + "','" + this.publisher + "'," + this.releaseDate + ","
 				+ this.numberOfCopies + "," + this.copiesLeft + ")";
 	}
 
@@ -99,6 +99,6 @@ public class Book extends BaseEntity {
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from books where uuid='" + getUUID() + "'";
+		return "select * from books where uuid='" + uuid + "'";
 	}
 }

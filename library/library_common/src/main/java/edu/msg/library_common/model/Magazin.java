@@ -96,7 +96,7 @@ public class Magazin extends BaseEntity {
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from magazines where uuid='" + getUUID() + "'";
+		return "select * from magazines where uuid='" + uuid + "'";
 	}
 
 }
