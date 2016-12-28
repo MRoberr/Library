@@ -31,6 +31,7 @@ public class AuthorTest {
 
 	@Test
 	public void updateTest() {
+		author = new Author();
 		author.setUUID("12345");
 		author.setName("TestUpdate");
 		String update = author.getUpdate();
