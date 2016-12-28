@@ -9,10 +9,12 @@ import java.util.List;
 
 import edu.msg.library_common.model.Author;
 import edu.msg.library_common.model.Book;
+import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazin;
 import edu.msg.library_common.model.Newspaper;
+import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 
 public class SqlHandler {
@@ -26,11 +28,13 @@ public class SqlHandler {
 		System.out.println("000");
 		try {
 			connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
+			connection.createStatement().executeQuery(Publication.getCreateView());
 			System.out.println("222");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 
 	public static synchronized SqlHandler getInstance() {
@@ -113,6 +117,27 @@ public class SqlHandler {
 					newspaper.setCopiesLeft(resultSet.getInt("copies_left"));
 
 					resultList.add(newspaper);
+				}
+				break;
+			case "PUBLICATION":   
+				while (resultSet.next()) {
+					Publication publcaion = new Publication();
+					publcaion.setUUID(resultSet.getString("uuid"));
+					publcaion.setTitle(resultSet.getString("title"));
+					publcaion.setType(resultSet.getInt("type"));
+					resultList.add(publcaion);
+				}
+				break;
+			case "BORROWING":   
+				while (resultSet.next()) {
+					Borrowing borrow = new Borrowing();
+					borrow.setUUID(resultSet.getString("uuid"));
+					borrow.setPublicationUuid(resultSet.getString("publications_uuid"));
+					borrow.setUserUuid(resultSet.getString("user_uuid"));
+					borrow.setBorrowingDate(resultSet.getDate("borrowing_date"));
+					borrow.setDeadline(resultSet.getDate("deadline"));
+					borrow.setReturnDate(resultSet.getDate("returning_date"));
+					resultList.add(borrow);
 				}
 				break;
 			default: {
