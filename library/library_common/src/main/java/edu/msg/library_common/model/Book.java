@@ -99,6 +99,6 @@ public class Book extends BaseEntity {
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from books where uuid='" + getUUID() + "'";
+		return "select * from books where uuid='" + uuid + "'";
 	}
 }

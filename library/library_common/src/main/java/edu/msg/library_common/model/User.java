@@ -71,7 +71,7 @@ public class User extends BaseEntity {
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from library_users where uuid=" + getUUID();
+		return "select * from library_users where uuid=" + uuid;
 	}
 
 	public String getSelectByName(String name) {

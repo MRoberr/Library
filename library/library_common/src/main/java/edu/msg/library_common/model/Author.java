@@ -40,7 +40,7 @@ public class Author extends BaseEntity {
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from authors where uuid='" + getUUID() + "'";
+		return "select * from authors where uuid='" + uuid + "'";
 	}
 
 }

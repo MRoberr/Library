@@ -19,7 +19,7 @@ public class BookServiceTest {
 
 	public BookServiceTest() {
 		book = new Book();
-		book.setUUID("998");
+		book.setUUID("d21d441c-0494-4b6e-9af8-1c0bc27299cb");
 		book.setTitle("Tests");
 		book.setPublisher("ujsd");
 		book.setReleaseDate(2016);
@@ -61,7 +61,8 @@ public class BookServiceTest {
 	@Test
 	public void test4GetBookByUUID() {
 		try {
-			assertEquals(book, bookService.getBookByUUID(book.getUUID()));
+			Book b = (Book)(bookService.getBookByUUID(book.getUUID()));			
+			assertTrue((b.getUUID().equals(book.getUUID())) && (b.getNumberOfCopies() == book.getNumberOfCopies()));		
 		} catch (RemoteException e) {
 			fail(e.getMessage());
 		}
@@ -75,7 +76,7 @@ public class BookServiceTest {
 			assertTrue(dbList.size()>0);
 			assertTrue(dbList.stream()
 					.map(p->(Book)p)
-					.filter(p-> (p.getUUID() == book.getUUID() && (p.getNumberOfCopies() == book.getNumberOfCopies()))
+					.filter(p-> (p.getUUID().equals(book.getUUID()) && (p.getNumberOfCopies() == book.getNumberOfCopies()))
 			) != null);
 		} catch (RemoteException e) {
 			fail(e.getMessage());
