@@ -24,23 +24,23 @@ public class Author extends BaseEntity {
 	}
 
 	@Override
-	public String getInsert() {		
-		return "insert into authors (uuid, name) " + "values (" + getUUID() + "," + this.name + ")";
+	public String getInsert() {
+		return "insert into authors (uuid, name) " + "values (" + getUUID() + ",'" + this.name + "')";
 	}
 
 	@Override
 	public String getUpdate() {
-		return "update authors set name=" + this.name + " where uuid=" + getUUID();
+		return "update authors set name='" + this.name + "' where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getDelete() {
-		return "delete from authors where uuid=" + getUUID();
+		return "delete from authors where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from authors where uuid=" + getUUID();
+		return "select * from authors where uuid='" + uuid + "'";
 	}
 
 }

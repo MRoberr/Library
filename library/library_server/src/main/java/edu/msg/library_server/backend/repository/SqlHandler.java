@@ -12,6 +12,7 @@ import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazin;
+import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.User;
 
 public class SqlHandler {
@@ -40,7 +41,7 @@ public class SqlHandler {
 		return instance;
 	}
 
-	public List<Entity> executeSelect(String select, String entityType) {
+	private List<Entity> returnEntityOfExecute(String select, String entityType) {
 		ResultSet resultSet = null;
 		List<Entity> resultList = new ArrayList<>();
 		try {
@@ -53,7 +54,7 @@ public class SqlHandler {
 					user.setUUID(resultSet.getString("uuid"));
 					user.setName(resultSet.getString("name"));
 					int userTpyeNum = (resultSet.getInt("user_type"));
-					if(userTpyeNum == 1) {
+					if (userTpyeNum == 1) {
 						user.setUserType(LoginAccess.ADMIN);
 					} else {
 						user.setUserType(LoginAccess.USER);
@@ -63,7 +64,7 @@ public class SqlHandler {
 					resultList.add(user);
 				}
 				break;
-				
+
 			case "AUTHOR":
 				while (resultSet.next()) {
 					Author author = new Author();
@@ -77,7 +78,7 @@ public class SqlHandler {
 				while (resultSet.next()) {
 					Book book = new Book();
 					book.setUUID(resultSet.getString("uuid"));
-					book.setTitle(resultSet.getString("title"));	
+					book.setTitle(resultSet.getString("title"));
 					book.setPublisher(resultSet.getString("publisher"));
 					book.setReleaseDate(resultSet.getInt("release_date"));
 					book.setNumberOfCopies(resultSet.getInt("nr_of_copies"));
@@ -86,9 +87,32 @@ public class SqlHandler {
 					resultList.add(book);
 				}
 				break;
-			case "":
+			case "MAGAZIN":
 				while (resultSet.next()) {
-					// resultList.add();
+					Magazin magazin = new Magazin();
+					magazin.setUUID(resultSet.getString("uuid"));
+					magazin.setTitle(resultSet.getString("title"));
+					magazin.setArticle_title(resultSet.getString("article_title"));
+					magazin.setPublisher(resultSet.getString("publisher"));
+					magazin.setReleaseDate(resultSet.getDate("release_date"));
+					magazin.setNumberOfCopies(resultSet.getInt("nr_of_copies"));
+					magazin.setCopiesLeft(resultSet.getInt("copies_left"));
+
+					resultList.add(magazin);
+				}
+				break;
+			case "NEWSPAPER":
+				while (resultSet.next()) {
+					Newspaper newspaper = new Newspaper();
+					newspaper.setUUID(resultSet.getString("uuid"));
+					newspaper.setTitle(resultSet.getString("title"));
+					newspaper.setArticle_title(resultSet.getString("article_title"));
+					newspaper.setPublisher(resultSet.getString("publisher"));
+					newspaper.setReleaseDate(resultSet.getDate("release_date"));
+					newspaper.setNumberOfCopies(resultSet.getInt("nr_of_copies"));
+					newspaper.setCopiesLeft(resultSet.getInt("copies_left"));
+
+					resultList.add(newspaper);
 				}
 				break;
 			default: {
@@ -104,7 +128,11 @@ public class SqlHandler {
 			return null;
 		}
 	}
-	
+
+	public List<Entity> executeSelect(String select, String entityType) {
+		return returnEntityOfExecute(select, entityType);
+	}
+
 	public boolean executeInsert(String select) {
 		try {
 			int i = connection.createStatement().executeUpdate(select);
@@ -114,10 +142,10 @@ public class SqlHandler {
 				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;	
-		}	
+			return false;
+		}
 	}
-	
+
 	public boolean executeUpdate(String select) {
 		try {
 			int i = connection.createStatement().executeUpdate(select);
@@ -127,10 +155,10 @@ public class SqlHandler {
 				return false;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return false;	
-		}			
+			return false;
+		}
 	}
-	
+
 	public boolean executeDelete(String select) {
 		try {
 			int i = connection.createStatement().executeUpdate(select);
@@ -139,19 +167,22 @@ public class SqlHandler {
 			} else
 				return false;
 		} catch (SQLException e) {
-			return false;	
-		}			
+			return false;
+		}
 	}
-	
+
 	public Entity executeSingleSelect(String select, String entityType) {
-		
-		return null;		
+		if (returnEntityOfExecute(select, entityType).size() == 1) {
+			return returnEntityOfExecute(select, entityType).get(0);
+		} else {
+			return null;
+		}
 	}
-	
+
 	public LoginAccess executeLoginSelect(String userName, String password) {
-		
-		return null;		
+
+		return null;
 	}
-	
+
 	// entityType USER, BORROW, BOOK, MAGAZINE, NEWSPAPER, AUTHOR
 }

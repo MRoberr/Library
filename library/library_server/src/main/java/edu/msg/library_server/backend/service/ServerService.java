@@ -1,10 +1,8 @@
 package edu.msg.library_server.backend.service;
 
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import edu.msg.library_common.model.Book;
 import edu.msg.library_common.rmi.AuthorServiceRmi;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.BorrowingServiceRmi;
