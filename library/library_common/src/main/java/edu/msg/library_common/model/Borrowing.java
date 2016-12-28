@@ -19,8 +19,18 @@ public class Borrowing extends BaseEntity{
 	private Date returnDate;
 	
 //his will be my wok
+	
+	
 	public String getPublicationUuid() {
 		return publicationUuid;
+	}
+
+	public String getUserUuid() {
+		return userUuid;
+	}
+
+	public void setUserUuid(String userUuid) {
+		this.userUuid = userUuid;
 	}
 
 	public void setPublicationUuid(String publicationUuid) {
@@ -59,8 +69,10 @@ public class Borrowing extends BaseEntity{
 
 	@Override
 	public String getInsert() {
-		// TODO Auto-generated method stub
-		return null;
+		return "insert into publication_borrowings	 (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date) " + 
+													 "values ('"+ this.getPublicationUuid() + ", '" + this.getUserUuid() + "', '" +
+													 			  this.getUUID() + "', "+ this.getBorrowingDate() + ", " + 
+													 			  this.getDeadline() + ", " + this.getReturnDate() + ")";
 	}
 
 	@Override
