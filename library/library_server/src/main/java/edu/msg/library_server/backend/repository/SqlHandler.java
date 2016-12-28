@@ -49,6 +49,13 @@ public class SqlHandler {
 					User user = new User();
 					user.setUUID(resultSet.getString("uuid"));
 					user.setName(resultSet.getString("name"));
+					int userTpyeNum = (resultSet.getInt("user_type"));
+					if(userTpyeNum == 1) {
+						user.setUserType(LoginAccess.ADMIN);
+					} else {
+						user.setUserType(LoginAccess.USER);
+					}
+					user.setLoyalityIndex(resultSet.getInt("loyality_index"));
 
 					resultList.add(user);
 				}
@@ -97,32 +104,40 @@ public class SqlHandler {
 	
 	public boolean executeInsert(String select) {
 		try {
-			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return false;		
+			return false;	
+		}	
 	}
 	
 	public boolean executeUpdate(String select) {
 		try {
-			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		return false;		
+			return false;	
+		}			
 	}
 	
 	public boolean executeDelete(String select) {
 		try {
-			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			int i = connection.createStatement().executeUpdate(select);
+			if (i == 1) {
+				return true;
+			} else
+				return false;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;		
+			return false;	
+		}			
 	}
 	
 	public Entity executeSingleSelect(String select, String entityType) {

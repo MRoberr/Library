@@ -81,13 +81,13 @@ public class Book extends BaseEntity {
 	@Override
 	public String getInsert() {
 		return "insert into books (uuid, title, publisher, release_date, nr_of_copies, copies_left) " + "values ("
-				+ getUUID() + "," + this.title + "," + this.publisher + "," + this.releaseDate + ","
+				+ getUUID() + ",'" + this.title + "','" + this.publisher + "'," + this.releaseDate + ","
 				+ this.numberOfCopies + "," + this.copiesLeft + ")";
 	}
 
 	@Override
 	public String getUpdate() {		
-		return "update books set title=" + this.title + ","+ "publisher=" +  this.publisher + "," + "release_date=" + this.releaseDate + "," + "nr_of_copies=" +  this.numberOfCopies + "," + "copies_left=" + this.copiesLeft  
+		return "update books set title='" + this.title + "',"+ "publisher='" +  this.publisher + "'," + "release_date=" + this.releaseDate + "," + "nr_of_copies=" +  this.numberOfCopies + "," + "copies_left=" + this.copiesLeft  
 				+ " where uuid=" + getUUID();
 	}
 
