@@ -72,7 +72,7 @@ public class Borrowing extends BaseEntity{
 
 	@Override
 	public String getUpdate() {
-		return "update publication_borrowings set publicationUuid=" + publicationUuid +", set userUuid=" + userUuid +", set borrowingDate=" + borrowingDate +", set deadline=" + deadline +", set returnDate=" + returnDate + " where uuid=" + getUUID();
+		return "update publication_borrowings set publicationUuid=" + publicationUuid +", userUuid=" + userUuid +", borrowingDate=" + borrowingDate +", deadline=" + deadline +", returnDate=" + returnDate + " where uuid=" + getUUID();
 	}
 
 	@Override
