@@ -26,6 +26,14 @@ public class Borrowing extends BaseEntity{
 	public void setPublicationUuid(String publicationUuid) {
 		this.publicationUuid = publicationUuid;
 	}
+	
+	public String getUserUuid() {
+		return userUuid;
+	}
+
+	public void setUserUuid(String userUuid) {
+		this.userUuid = userUuid;
+	}
 
 	public Date getBorrowingDate() {
 		return borrowingDate;
@@ -53,32 +61,29 @@ public class Borrowing extends BaseEntity{
 
 	@Override
 	public String getSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from publication_borrowings";
 	}
-
+	
 	@Override
 	public String getInsert() {
-		// TODO Auto-generated method stub
-		return null;
+		return "insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, return_date) " + "values('" + publicationUuid + "','" + userUuid + "','"
+				+ getUUID() + "','" + borrowingDate + "','" + deadline  + "','"+ null + "')";
 	}
 
 	@Override
 	public String getUpdate() {
-		// TODO Auto-generated method stub
-		return null;
+		return "update publication_borrowings set publicationUuid='" + publicationUuid +"',userUuid='" + userUuid +"',borrowingDate='" + borrowingDate +"',deadline='" + deadline +"',returnDate='" + returnDate + "' where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getDelete() {
-		// TODO Auto-generated method stub
-		return null;
+		return "delete from publication_borrowings where uuid='" + getUUID() + "'";	
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from publication_borrowings where uuid='" + uuid + "'";
 	}
 
 }
+
