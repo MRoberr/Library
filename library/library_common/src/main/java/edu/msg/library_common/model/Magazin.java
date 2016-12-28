@@ -78,7 +78,7 @@ public class Magazin extends BaseEntity {
 	@Override
 	public String getInsert() {
 		return "insert into magazines (uuid, title, article_title, publisher, release_date, nr_of_copies, copies_left)"
-				+ "values(" + getUUID() + ",'" + this.title + "','" + this.article_title + "','" + this.publisher
+				+ "values('" + getUUID() + "','" + this.title + "','" + this.article_title + "','" + this.publisher
 				+ "','" + this.releaseDate + "'," + this.numberOfCopies + "," + this.copiesLeft + ")";
 	}
 
