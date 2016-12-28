@@ -26,11 +26,12 @@ public class AuthorTest {
 		createAuthor();
 		String insert = author.getInsert();
 		System.out.println("insert: " + insert);
-		assertEquals("insert into authors (uuid, name) values (12345,'Test')", insert);
+		assertEquals("insert into authors (uuid, name) values ('12345','Test')", insert);
 	}
 
 	@Test
 	public void updateTest() {
+		author = new Author();
 		author.setUUID("12345");
 		author.setName("TestUpdate");
 		String update = author.getUpdate();

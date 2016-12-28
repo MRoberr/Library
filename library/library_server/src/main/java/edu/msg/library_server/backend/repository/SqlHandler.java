@@ -87,7 +87,7 @@ public class SqlHandler {
 					resultList.add(book);
 				}
 				break;
-			case "MAGAZIN":
+			case "MAGAZINE":
 				while (resultSet.next()) {
 					Magazin magazin = new Magazin();
 					magazin.setUUID(resultSet.getString("uuid"));

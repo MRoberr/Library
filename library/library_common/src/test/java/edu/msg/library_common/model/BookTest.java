@@ -23,7 +23,7 @@ public class BookTest {
 		String insert = book.getInsert();
 		System.out.println("insert: " + insert);
 		assertEquals(
-				"insert into books (uuid, title, publisher, release_date, nr_of_copies, copies_left) values (999,'Test','uj',2016,5,4)",
+				"insert into books (uuid, title, publisher, release_date, nr_of_copies, copies_left) values ('999','Test','uj',2016,5,4)",
 				insert);
 	}
 
@@ -37,6 +37,7 @@ public class BookTest {
 
 	@Test
 	public void updateTest() {
+		book = new Book();
 		book.setUUID("999");
 		book.setTitle("uj");
 		book.setPublisher("uj");
