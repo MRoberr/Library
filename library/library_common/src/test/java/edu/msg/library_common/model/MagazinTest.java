@@ -3,6 +3,8 @@ package edu.msg.library_common.model;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -71,5 +73,26 @@ public class MagazinTest {
 		System.out.println("select one: " + selectOne);
 		assertEquals("select * from magazines where uuid='999'", selectOne);
 	}
-
+	
+	@Test
+	public void insertAuthorsTest() {
+		createMagazin();
+		List<Author> authors = new ArrayList<>();
+		Author author = new Author();
+		author.setName("alma");
+		author.setUUID("369");
+		authors.add(author);
+		Author author2 = new Author();
+		author2.setName("almafa");
+		author2.setUUID("3698");
+		authors.add(author2);
+		
+		magazin.setAuthors(authors);
+		String insertAuthor = magazin.insertAuthors();
+		System.out.println("insert authors: " + insertAuthor);
+		assertEquals("insert into publications_authors (publications_uuid, authors_uuid) "
+					+ "values('456456','369');"
+					+ "insert into publications_authors (publications_uuid, authors_uuid) "
+					+ "values('456456','3698');", insertAuthor);
+	}
 }
