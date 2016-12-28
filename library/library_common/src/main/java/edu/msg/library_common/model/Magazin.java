@@ -1,5 +1,6 @@
 package edu.msg.library_common.model;
 
+import java.sql.Date;
 import java.util.List;
 
 public class Magazin extends BaseEntity{
@@ -9,7 +10,7 @@ public class Magazin extends BaseEntity{
 	private String article_title;
 	private String publisher;
 	private List<Author> authors;
-	private int releaseDate;
+	private Date releaseDate;
 	private int numberOfCopies;
 	private int copiesLeft;
 
@@ -45,11 +46,11 @@ public class Magazin extends BaseEntity{
 		this.authors = authors;
 	}
 
-	public int getReleaseDate() {
+	public Date getReleaseDate() {
 		return releaseDate;
 	}
 
-	public void setReleaseDate(int releaseDate) {
+	public void setReleaseDate(Date releaseDate) {
 		this.releaseDate = releaseDate;
 	}
 
@@ -76,25 +77,26 @@ public class Magazin extends BaseEntity{
 
 	@Override
 	public String getInsert() {		
-		return null;
+		return "insert into magazines (uuid, title, article_title, publisher, release_date, nr_of_copies, copies_left)" + 
+				"values(" + getUUID() + "," + this.title + "," + this.article_title + "," + this.publisher
+				+ "," + this.releaseDate + "," + this.numberOfCopies + "," + this.copiesLeft +")";
 	}
 
 	@Override
-	public String getUpdate() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUpdate() {		
+		return  "update magazines set title=" + this.title + ","+ "article_title=" + this.article_title + ","+"publisher=" +  this.publisher + "," 
+	+ "release_date=" + this.releaseDate + "," + "nr_of_copies=" +  this.numberOfCopies + "," + "copies_left=" + this.copiesLeft  
+				+ " where uuid=" + getUUID();
 	}
 
 	@Override
-	public String getDelete() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDelete() {		
+		return "delete from magazines where uuid=" + getUUID();
 	}
 
 	@Override
-	public String getSelectByUUID(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getSelectByUUID(String uuid) {		
+		return "select * from magazines where uuid=" + getUUID();
 	}
 
 }
