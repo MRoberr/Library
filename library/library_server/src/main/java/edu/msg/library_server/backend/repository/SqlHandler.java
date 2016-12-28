@@ -27,7 +27,7 @@ public class SqlHandler {
 	private SqlHandler() {
 		try {
 			connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
-			connection.createStatement().executeQuery(Publication.getCreateView());
+			connection.createStatement().executeUpdate(Publication.getCreateView());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
