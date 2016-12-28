@@ -23,16 +23,16 @@ public class ServerService {
 			registry.rebind(UserServiceRmi.RMI_NAME, uService);
 			BookService bService = new BookService();
 			registry.rebind(BookServiceRmi.RMI_NAME, bService);
-			AuthorService aService = new AuthorService();
-			registry.rebind(AuthorServiceRmi.RMI_NAME, aService);
-			BorrowingService boService = new BorrowingService();
-			registry.rebind(BorrowingServiceRmi.RMI_NAME, boService);
-			MagazineService mService = new MagazineService();
-			registry.rebind(MagazineServiceRmi.RMI_NAME, mService);
-			NewspaperService nService = new NewspaperService();
-			registry.rebind(NewspaperServiceRmi.RMI_NAME, nService);
-			SearchService sService = new SearchService();
-			registry.rebind(SearchServiceRmi.RMI_NAME, sService);				
+//			AuthorService aService = new AuthorService();
+//			registry.rebind(AuthorServiceRmi.RMI_NAME, aService);
+//			BorrowingService boService = new BorrowingService();
+//			registry.rebind(BorrowingServiceRmi.RMI_NAME, boService);
+//			MagazineService mService = new MagazineService();
+//			registry.rebind(MagazineServiceRmi.RMI_NAME, mService);
+//			NewspaperService nService = new NewspaperService();
+//			registry.rebind(NewspaperServiceRmi.RMI_NAME, nService);
+//			SearchService sService = new SearchService();
+//			registry.rebind(SearchServiceRmi.RMI_NAME, sService);				
 
 			System.out.println("Server online");
 		} catch (Exception ex) {
