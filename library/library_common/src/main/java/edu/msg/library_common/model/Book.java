@@ -101,4 +101,13 @@ public class Book extends BaseEntity {
 	public String getSelectByUUID(String uuid) {
 		return "select * from books where uuid='" + uuid + "'";
 	}
+	
+	public String insertAuthors(){
+		StringBuilder strBld = new StringBuilder();
+		for(Author author : authors){
+			strBld.append("insert into publications_authors (publications_uuid, authors_uuid) "
+					+ "values('" + getUUID() + "','" + author.getUUID() + "');");
+		}
+		return strBld.toString();
+	}
 }
