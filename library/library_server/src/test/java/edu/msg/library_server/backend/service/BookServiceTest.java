@@ -5,11 +5,14 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BookServiceTest {
 	Book book;
 	BookService bookService;
@@ -31,13 +34,13 @@ public class BookServiceTest {
 	}
 
 	@Test
-	public void initBook() {
+	public void init1Book() {
 		assertNotNull(book);
 		assertNotNull(bookService);
 	}
 
 	@Test
-	public void testInsertBook() {
+	public void test2InsertBook() {
 		try {
 			assertTrue(bookService.insertBook(book));
 		} catch (RemoteException e) {
@@ -46,7 +49,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	public void testUpdateBook() {
+	public void test3UpdateBook() {
 		try {
 			book.setTitle("TES");
 			assertTrue(bookService.updateBook(book));
@@ -56,16 +59,7 @@ public class BookServiceTest {
 	}
 
 	@Test
-	public void testDeleteBook() {
-		try {			
-			assertTrue(bookService.deleteBook(book));
-		} catch (RemoteException e) {
-			fail(e.getMessage());
-		}
-	}
-
-	@Test
-	public void testGetBookByUUID() {
+	public void test4GetBookByUUID() {
 		try {
 			assertEquals(book, bookService.getBookByUUID(book.getUUID()));
 		} catch (RemoteException e) {
@@ -74,12 +68,24 @@ public class BookServiceTest {
 	}
 
 	@Test
-	public void testGetAllBooks() {
+	public void test5GetAllBooks() {
 		try {
-			List<Entity> resultList = new ArrayList<>();
-			resultList.add(book);
-			assertNotNull(bookService.getAllBooks());
-			assertEquals(resultList, bookService.getAllBooks());
+			List<Entity> dbList = new ArrayList<>();
+			dbList = bookService.getAllBooks();
+			assertTrue(dbList.size()>0);
+			assertTrue(dbList.stream()
+					.map(p->(Book)p)
+					.filter(p-> (p.getUUID() == book.getUUID() && (p.getNumberOfCopies() == book.getNumberOfCopies()))
+			) != null);
+		} catch (RemoteException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	@Test
+	public void test6DeleteBook() {
+		try {			
+			assertTrue(bookService.deleteBook(book));
 		} catch (RemoteException e) {
 			fail(e.getMessage());
 		}
