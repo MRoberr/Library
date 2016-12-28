@@ -41,6 +41,7 @@ public class MagazinTest {
 
 	@Test
 	public void updateTest() {
+		magazin = new Magazin();
 		magazin.setUUID("456456");
 		magazin.setTitle("ujMAgazin");
 		magazin.setArticle_title("ujCikk");
@@ -68,7 +69,7 @@ public class MagazinTest {
 		createMagazin();
 		String selectOne = magazin.getSelectByUUID("999");
 		System.out.println("select one: " + selectOne);
-		assertEquals("select * from magazines where uuid='456456'", selectOne);
+		assertEquals("select * from magazines where uuid='999'", selectOne);
 	}
 
 }

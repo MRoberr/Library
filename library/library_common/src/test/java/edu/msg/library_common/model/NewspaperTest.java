@@ -41,6 +41,7 @@ public class NewspaperTest {
 
 	@Test
 	public void updateTest() {
+		newspaper = new Newspaper();
 		newspaper.setUUID("456456");
 		newspaper.setTitle("ujnewspaper");
 		newspaper.setArticle_title("ujCikk");
@@ -68,7 +69,7 @@ public class NewspaperTest {
 		createNewspaper();
 		String selectOne = newspaper.getSelectByUUID("999");
 		System.out.println("select one: " + selectOne);
-		assertEquals("select * from newspapers where uuid='456456'", selectOne);
+		assertEquals("select * from newspapers where uuid='999'", selectOne);
 	}
 
 }
