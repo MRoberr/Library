@@ -86,18 +86,19 @@ public class Book extends BaseEntity {
 	}
 
 	@Override
-	public String getUpdate() {		
-		return "update books set title='" + this.title + "',"+ "publisher='" +  this.publisher + "'," + "release_date=" + this.releaseDate + "," + "nr_of_copies=" +  this.numberOfCopies + "," + "copies_left=" + this.copiesLeft  
-				+ " where uuid=" + getUUID();
+	public String getUpdate() {
+		return "update books set title='" + this.title + "'," + "publisher='" + this.publisher + "'," + "release_date="
+				+ this.releaseDate + "," + "nr_of_copies=" + this.numberOfCopies + "," + "copies_left="
+				+ this.copiesLeft + " where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getDelete() {
-		return "delete from books where uuid=" + getUUID();
+		return "delete from books where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from books where uuid=" + getUUID();
+		return "select * from books where uuid='" + getUUID() + "'";
 	}
 }
