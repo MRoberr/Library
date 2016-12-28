@@ -63,33 +63,32 @@ public class Newspaper extends BaseEntity{
 	
 
 	@Override
-	public String getSelectAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getSelectAll() {		
+		return "select * from newspapers";
 	}
 
 	@Override
-	public String getInsert() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getInsert() {		
+		return "insert into newspapers (uuid, title, article_title, publisher, release_date, nr_of_copies, copies_left)"
+				+ "values('" + getUUID() + "','" + this.title + "','" + this.article_title + "','" + this.publisher
+				+ "','" + this.releaseDate + "'," + this.numberOfCopies + "," + this.copiesLeft + ")";
 	}
 
 	@Override
-	public String getUpdate() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getUpdate() {		
+		return "update newspapers set title='" + this.title + "'," + "article_title='" + this.article_title + "',"
+				+ "publisher='" + this.publisher + "'," + "release_date='" + this.releaseDate + "'," + "nr_of_copies="
+				+ this.numberOfCopies + "," + "copies_left=" + this.copiesLeft + " where uuid='" + getUUID() + "'";
 	}
 
 	@Override
-	public String getDelete() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDelete() {	
+		return "delete from newspapers where uuid='" + getUUID() + "'";
 	}
 
 	@Override
-	public String getSelectByUUID(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getSelectByUUID(String uuid) {	
+		return "select * from newspapers where uuid='" + uuid + "'";
 	}
 
 }

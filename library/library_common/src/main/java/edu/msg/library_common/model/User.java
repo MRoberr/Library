@@ -4,7 +4,7 @@ public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
-	private int userType;
+	private LoginAccess userType;
 	private int loyalityIndex;
 	private String password;
 
@@ -22,13 +22,13 @@ public class User extends BaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}	
+	}
 
-	public int getUserType() {
+	public LoginAccess getUserType() {
 		return userType;
 	}
 
-	public void setUserType(int userType) {
+	public void setUserType(LoginAccess userType) {
 		this.userType = userType;
 	}
 
@@ -44,8 +44,16 @@ public class User extends BaseEntity {
 		return "select * from library_users";
 	}
 
+	// userTypeNum: Admin = 1, User = 0;
 	public String getInsert() {
-		return "insert into library_users (uuid, name) " + "values (" + getUUID() + "," + this.name + ")";
+		int userTypeNum;
+		if (getUserType() == LoginAccess.ADMIN) {
+			userTypeNum = 1;
+		} else {
+			userTypeNum = 0;
+		}
+		return "insert into library_users (uuid, name, user_type, loyality_index, password) " + "values ('" + getUUID() + "','" + this.name + "','"
+				+ userTypeNum + "','" + getLoyalityIndex() + "','" + getPassword() +"')";
 	}
 
 	public String getUpdate() {
@@ -63,12 +71,10 @@ public class User extends BaseEntity {
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from library_users where uuid=" + uuid;
 	}
 
 	public String getSelectByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return "select * from library_users where uuid=" + getName();
 	}
 }
