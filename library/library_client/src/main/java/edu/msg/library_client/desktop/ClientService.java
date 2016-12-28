@@ -56,4 +56,25 @@ public class ClientService {
 			ex.printStackTrace();
 		}
 	}
+	
+	public static void menuforAdmin() {
+		Console console = System.console();
+		console.printf("Type");
+		console.printf("1-Kiadvany utani kereses");
+		console.printf("2-Uj felhasznalo letrehozasa");
+		console.printf("3-Felhasznalo adatainak modositasa");
+		console.printf("4-Felhasznalo torlese");
+		console.printf("5-Felhasznalo utani kereses");
+		console.printf("6-Uj kiadvany letrehozasa");
+		console.printf("7-Meglevo kiadvany adatainak modositasa");
+		console.printf("8-Meglevo kiadvany torlese");
+		console.printf("9-Kiadvany kolcsonzes");
+		console.printf("10-Kiadvany visszavetele");
+	
+	}
+	public static void menuforUser() {
+		Console console = System.console();
+		console.printf("Type");
+		console.printf("1-Kiadvany utani kereses");
+	}
 }
