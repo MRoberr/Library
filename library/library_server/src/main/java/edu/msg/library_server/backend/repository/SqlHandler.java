@@ -22,8 +22,10 @@ public class SqlHandler {
 	private static SqlHandler instance;
 
 	private SqlHandler() {
+		System.out.println("000");
 		try {
 			connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
+			System.out.println("222");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -31,6 +33,7 @@ public class SqlHandler {
 	}
 
 	public static synchronized SqlHandler getInstance() {
+		System.out.println("111");
 		if (instance == null) {
 			instance = new SqlHandler();
 		}
