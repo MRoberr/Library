@@ -65,9 +65,9 @@ public class Borrowing extends BaseEntity {
 
 	@Override
 	public String getInsert() {
-		return "insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, return_date) "
+		return "insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date) "
 				+ "values('" + publicationUuid + "','" + userUuid + "','" + getUUID() + "','" + borrowingDate + "','"
-				+ deadline + "','" + null + "')";
+				+ deadline + "','"+returnDate +"')";
 	}
 
 	@Override
