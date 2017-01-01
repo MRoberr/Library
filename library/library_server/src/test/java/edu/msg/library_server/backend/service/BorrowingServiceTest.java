@@ -24,7 +24,7 @@ public class BorrowingServiceTest {
 		Date date = new Date();
 		borrowingTemp.setReturnDate(date);
 		borrowingTemp.setBorrowingDate(date);
-		borrowingTemp.setReturnDate(date);
+//		borrowingTemp.setReturnDate(date);
 		BorrowingService bs;
 		try {
 			bs = new BorrowingService();

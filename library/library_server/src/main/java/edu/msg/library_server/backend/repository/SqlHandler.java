@@ -2,6 +2,7 @@ package edu.msg.library_server.backend.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -155,7 +156,7 @@ public class SqlHandler {
 		return returnEntityOfExecute(select, entityType);
 	}
 
-	public boolean executeInsert(String select) {
+	public boolean executeSqlStatement(String select) {
 		try {
 			int i = connection.createStatement().executeUpdate(select);
 			if (i == 1) {
@@ -168,30 +169,32 @@ public class SqlHandler {
 		}
 	}
 
-	public boolean executeUpdate(String select) {
-		try {
-			int i = connection.createStatement().executeUpdate(select);
-			if (i == 1) {
-				return true;
-			} else
-				return false;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+	//exact same function just with different name
+	
+//	public boolean executeUpdate(String select) {
+//		try {
+//			int i = connection.createStatement().executeUpdate(select);
+//			if (i == 1) {
+//				return true;
+//			} else
+//				return false;
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			return false;
+//		}
+//	}
 
-	public boolean executeDelete(String select) {
-		try {
-			int i = connection.createStatement().executeUpdate(select);
-			if (i == 1) {
-				return true;
-			} else
-				return false;
-		} catch (SQLException e) {
-			return false;
-		}
-	}
+//	public boolean executeDelete(String select) {
+//		try {
+//			int i = connection.createStatement().executeUpdate(select);
+//			if (i == 1) {
+//				return true;
+//			} else
+//				return false;
+//		} catch (SQLException e) {
+//			return false;
+//		}
+//	}
 
 	public Entity executeSingleSelect(String select, String entityType) {
 		if (returnEntityOfExecute(select, entityType).size() == 1) {
@@ -201,9 +204,35 @@ public class SqlHandler {
 		}
 	}
 
-	public LoginAccess executeLoginSelect(String userName, String password) {
+	
+	public LoginAccess executeLoginSelect(String userName, String password) throws SQLException {
 
-		return null;
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement("select user_type from library.library_users where name = ? and password = ?");
+			preparedStatement.setString(1, userName);
+			preparedStatement.setString(2, password);
+			
+			System.out.println(preparedStatement.toString());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			System.out.println("size" + resultSet.getFetchSize());
+			resultSet.next();
+			
+			switch(resultSet.getInt(1)) {
+			
+			case 1:
+				return LoginAccess.ADMIN;
+			case 0:
+				return LoginAccess.USER;
+			default:
+				return LoginAccess.DENIED;
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			throw new SQLException();
+		}
+		
 	}
 
 	// entityType USER, BORROW, BOOK, MAGAZINE, NEWSPAPER, AUTHOR

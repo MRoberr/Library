@@ -29,19 +29,19 @@ public class AuthorService extends UnicastRemoteObject implements AuthorServiceR
 	@Override
 	public boolean insertAuthor(Author author) throws RemoteException {
 		authorTemp = author.getInsert();
-		return SqlHandler.getInstance().executeInsert(authorTemp);
+		return SqlHandler.getInstance().executeSqlStatement(authorTemp);
 	}
 
 	@Override
 	public boolean updateAuthor(Author author) throws RemoteException {
 		authorTemp = author.getUpdate();
-		return SqlHandler.getInstance().executeUpdate(authorTemp);
+		return SqlHandler.getInstance().executeSqlStatement(authorTemp);
 	}
 
 	@Override
 	public boolean deleteAuthor(Author author) throws RemoteException {
 		authorTemp = author.getDelete();
-		return SqlHandler.getInstance().executeDelete(authorTemp);
+		return SqlHandler.getInstance().executeSqlStatement(authorTemp);
 	}
 
 	@Override
