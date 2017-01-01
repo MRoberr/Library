@@ -1,3 +1,14 @@
+/*
+ * not used anymore
+ * use anything from here if you need it
+ * 
+ */
+
+
+
+
+
+
 package edu.msg.library_client.desktop;
 
 import java.io.Console;
@@ -30,27 +41,32 @@ public class ClientService {
 	}
 
 	public static void initClient() {
-		LoginCheck();
+	
+//		LoginCheck();
+		
 		try {
 			Registry registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
+			
 			LoginServiceRmi lRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
 			UserServiceRmi uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
 			BookServiceRmi bRmi = (BookServiceRmi) registry.lookup(BookServiceRmi.RMI_NAME);
-			loginAccess = lRmi.login(username, password);
-			System.out.println(loginAccess);
 			
-			if (loginAccess == LoginAccess.ADMIN) {
-				uRmi.getAllUsers().forEach(u -> System.out.println(((User) u).getName()));
-			} else if (loginAccess == LoginAccess.USER) {
-
-			} else if (loginAccess == LoginAccess.DENIED) {
-				Console console = System.console();
-				console.printf("!!!!! Please enter your name and password again: ");
-				initClient();
-			} else {
-				System.out.println("Error");
-				System.exit(0);
-			}
+			loginAccess = lRmi.login("Zoli", "1234");
+			System.out.println("itt");
+//			System.out.println(loginAccess);
+//			
+//			if (loginAccess == LoginAccess.ADMIN) {
+//				uRmi.getAllUsers().forEach(u -> System.out.println(((User) u).getName()));
+//			} else if (loginAccess == LoginAccess.USER) {
+//
+//			} else if (loginAccess == LoginAccess.DENIED) {
+//				Console console = System.console();
+//				console.printf("!!!!! Please enter your name and password again: ");
+//				initClient();
+//			} else {
+//				System.out.println("Error");
+//				System.exit(0);
+//			}
 			// bRmi.getAllBooks();
 		} catch (Exception ex) {
 			ex.printStackTrace();

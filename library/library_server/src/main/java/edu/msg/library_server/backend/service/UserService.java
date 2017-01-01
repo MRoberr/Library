@@ -27,18 +27,18 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 
 	public synchronized boolean insertUser(User user) throws RemoteException {
 
-		return SqlHandler.getInstance().executeInsert(user.getInsert());
+		return SqlHandler.getInstance().executeSqlStatement(user.getInsert());
 	}
 
 	@Override
 	public synchronized boolean updateUser(User user) throws RemoteException {
 
-		return SqlHandler.getInstance().executeUpdate(user.getUpdate());
+		return SqlHandler.getInstance().executeSqlStatement(user.getUpdate());
 	}
 
 	@Override
 	public synchronized boolean deleteUser(User user) throws RemoteException {
-		return SqlHandler.getInstance().executeDelete(user.getDelete());
+		return SqlHandler.getInstance().executeSqlStatement(user.getDelete());
 	}
 
 	@Override

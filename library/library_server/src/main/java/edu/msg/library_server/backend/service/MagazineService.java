@@ -29,19 +29,19 @@ public class MagazineService extends UnicastRemoteObject implements MagazineServ
 	@Override
 	public synchronized boolean insertMagazine(Magazin magazine) throws RemoteException {
 		magazineTemp = magazine.getInsert();
-		return SqlHandler.getInstance().executeInsert(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override
 	public synchronized boolean updateMagazine(Magazin magazine) throws RemoteException {
 		magazineTemp = magazine.getUpdate();
-		return SqlHandler.getInstance().executeUpdate(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override
 	public synchronized boolean deleteMagazine(Magazin magazine) throws RemoteException {
 		magazineTemp = magazine.getDelete();
-		return SqlHandler.getInstance().executeDelete(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override
