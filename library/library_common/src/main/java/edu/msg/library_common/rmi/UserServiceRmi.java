@@ -26,6 +26,8 @@ public interface UserServiceRmi extends Remote {
 	
 	public Entity getUserByUUUID(String uuid) throws RemoteException; 
 	
+	public List<Entity> searchUser(String name) throws RemoteException;
+	
 //
 //	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;
 //

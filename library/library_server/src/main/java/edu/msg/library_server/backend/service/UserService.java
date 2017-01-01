@@ -54,4 +54,11 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 		return SqlHandler.getInstance().executeSingleSelect(user.getSelectByUUID(uuid), "USER");
 	}
 
+	@Override
+	public List<Entity> searchUser(String name) {
+		return null;
+		
+	}
+	
+
 }
