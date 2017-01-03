@@ -166,6 +166,30 @@ public class SqlHandler {
 		}
 	}
 
+	public List<Publication> executePublicationSelect(String select) {
+		
+		ResultSet resultSet = null;
+		List<Publication> resultList = new ArrayList<>();
+		try {
+			
+			resultSet = connection.createStatement().executeQuery(select);	
+			while (resultSet.next()) {
+				Publication publcaion = new Publication();
+				publcaion.setUUID(resultSet.getString("uuid"));
+				publcaion.setTitle(resultSet.getString("title"));
+				publcaion.setType(resultSet.getInt("type"));
+				resultList.add(publcaion);
+			}			
+			return resultList;
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.err.println("Couldn't select users!");
+			return null;
+		}
+	}
+	
 	private List<Entity> returnEntityOfExecute(String select, String entityType) {
 		
 		ResultSet resultSet = null;

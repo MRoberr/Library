@@ -56,8 +56,7 @@ public class Publication extends BaseEntity{
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		//Don t implement
-		return null;
+		return "Select * from publications where uuid = '" + uuid + "'";
 	}
 
 	public int getType() {
