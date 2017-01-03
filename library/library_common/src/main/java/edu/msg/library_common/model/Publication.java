@@ -28,6 +28,7 @@ public class Publication extends BaseEntity{
 		return "Select * from publications";
 	}
 	
+
 	public String getSelectByTitle() {		
 		return "Select * from publications where title like '% "+ title +" %'";
 	}
