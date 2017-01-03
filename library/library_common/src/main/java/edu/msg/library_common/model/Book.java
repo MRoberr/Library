@@ -140,4 +140,13 @@ public class Book extends Publication {
 		}
 		return strBld.toString();
 	} 
+
+	/**
+	 * 
+	 * @return a string representation of the SQL delete statement which deletes
+	 *         all authors of the book
+	 */
+	public String deleteAuthors() {
+		return "delete from publications_authors where publications_uuid='" + getUUID() + "'";
+	}
 }

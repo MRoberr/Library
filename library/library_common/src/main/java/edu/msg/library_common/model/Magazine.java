@@ -28,8 +28,8 @@ public class Magazine extends Publication {
 	 */
 	private Date releaseDate;
 	/**
-	 * {@link magazine#copiesLeft} Represents the number of magazines copies left
-	 * in the library.
+	 * {@link magazine#copiesLeft} Represents the number of magazines copies
+	 * left in the library.
 	 */
 	private int numberOfCopies;
 	/**
@@ -135,6 +135,15 @@ public class Magazine extends Publication {
 					+ "','" + author.getUUID() + "');");
 		}
 		return strBld.toString();
+	}
+
+	/**
+	 * 
+	 * @return a string representation of the SQL delete statement which deletes
+	 *         all authors of the book
+	 */
+	public String deleteAuthors() {
+		return "delete from publications_authors where publications_uuid='" + getUUID() + "'";
 	}
 
 }
