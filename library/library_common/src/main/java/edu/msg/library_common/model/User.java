@@ -8,6 +8,18 @@ public class User extends BaseEntity {
 	private int loyalityIndex;
 	private String password;
 
+	public User() {
+		
+	}
+	
+	public User(String name, LoginAccess userType, String password) {
+		
+		this.name = name;
+		this.userType = userType;
+		this.password = password;
+		loyalityIndex = 10;
+	}
+	
 	public String getName() {
 		return name;
 	}

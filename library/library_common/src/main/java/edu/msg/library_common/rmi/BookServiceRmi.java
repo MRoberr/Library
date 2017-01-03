@@ -13,7 +13,7 @@ public interface BookServiceRmi extends Remote {
 
 	public static final int RMI_PORT = 1099;
 	
-	public List<Entity> getAllBooks() throws RemoteException; 
+	public List<Book> getAllBooks() throws RemoteException; 
 	
 	public boolean insertBook(Book book) throws RemoteException;
 	
