@@ -1,10 +1,8 @@
 package edu.msg.library_common.model;
 
-public class Publication extends BaseEntity{
+public abstract class Publication extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
-	private String title;
-	private int type;//1-book, 2-news, 3-magazine
 	
 	
 	public static String getCreateView(){
@@ -26,10 +24,10 @@ public class Publication extends BaseEntity{
 	
 	public static String getSelectByTitle(String title) {		
 		
-		return "Select * from publications where title like '%"+ title +"%'";
+		return "Select * from publications where title like '% "+ title +" %'";
 	}
 	
-	public String getSelectByRegexp(String regexp){
+	public static String getSelectByRegexp(String regexp){
 		return "select * from publications where title REGEXP '"+regexp+"'";
 	}
 

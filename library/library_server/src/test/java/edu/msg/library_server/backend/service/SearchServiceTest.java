@@ -29,9 +29,9 @@ public class SearchServiceTest {
 		try {
 			List<Publication> searchlist = searchService.searchPublicationByTitles("zoli");
 			assertTrue(!searchlist.isEmpty());
-			Publication pb = new Publication();
-			pb.setTitle("zoli");
-			assertEquals(pb.getTitle(), searchlist.get(0).getTitle());
+		//	Publication pb = new Publication();
+		//	pb.setTitle("zoli");
+			assertEquals("zoli", searchlist.get(0).getTitle());
 		} catch (Exception e) {
 
 		}
