@@ -12,6 +12,7 @@ public class Book extends Publication {
 	private int numberOfCopies;
 	private int copiesLeft;
 
+	
 	public String getTitle() {
 		return title;
 	}

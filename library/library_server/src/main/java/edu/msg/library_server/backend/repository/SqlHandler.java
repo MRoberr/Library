@@ -174,11 +174,27 @@ public class SqlHandler {
 			
 			resultSet = connection.createStatement().executeQuery(select);	
 			while (resultSet.next()) {
-				Publication publcaion = new Publication();
-				publcaion.setUUID(resultSet.getString("uuid"));
-				publcaion.setTitle(resultSet.getString("title"));
-				publcaion.setType(resultSet.getInt("type"));
-				resultList.add(publcaion);
+				
+				Publication publication;
+				
+				switch(resultSet.getString("type")) {
+				
+				case "1":
+					publication = new Book();
+					
+					break;
+				case "2":
+					publication = new Newspaper();
+					break;
+				default:
+					publication = new Magazine();
+					break;
+				}
+				
+				publication.setUUID(resultSet.getString("uuid"));
+				publication.setTitle(resultSet.getString("title"));
+				
+				resultList.add(publication);
 			}			
 			return resultList;
 			
@@ -266,13 +282,13 @@ public class SqlHandler {
 				}
 				break;
 			case "PUBLICATION":   
-				while (resultSet.next()) {
-					Publication publcaion = new Publication();
-					publcaion.setUUID(resultSet.getString("uuid"));
-					publcaion.setTitle(resultSet.getString("title"));
-					publcaion.setType(resultSet.getInt("type"));
-					resultList.add(publcaion);
-				}
+//				while (resultSet.next()) {
+//					Publication publcaion = new Publication();
+//					publcaion.setUUID(resultSet.getString("uuid"));
+//					publcaion.setTitle(resultSet.getString("title"));
+//					publcaion.setType(resultSet.getInt("type"));
+//					resultList.add(publcaion);
+//				}
 				break;
 			case "BORROWING":   
 				while (resultSet.next()) {
