@@ -11,12 +11,14 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import edu.msg.library_common.model.Magazine;
-import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.Author;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MagazineServiceTest {
 	Magazine magazine;
 	MagazineService magazineService;
+	Author author;
+	List<Author> authors;
 
 	public MagazineServiceTest() {
 		magazine = new Magazine();
@@ -27,6 +29,13 @@ public class MagazineServiceTest {
 		magazine.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(2015, 12, 01)));
 		magazine.setNumberOfCopies(5);
 		magazine.setCopiesLeft(4);
+		
+		author = new Author();
+		author.setUUID("d21d441c-0494-4b6e-9af8-1c0bc27289ca");
+		author.setName("Author");
+		authors = new ArrayList<>();		
+		authors.add(author);
+		magazine.setAuthors(authors);
 
 		try {
 			magazineService = new MagazineService();
