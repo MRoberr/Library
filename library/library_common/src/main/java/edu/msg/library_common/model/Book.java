@@ -1,5 +1,6 @@
  package edu.msg.library_common.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book extends Publication {
@@ -11,6 +12,10 @@ public class Book extends Publication {
 	private int releaseDate;
 	private int numberOfCopies;
 	private int copiesLeft;
+	
+	public Book() {
+		authors = new ArrayList<>();
+	}
 
 	public String getTitle() {
 		return title;
