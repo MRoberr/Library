@@ -27,12 +27,12 @@ public interface BorrowingServiceRmi extends Remote {
 	public List<Entity> getAllBorrows() throws RemoteException;
 	
 	/**
-	 * 
+	 * inserts a borrowing object into the DB
 	 * @param borrow - Borrowing object
 	 * @return true if the insert was successful, or false if not
 	 * @throws RemoteException
 	 */
-	public boolean insertPublication(Borrowing borrow) throws RemoteException;
+	public boolean insertBorrowing(Borrowing borrow) throws RemoteException;
 	
 	/**
 	 * 
@@ -40,7 +40,7 @@ public interface BorrowingServiceRmi extends Remote {
 	 * @return true if the insert was successful, or false if not
 	 * @throws RemoteException
 	 */
-	public boolean updatePublication(Borrowing borrow) throws RemoteException;
+	public boolean updateBorrowing(Borrowing borrow) throws RemoteException;
 	
 	/**
 	 * 

@@ -28,7 +28,7 @@ public class BorrowingServiceTest {
 		BorrowingService bs;
 		try {
 			bs = new BorrowingService();
-			assertTrue(bs.insertPublication (borrowingTemp));
+			assertTrue(bs.insertBorrowing (borrowingTemp));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
