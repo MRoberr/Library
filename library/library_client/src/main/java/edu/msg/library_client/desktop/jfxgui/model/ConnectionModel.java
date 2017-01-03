@@ -69,7 +69,7 @@ public enum ConnectionModel {
 
 			return loginServiceRmi.login(user, pass);
 		} catch (RemoteException | SQLException e) {
-			// System.out.println("deny");
+
 			return LoginAccess.DENIED;
 		}
 	}
