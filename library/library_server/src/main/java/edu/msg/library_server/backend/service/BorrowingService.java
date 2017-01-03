@@ -8,6 +8,9 @@ import java.util.List;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.Magazine;
+import edu.msg.library_common.model.Newspaper;
+import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BorrowingServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
@@ -64,9 +67,35 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 				user.setLoyalityIndex(user.getLoyalityIndex() - 1);
 				us.updateUser(user);
 			}
-			
-			
-			
+			SearchService ss = new SearchService();
+			List<Publication> publicationList = ss.searchPublicationByUUID(borrow.getPublicationUuid());
+			if (publicationList.isEmpty()) {
+				return false;
+			} else {
+				int type = publicationList.get(0).getType();
+				switch (type) {
+				case 1:
+					BookService bs = new BookService();
+					Book book = (Book)bs.getBookByUUID(borrow.getPublicationUuid());
+					book.setCopiesLeft(book.getCopiesLeft() + 1);
+					bs.updateBook(book);
+					break;
+				case 2:
+					NewspaperService ns = new NewspaperService();
+					Newspaper paper = (Newspaper)ns.getNewspaperByUUID(borrow.getPublicationUuid());
+					paper.setCopiesLeft(paper.getCopiesLeft() + 1);
+					ns.updateNewspaper(paper);
+					break;
+				case 3:
+					MagazineService ms = new MagazineService();
+					Magazine mag = (Magazine)ms.getMagazineByUUID(borrow.getPublicationUuid());
+					mag.setCopiesLeft(mag.getCopiesLeft() + 1);
+					ms.updateMagazine(mag);
+					break;
+				default:
+					break;
+				}
+			}
 			
 			return true;
 		} catch (Exception e) {
