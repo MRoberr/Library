@@ -10,16 +10,16 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import edu.msg.library_common.model.Magazin;
+import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Entity;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MagazineServiceTest {
-	Magazin magazine;
+	Magazine magazine;
 	MagazineService magazineService;
 
 	public MagazineServiceTest() {
-		magazine = new Magazin();
+		magazine = new Magazine();
 		magazine.setUUID("d21d441c-0494-4b6e-9af8-1c0bc27299cm");
 		magazine.setTitle("Magazine");
 		magazine.setPublisher("NA");
@@ -63,7 +63,7 @@ public class MagazineServiceTest {
 	@Test
 	public void test4GetMagazineByUUID() {
 		try {
-			Magazin b = (Magazin)(magazineService.getMagazineByUUID(magazine.getUUID()));			
+			Magazine b = (Magazine)(magazineService.getMagazineByUUID(magazine.getUUID()));			
 			assertTrue((b.getUUID().equals(magazine.getUUID())) && (b.getNumberOfCopies() == magazine.getNumberOfCopies()));		
 		} catch (RemoteException e) {
 			fail(e.getMessage());
@@ -73,11 +73,11 @@ public class MagazineServiceTest {
 	@Test
 	public void test5GetAllMagazines() {
 		try {
-			List<Entity> dbList = new ArrayList<>();
+			List<Magazine> dbList = new ArrayList<>();
 			dbList = magazineService.getAllMagazines();
 			assertTrue(dbList.size()>0);
 			assertTrue(dbList.stream()
-					.map(p->(Magazin)p)
+					.map(p->(Magazine)p)
 					.filter(p-> (p.getUUID().equals(magazine.getUUID()) && (p.getNumberOfCopies() == magazine.getNumberOfCopies()))
 			) != null);
 		} catch (RemoteException e) {
