@@ -87,6 +87,10 @@ public class User extends BaseEntity {
 	}
 
 	public String getSelectByName(String name) {
-		return "select * from library_users where uuid='" + getName() + "'";
+		return "select * from library_users where name='" + name + "'";
+	}
+	
+	public String getSearchByName(String name) {
+		return "select * from library_users where name like '%" + name + "%'";
 	}
 }

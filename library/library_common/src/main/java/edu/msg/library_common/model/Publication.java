@@ -31,6 +31,10 @@ public class Publication extends BaseEntity{
 	public String getSelectByTitle() {		
 		return "Select * from publications where title like '% "+ title +" %'";
 	}
+	
+	public String getSelectByRegexp(String regexp){
+		return "select * from publications where title REGEXP '"+regexp+"'";
+	}
 
 	@Override
 	public String getInsert() {
