@@ -1,18 +1,54 @@
 package edu.msg.library_common.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Magazine extends Publication {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * {@link magazine#title} The title of the magazine.
+	 */
 	private String title;
+	/**
+	 * {@link magazine#article_title} The title of the article.
+	 */
 	private String article_title;
+	/**
+	 * {@link magazine#publisher} The publisher of the magazine.
+	 */
 	private String publisher;
+	/**
+	 * {@link magazine#authors} The authors of the magazine. A magazine has
+	 * atleast one author.
+	 */
 	private List<Author> authors;
+	/**
+	 * {@link magazine#releaseDate} The date when the magazine was released.
+	 */
 	private Date releaseDate;
+	/**
+	 * {@link magazine#copiesLeft} Represents the number of magazines copies
+	 * left in the library.
+	 */
 	private int numberOfCopies;
+	/**
+	 * {@link magazine#copiesLeft} Represents the number of magazines copies
+	 * left in the library.
+	 */
 	private int copiesLeft;
+	
+	public Magazine() {
+		authors = new ArrayList<>();
+	}
+
+	@Override
+	public String toString() {
+		return "Magazine [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher
+				+ ", authors=" + authors + ", releaseDate=" + releaseDate + ", numberOfCopies=" + numberOfCopies
+				+ ", copiesLeft=" + copiesLeft + "]";
+	}
 
 	public String getTitle() {
 		return title;
@@ -98,14 +134,28 @@ public class Magazine extends Publication {
 	public String getSelectByUUID(String uuid) {
 		return "select * from magazines where uuid='" + uuid + "'";
 	}
-	
-	public String insertAuthors(){
+
+	/**
+	 * 
+	 * @return a string representation of the SQL statement which inserts the
+	 *         authors' id and the books' id into the mapping table
+	 */
+	public String insertAuthors() {
 		StringBuilder strBld = new StringBuilder();
-		for(Author author : authors){
-			strBld.append("insert into publications_authors (publications_uuid, authors_uuid) "
-					+ "values('" + getUUID() + "','" + author.getUUID() + "');");
+		for (Author author : authors) {
+			strBld.append("insert into publications_authors (publications_uuid, authors_uuid) " + "values('" + getUUID()
+					+ "','" + author.getUUID() + "');");
 		}
 		return strBld.toString();
+	}
+
+	/**
+	 * 
+	 * @return a string representation of the SQL delete statement which deletes
+	 *         all authors of the book
+	 */
+	public String deleteAuthors() {
+		return "delete from publications_authors where publications_uuid='" + getUUID() + "'";
 	}
 
 }

@@ -15,20 +15,17 @@ public class Publication extends BaseEntity{
 				") as p";
 	}
 	
-	public String getTitle() {
-		return title;
-	}
+	public abstract String getTitle();
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
+	public abstract void setTitle(String title);
+	
 	@Override
 	public String getSelectAll() {		
 		return "Select * from publications";
 	}
 	
-	public String getSelectByTitle() {		
+	public static String getSelectByTitle(String title) {		
+		
 		return "Select * from publications where title like '%"+ title +"%'";
 	}
 	
@@ -56,16 +53,14 @@ public class Publication extends BaseEntity{
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		//Don t implement
+		//Don't implement
 		return null;
 	}
 
-	public int getType() {
-		return type;
+	public static String getSelectByPublicationUUID(String uuid) {
+		return "Select * from publications where uuid = '" + uuid + "'";
 	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
+	
+	
 
 }
