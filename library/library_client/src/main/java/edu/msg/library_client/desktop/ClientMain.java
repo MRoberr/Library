@@ -1,8 +1,10 @@
 package edu.msg.library_client.desktop;
 
+
 public class ClientMain {	
 	
 	public static void main(String[] args) {				
-		UiFactory.getUiFatory();
+		
+		UiFactory.getUiFatory();	
 	}
 }

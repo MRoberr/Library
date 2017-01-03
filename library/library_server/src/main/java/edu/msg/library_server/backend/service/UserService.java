@@ -19,9 +19,10 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 
 	}
 
-	public synchronized List<Entity> getAllUsers() throws RemoteException {
+	public synchronized List<User> getAllUsers() throws RemoteException {
 		User user = new User();
-		return SqlHandler.getInstance().executeSelect(user.getSelectAll(), "USER");
+//		return SqlHandler.getInstance().executeSelect(user.getSelectAll(), "USER");
+		return SqlHandler.getInstance().executeUserSelect(user.getSelectAll());
 
 	}
 
