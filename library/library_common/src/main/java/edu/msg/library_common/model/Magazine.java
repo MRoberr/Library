@@ -1,6 +1,7 @@
 package edu.msg.library_common.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Magazine extends Publication {
@@ -13,6 +14,10 @@ public class Magazine extends Publication {
 	private Date releaseDate;
 	private int numberOfCopies;
 	private int copiesLeft;
+	
+	public Magazine() {
+		authors = new ArrayList<>();
+	}
 
 	@Override
 	public String toString() {
