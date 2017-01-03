@@ -2,11 +2,13 @@ package edu.msg.library_server.backend.service;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Date;
 import java.util.List;
 
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BorrowingServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
 
@@ -53,8 +55,24 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 
 	@Override
 	public boolean returnPublication(Borrowing borrow) throws RemoteException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			Date today = new Date();
+			borrow.setReturnDate(today);
+			if (borrow.getReturnDate().after(borrow.getDeadline())) {
+				UserService us = new UserService();
+				User user = (User)us.getUserByUUUID(borrow.getUserUuid());
+				user.setLoyalityIndex(user.getLoyalityIndex() - 1);
+				us.updateUser(user);
+			}
+			
+			
+			
+			
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+		
 	} 
 
 }
