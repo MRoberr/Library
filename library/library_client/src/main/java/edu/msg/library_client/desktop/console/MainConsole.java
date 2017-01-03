@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.msg.library_client.desktop.ClientService;
+import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
+	private PublicationService publicationService = new PublicationService();
 	Scanner scanner = new Scanner(System.in);
 
 	public MainConsole() {
@@ -32,11 +35,12 @@ public class MainConsole extends UiFactory {
 			int cmd = scanner.nextInt();
 			switch (cmd) {
 			case 1:
-				//kiadvany utani kerese
+				searchPublications();
+				// kiadvany utani kerese
 			case 2:
 				createNewUser();
 				break;
-			
+
 			case 3:
 				updateClient();
 				break;
@@ -45,6 +49,32 @@ public class MainConsole extends UiFactory {
 				break;
 			case 5:
 				searchClient();
+				break;
+			case 6:
+				System.out.println("0-viszalepes");
+				System.out.println("1-Konyv letrehozasa");
+				System.out.println("2-Magazin letrehozasa");
+				System.out.println("3-Ujsag letrehozasa");
+				int admincmd = scanner.nextInt();
+				switch (admincmd) {
+				case 1:
+					createNewBook();
+					System.out.println("megy1");
+					break;
+				case 2:
+					createMagazin();
+					System.out.println("megy2");
+					break;
+				case 3:
+					createNewspaper();
+					System.out.println("megy3");
+					break;
+
+				case 0:
+					break;
+
+				}
+
 				break;
 			case 11:
 				listUsers();
@@ -65,15 +95,40 @@ public class MainConsole extends UiFactory {
 	private void createNewUser() {
 		clientService.newClientCreate(scanner.next(), scanner.next());
 	}
-	private void updateClient(){
+
+	private void updateClient() {
 		clientService.clientUpdate(scanner.next(), scanner.next());
 	}
-	private void deleteClient(){
+
+	private void deleteClient() {
 		clientService.clientDelete(scanner.next());
 	}
-	private void searchClient(){
+
+	private void searchClient() {
 		clientService.searchClient(scanner.next());
 	}
+
+	private void searchPublications() {
+		List<Publication> publications = publicationService.getPublications(scanner.next());
+		if (publications.isEmpty()) {
+			System.out.println("nem talahato ijen kony");
+		}
+		for (Publication publication : publications) {
+			System.out.println(publication);
+		}
+	}
+
+	private void createNewBook() {
+		publicationService.insertBook(scanner.next(), scanner.next(), scanner.nextInt(), scanner.nextInt(),
+				scanner.nextInt());
+	}
+	private void createMagazin(){
+		publicationService.insertMagazin(scanner.next(),scanner.next(),scanner.next(),scanner.nextInt(),scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+	}
+	private void createNewspaper(){
+		publicationService.insertNewspapaer(scanner.next(),scanner.next(),scanner.next(),scanner.nextInt(), scanner.nextInt(),scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+	}
+
 	private void menuforAdmin() {
 		System.out.println("Type");
 		System.out.println("1-Kiadvany utani kereses");

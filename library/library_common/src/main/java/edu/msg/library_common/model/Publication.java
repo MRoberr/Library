@@ -29,7 +29,7 @@ public class Publication extends BaseEntity{
 	}
 	
 	public String getSelectByTitle() {		
-		return "Select * from publications where title like '% "+ title +" %'";
+		return "Select * from publications where title like '%"+ title +"%'";
 	}
 	
 	public String getSelectByRegexp(String regexp){
