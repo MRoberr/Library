@@ -60,7 +60,7 @@ public interface BorrowingServiceRmi extends Remote {
 	
 	/**
 	 * Changes the return date of the borrow object in the persistency layer. 
-	 * Updates the number of copies field of the publication in th epersistency layer
+	 * Updates the number of copies left field of the publication in the persistency layer
 	 * Updates if the users trust index must be changed and updates it if necesarry
 	 * @param borrow - Borrowing object
 	 * @return true if publication has been returned correctly, false if not
@@ -68,4 +68,12 @@ public interface BorrowingServiceRmi extends Remote {
 	 */
 	public boolean returnPublication (Borrowing borrow) throws RemoteException;
 	
+	/**
+	 * Inserts a new borrow object, if conditions are met.
+	 * Updates the number of copies left field of the publication in the persistency layer
+	 * @param borrow - Borrowing object
+	 * @return true if publication has been borrowed correctly, false if not
+	 * @throws RemoteException
+	 */
+	public boolean borrowPublication (Borrowing borrow) throws RemoteException;
 }
