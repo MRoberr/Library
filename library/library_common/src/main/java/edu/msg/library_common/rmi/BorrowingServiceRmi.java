@@ -7,6 +7,11 @@ import java.util.List;
 import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
 
+/**
+ * The interface represents the borrowing of a publication by a reader(library user)
+ * @author gallb
+ * 
+ */
 public interface BorrowingServiceRmi extends Remote {
 	
 	public static final String RMI_NAME = "Borrowing";

@@ -16,7 +16,6 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 
 	private String sqlStatement;
 	private Borrowing borrowTemp;
-	
 	protected BorrowingService() throws RemoteException {
 		super();
 		borrowTemp = new Borrowing();
