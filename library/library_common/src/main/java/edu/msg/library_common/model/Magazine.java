@@ -50,13 +50,6 @@ public class Magazine extends Publication {
 				+ ", copiesLeft=" + copiesLeft + "]";
 	}
 
-	@Override
-	public String toString() {
-		return "Magazine [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher
-				+ ", authors=" + authors + ", releaseDate=" + releaseDate + ", numberOfCopies=" + numberOfCopies
-				+ ", copiesLeft=" + copiesLeft + "]";
-	}
-
 	public String getTitle() {
 		return title;
 	}

@@ -13,6 +13,10 @@ import org.junit.runners.MethodSorters;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Author;
 
+/**
+ * @author simoz
+ *
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class MagazineServiceTest {
 	Magazine magazine;

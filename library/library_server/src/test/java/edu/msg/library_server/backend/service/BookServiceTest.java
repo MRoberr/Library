@@ -9,13 +9,20 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import edu.msg.library_common.model.Author;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
+/**
+ * @author simoz
+ *
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class BookServiceTest {
 	Book book;
 	BookService bookService;
+	Author author;
+	List<Author> authors;
 
 	public BookServiceTest() {
 		book = new Book();
@@ -25,10 +32,16 @@ public class BookServiceTest {
 		book.setReleaseDate(1851);
 		book.setNumberOfCopies(45);
 		book.setCopiesLeft(34);
+		
+		author = new Author();
+		author.setUUID("d21d441c-0494-4b6e-9af8-1c0bc27289ca");
+		author.setName("Author");
+		authors = new ArrayList<>();		
+		authors.add(author);
+		book.setAuthors(authors);
 
 		try {
 			bookService = new BookService();
-			bookService.insertBook(book);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

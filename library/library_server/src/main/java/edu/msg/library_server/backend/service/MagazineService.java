@@ -10,6 +10,10 @@ import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.rmi.MagazineServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
 
+/**
+ * @author simoz
+ *
+ */
 public class MagazineService extends UnicastRemoteObject implements MagazineServiceRmi{
 
 	private static final long serialVersionUID = 1L;
@@ -23,10 +27,8 @@ public class MagazineService extends UnicastRemoteObject implements MagazineServ
 	}
 
 	@Override
-	public synchronized List<Magazine> getAllMagazines() throws RemoteException {	
-		//getAllMagazine inkább
+	public synchronized List<Magazine> getAllMagazines() throws RemoteException {
 		magazineTemp = magazineSQL.getSelectAll();
-//		return SqlHandler.getInstance().executeMagazineSelect(magazineTemp, "MAGAZINE");
 		return SqlHandler.getInstance().executeMagazineSelect(magazineTemp);
 	}
 
@@ -47,9 +49,9 @@ public class MagazineService extends UnicastRemoteObject implements MagazineServ
 	@Override
 	public synchronized boolean deleteMagazine(Magazine magazine) throws RemoteException {
 		magazineTemp = magazine.getDelete();
-		//ret = SqlHandler.getInstance().executeSqlStatement(magazineTemp);
-		//magazineTemp = magazine.getDeleteAuthors();
-		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
+		ret = SqlHandler.getInstance().executeSqlStatement(magazineTemp);
+		magazineTemp = magazine.deleteAuthors();
+		return ret && SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override
