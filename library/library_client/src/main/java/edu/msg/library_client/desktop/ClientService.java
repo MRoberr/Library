@@ -111,7 +111,7 @@ public class ClientService {
 	public void clientUpdate(String selectedUser, String newUserName) {
 		try {
 
-			List<Entity> userList = getAllUsers();
+			List<User> userList = getAllUsers();
 			for (Entity entity : userList) {
 				User user = (User) entity;
 				if (user.getName().equals(selectedUser)) {
@@ -127,7 +127,7 @@ public class ClientService {
 	public void clientDelete(String selectedUser) {
 		try {
 
-			List<Entity> userList = getAllUsers();
+			List<User> userList = getAllUsers();
 			for (Entity entity : userList) {
 				User user = (User) entity;
 				if (user.getName().equals(selectedUser)) {
@@ -141,7 +141,7 @@ public class ClientService {
 		}
 	}
 
-	public List<Entity> getAllUsers() {
+	public List<User> getAllUsers() {
 		try {
 			return uRmi.getAllUsers();
 		} catch (RemoteException e) {

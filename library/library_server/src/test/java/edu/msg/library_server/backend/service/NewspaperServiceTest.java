@@ -73,7 +73,7 @@ public class NewspaperServiceTest {
 	@Test
 	public void test5GetAllNewspapers() {
 		try {
-			List<Entity> dbList = new ArrayList<>();
+			List<Newspaper> dbList = new ArrayList<>();
 			dbList = newspaperService.getAllNewspapers();
 			assertTrue(dbList.size()>0);
 			assertTrue(dbList.stream()
