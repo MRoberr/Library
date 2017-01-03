@@ -181,7 +181,6 @@ public class SqlHandler {
 				
 				case "1":
 					publication = new Book();
-					
 					break;
 				case "2":
 					publication = new Newspaper();

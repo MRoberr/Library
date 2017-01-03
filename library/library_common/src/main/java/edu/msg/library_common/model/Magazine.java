@@ -7,10 +7,7 @@ import java.util.List;
 public class Magazine extends Publication {
 
 	private static final long serialVersionUID = 1L;
-	/**
-	 * {@link magazine#title} The title of the magazine.
-	 */
-	private String title;
+	
 	/**
 	 * {@link magazine#article_title} The title of the article.
 	 */
@@ -21,7 +18,7 @@ public class Magazine extends Publication {
 	private String publisher;
 	/**
 	 * {@link magazine#authors} The authors of the magazine. A magazine has
-	 * atleast one author.
+	 * at least one author.
 	 */
 	private List<Author> authors;
 	/**

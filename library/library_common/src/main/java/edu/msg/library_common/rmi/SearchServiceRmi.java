@@ -14,4 +14,6 @@ public interface SearchServiceRmi extends Remote {
 	public static final int RMI_PORT = 1099;
 
 	public List<Publication> searchPublicationByTitles(String title) throws RemoteException;
+	
+	public List<Publication> getAllPublications() throws RemoteException;
 }

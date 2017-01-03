@@ -27,4 +27,10 @@ public class SearchService extends UnicastRemoteObject implements SearchServiceR
 		
 		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectByPublicationUUID(uuid));		
 	}
+
+	@Override
+	public List<Publication> getAllPublications() throws RemoteException {
+
+		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectAllPublications());
+	}
 }
