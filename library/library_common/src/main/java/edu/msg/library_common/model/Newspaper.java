@@ -12,6 +12,13 @@ public class Newspaper extends Publication{
 	private int numberOfCopies;
 	private int copiesLeft;
 
+	@Override
+	public String toString() {
+		return "Newspaper [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher
+				+ ", releaseDate=" + releaseDate + ", numberOfCopies=" + numberOfCopies + ", copiesLeft=" + copiesLeft
+				+ "]";
+	}
+
 	public Date getReleaseDate() {
 		return releaseDate;
 	}
