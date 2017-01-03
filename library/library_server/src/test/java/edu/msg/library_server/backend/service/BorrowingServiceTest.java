@@ -34,4 +34,13 @@ public class BorrowingServiceTest {
 			e.printStackTrace();
 		}
 	}
+	
+	public void returnPublicationTest() {
+		Borrowing borrowingTemp = new Borrowing();
+		borrowingTemp.setPublicationUuid("112");
+		borrowingTemp.setUserUuid("23");
+		//Date date = new Date();
+		//da
+		//borrowingTemp.setDeadline(deadline);
+	}
 }
