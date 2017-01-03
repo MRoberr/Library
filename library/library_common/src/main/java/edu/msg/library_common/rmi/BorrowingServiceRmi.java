@@ -67,4 +67,5 @@ public interface BorrowingServiceRmi extends Remote {
 	 * @throws RemoteException
 	 */
 	public boolean returnPublication (Borrowing borrow) throws RemoteException;
+	
 }

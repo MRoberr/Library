@@ -21,4 +21,10 @@ public class SearchService extends UnicastRemoteObject implements SearchServiceR
 		
 		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectByTitle(title));		
 	}
+	
+	
+	public List<Publication> searchPublicationByUUID(String uuid) {		
+		publicationTemp = publicationSQL.getSelectByUUID(uuid);
+		return SqlHandler.getInstance().executePublicationSelect(publicationTemp);		
+	}
 }
