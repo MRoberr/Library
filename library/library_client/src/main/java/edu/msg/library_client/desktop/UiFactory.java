@@ -7,7 +7,7 @@ public abstract class UiFactory {
 
 	public static void getUi() {
 		
-//		new MainController();
+//		Application.launch(MainWindowController.class);
 		new MainConsole().startConsole();
 		
 	}

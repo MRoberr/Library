@@ -21,9 +21,10 @@ public class NewspaperService extends UnicastRemoteObject implements NewspaperSe
 	}
 
 	@Override
-	public synchronized List<Entity> getAllNewspapers() throws RemoteException {		
+	public synchronized List<Newspaper> getAllNewspapers() throws RemoteException {		
 		newspaperTemp = newspaperSQL.getSelectAll();
-		return SqlHandler.getInstance().executeSelect(newspaperTemp, "NEWSPAPER");
+//		return SqlHandler.getInstance().executeSelect(newspaperTemp, "NEWSPAPER");
+		return SqlHandler.getInstance().executeNewspaperSelect(newspaperTemp);
 	}
 
 	@Override

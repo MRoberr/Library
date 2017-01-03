@@ -7,6 +7,7 @@ import java.util.Scanner;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.User;
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
@@ -55,7 +56,7 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void listUsers() {
-		List<Entity> users = clientService.getAllUsers();
+		List<User> users = clientService.getAllUsers();
 		for (Entity user : users) {
 			System.out.println(user);
 		}
