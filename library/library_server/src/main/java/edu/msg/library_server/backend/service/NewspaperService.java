@@ -9,6 +9,10 @@ import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.rmi.NewspaperServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
 
+/**
+ * @author simoz
+ *
+ */
 public class NewspaperService extends UnicastRemoteObject implements NewspaperServiceRmi{
 
 	private static final long serialVersionUID = 1L;
@@ -23,7 +27,6 @@ public class NewspaperService extends UnicastRemoteObject implements NewspaperSe
 	@Override
 	public synchronized List<Newspaper> getAllNewspapers() throws RemoteException {		
 		newspaperTemp = newspaperSQL.getSelectAll();
-//		return SqlHandler.getInstance().executeSelect(newspaperTemp, "NEWSPAPER");
 		return SqlHandler.getInstance().executeNewspaperSelect(newspaperTemp);
 	}
 
