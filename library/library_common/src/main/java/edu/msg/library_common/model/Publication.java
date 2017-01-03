@@ -3,7 +3,6 @@ package edu.msg.library_common.model;
 public abstract class Publication extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
-	private int type;//1-book, 2-news, 3-magazine
 	
 	
 	public static String getCreateView(){
@@ -17,6 +16,7 @@ public abstract class Publication extends BaseEntity{
 	public abstract String getTitle();
 
 	public abstract void setTitle(String title);
+	
 	@Override
 	public String getSelectAll() {		
 		return "Select * from publications";
@@ -51,15 +51,14 @@ public abstract class Publication extends BaseEntity{
 
 	@Override
 	public String getSelectByUUID(String uuid) {
+		//Don't implement
+		return null;
+	}
+
+	public static String getSelectByPublicationUUID(String uuid) {
 		return "Select * from publications where uuid = '" + uuid + "'";
 	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
+	
+	
 
 }
