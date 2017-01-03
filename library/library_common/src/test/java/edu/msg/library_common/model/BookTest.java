@@ -91,5 +91,13 @@ public class BookTest {
 					+ "insert into publications_authors (publications_uuid, authors_uuid) "
 					+ "values('999','3698');", insertAuthor);
 	}
+	
+	@Test
+	public void deleteAuthorsTest() {
+		createBook();
+		String deleteAuthors = book.deleteAuthors();
+		System.out.println("delete: " + deleteAuthors);
+		assertEquals("delete from publications_authors where publications_uuid='999'", deleteAuthors);
+	}
 
 }
