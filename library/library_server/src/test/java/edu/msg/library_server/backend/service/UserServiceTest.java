@@ -60,7 +60,7 @@ public class UserServiceTest {
 			fail(e.getMessage());
 		}
 		
-		List<Entity> dbList = new ArrayList<>();
+		List<User> dbList = new ArrayList<>();
 		try {
 			dbList = userService.getAllUsers();
 		} catch (RemoteException e) {

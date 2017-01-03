@@ -9,10 +9,10 @@ import java.util.List;
 import org.junit.Test;
 
 public class MagazinTest {
-	private Magazin magazin;
+	private Magazine magazin;
 
 	public void createMagazin() {
-		magazin = new Magazin();
+		magazin = new Magazine();
 		magazin.setUUID("456456");
 		magazin.setTitle("magazin");
 		magazin.setArticle_title("cikk");
@@ -43,7 +43,7 @@ public class MagazinTest {
 
 	@Test
 	public void updateTest() {
-		magazin = new Magazin();
+		magazin = new Magazine();
 		magazin.setUUID("456456");
 		magazin.setTitle("ujMAgazin");
 		magazin.setArticle_title("ujCikk");
