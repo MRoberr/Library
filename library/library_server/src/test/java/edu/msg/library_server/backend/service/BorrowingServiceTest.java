@@ -28,10 +28,19 @@ public class BorrowingServiceTest {
 		BorrowingService bs;
 		try {
 			bs = new BorrowingService();
-			assertTrue(bs.insertPublication (borrowingTemp));
+			assertTrue(bs.insertBorrowing (borrowingTemp));
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void returnPublicationTest() {
+		Borrowing borrowingTemp = new Borrowing();
+		borrowingTemp.setPublicationUuid("112");
+		borrowingTemp.setUserUuid("23");
+		//Date date = new Date();
+		//da
+		//borrowingTemp.setDeadline(deadline);
 	}
 }
