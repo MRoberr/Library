@@ -4,9 +4,7 @@ package edu.msg.library_server.backend.service;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
-import java.util.List;
 
-import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.rmi.LoginServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;

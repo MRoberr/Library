@@ -21,8 +21,9 @@ public interface LoginServiceRmi extends Remote {
 	 * @param password
 	 * @return list of enum containing user type: User, Admin or Denied ;
 	 * @throws RemoteException
+	 * @throws SQLException 
 	 */
-	public LoginAccess login(String user, String password) throws RemoteException;
+	public LoginAccess login(String user, String password) throws RemoteException, SQLException;
 
 	/**
 	 * @return null
