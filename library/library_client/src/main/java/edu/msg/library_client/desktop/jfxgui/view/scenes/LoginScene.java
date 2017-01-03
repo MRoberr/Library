@@ -30,7 +30,7 @@ public class LoginScene extends Scene{
 	private HBox hBox;
 	
 	public LoginScene(Parent root) {
-		super(root, 300, 275);
+		super(root, 350, 275);
 
 		createGrid();
 		
