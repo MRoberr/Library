@@ -23,7 +23,7 @@ public class SqlHandlerTest {
 		user2.setUserType(LoginAccess.ADMIN);
 		user2.setLoyalityIndex(2);
 		user2.setPassword("almafa12345");
-		sqlHandler.executeInsert(user2.getInsert());
+		sqlHandler.executeSqlStatement(user2.getInsert());
 		sqlHandler.executeSelect(userSelect, "USER").forEach(u -> System.out.println(u));
 		
 

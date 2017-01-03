@@ -2,7 +2,7 @@
 
 import java.util.List;
 
-public class Book extends BaseEntity {
+public class Book extends Publication {
 
 	private static final long serialVersionUID = 1L;
 	private String title;

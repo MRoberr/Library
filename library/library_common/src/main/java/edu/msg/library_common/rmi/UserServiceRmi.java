@@ -14,7 +14,7 @@ public interface UserServiceRmi extends Remote {
 
 	public static final int RMI_PORT = 1099;
 	
-	public List<Entity> getAllUsers() throws RemoteException; 
+	public List<User> getAllUsers() throws RemoteException; 
 	
 	public boolean insertUser(User user) throws RemoteException;
 	
@@ -23,6 +23,10 @@ public interface UserServiceRmi extends Remote {
 	public boolean deleteUser(User user) throws RemoteException;
 	
 	public Entity getUserByName(String name) throws RemoteException;
+	
+	public Entity getUserByUUUID(String uuid) throws RemoteException; 
+	
+	public List<Entity> searchUser(String name) throws RemoteException;
 	
 //
 //	public Session belepes(String p_felhasznaloi_nev) throws RemoteException;
