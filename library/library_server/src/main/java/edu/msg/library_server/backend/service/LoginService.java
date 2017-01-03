@@ -14,6 +14,9 @@ public class LoginService extends UnicastRemoteObject implements LoginServiceRmi
 
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @throws RemoteException 
+	 */
 	protected LoginService() throws RemoteException {
 		super();
 	}
@@ -24,6 +27,7 @@ public class LoginService extends UnicastRemoteObject implements LoginServiceRmi
 		//return LoginAccess.ADMIN;
 	}
 
+	@Override
 	public synchronized String logout() throws RemoteException {
 		// return SqlHandler.getInstance().executeLogOut();
 		return null;
