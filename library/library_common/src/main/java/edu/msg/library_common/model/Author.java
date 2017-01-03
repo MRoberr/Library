@@ -3,6 +3,10 @@ package edu.msg.library_common.model;
 public class Author extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 *{@link author#name}
+	 *The name of the author, contains the last name and first name.
+	 */
 	private String name;
 
 	public String getName() {

@@ -5,11 +5,35 @@ import java.util.List;
 public class Book extends Publication {
 
 	private static final long serialVersionUID = 1L;
+	/**
+	 * {@link book#title}
+	 * The title of the book.
+	 */
 	private String title;
+	/**
+	 * {@link book#publisher}
+	 * The publisher of the book.
+	 */
 	private String publisher;
+	/**
+	 * {@link book#authors}
+	 * The authors of the book. A book has atleast one author.
+	 */
 	private List<Author> authors;
+	/**
+	 * {@link book#releaseDate}
+	 * The year when the book was released.
+	 */
 	private int releaseDate;
+	/**
+	 * {@link book#numberOfCopies}
+	 * Represents the maximum number of book copies the library has.
+	 */
 	private int numberOfCopies;
+	/**
+	 * {@link book#copiesLeft}
+	 * Represents the number of book copies left in the library.
+	 */
 	private int copiesLeft;
 
 	public String getTitle() {
@@ -102,6 +126,12 @@ public class Book extends Publication {
 		return "select * from books where uuid='" + uuid + "'";
 	}
 	
+	
+	/**
+	 * 
+	 * @return a string representation of the SQL statement which inserts the
+	 *         authors' id and the books' id into the mapping table
+	 */
 	public String insertAuthors(){
 		StringBuilder strBld = new StringBuilder();
 		for(Author author : authors){
@@ -109,5 +139,5 @@ public class Book extends Publication {
 					+ "values('" + getUUID() + "','" + author.getUUID() + "');");
 		}
 		return strBld.toString();
-	}
+	} 
 }
