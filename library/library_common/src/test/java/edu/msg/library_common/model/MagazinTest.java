@@ -99,8 +99,8 @@ public class MagazinTest {
 	@Test
 	public void deleteAuthorsTest() {
 		createMagazin();
-		String deleteAuthor = magazin.getDelete();
+		String deleteAuthor = magazin.deleteAuthors();
 		System.out.println("delete: " + deleteAuthor);
-		assertEquals("delete from from publications_authors where publications_uuid='456456'", deleteAuthor);
+		assertEquals("delete from publications_authors where publications_uuid='456456'", deleteAuthor);
 	}
 }
