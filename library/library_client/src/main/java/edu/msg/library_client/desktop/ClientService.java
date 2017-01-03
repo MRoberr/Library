@@ -1,13 +1,25 @@
+/*
+ * not used anymore
+ * use anything from here if you need it
+ * 
+ */
+
 package edu.msg.library_client.desktop;
 
 import java.io.Console;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.List;
+import java.util.Scanner;
 
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
+import edu.msg.library_common.rmi.SearchServiceRmi;
 import edu.msg.library_common.rmi.UserServiceRmi;
 
 public class ClientService {
@@ -15,6 +27,24 @@ public class ClientService {
 	private static String username;
 	private static String password;
 	private static LoginAccess loginAccess;
+	private static UserServiceRmi uRmi;
+	private Scanner scanner;
+
+	public ClientService() {
+		try {
+			scanner = new Scanner(System.in);
+			Registry registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
+			try {
+				uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
+			} catch (NotBoundException e) {
+
+				e.printStackTrace();
+			}
+		} catch (RemoteException e) {
+
+			e.printStackTrace();
+		}
+	}
 
 	public static void LoginCheck() {
 		Console console = System.console();
@@ -23,58 +53,109 @@ public class ClientService {
 			System.exit(0);
 		}
 		console.printf("Please enter your username: ");
-		username = console.readLine();		
+		username = console.readLine();
 		console.printf("Please enter your password: ");
 		char passwordArray[] = console.readPassword("");
 		password = new String(passwordArray);
 	}
 
-	public static void initClient() {
-		LoginCheck();
-		try {
-			Registry registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
-			LoginServiceRmi lRmi = (LoginServiceRmi) registry.lookup(LoginServiceRmi.RMI_NAME);
-			UserServiceRmi uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
-			BookServiceRmi bRmi = (BookServiceRmi) registry.lookup(BookServiceRmi.RMI_NAME);
-			loginAccess = lRmi.login(username, password);
-			System.out.println(loginAccess);
-			
-			if (loginAccess == LoginAccess.ADMIN) {
-				uRmi.getAllUsers().forEach(u -> System.out.println(((User) u).getName()));
-			} else if (loginAccess == LoginAccess.USER) {
+	// public static void initClient() {
+	//
+	//// LoginCheck();
+	//
+	// try {
+	// Registry registry = LocateRegistry.getRegistry("localhost",
+	// LoginServiceRmi.RMI_PORT);
+	//
+	// LoginServiceRmi lRmi = (LoginServiceRmi)
+	// registry.lookup(LoginServiceRmi.RMI_NAME);
+	// UserServiceRmi uRmi = (UserServiceRmi)
+	// registry.lookup(UserServiceRmi.RMI_NAME);
+	// bRmi = (BookServiceRmi) registry.lookup(BookServiceRmi.RMI_NAME);
+	//
+	// loginAccess = lRmi.login("Zoli", "1234");
+	// System.out.println("itt");
+	// System.out.println(loginAccess);
+	//
+	// if (loginAccess == LoginAccess.ADMIN) {
+	// uRmi.getAllUsers().forEach(u -> System.out.println(((User)
+	// u).getName()));
+	// } else if (loginAccess == LoginAccess.USER) {
+	//
+	// } else if (loginAccess == LoginAccess.DENIED) {
+	// Console console = System.console();
+	// console.printf("!!!!! Please enter your name and password again: ");
+	// initClient();
+	// } else {
+	// System.out.println("Error");
+	// System.exit(0);
+	// }
+	// bRmi.getAllBooks();
+	// } catch (Exception ex) {
+	// ex.printStackTrace();
+	// }
+	// }
 
-			} else if (loginAccess == LoginAccess.DENIED) {
-				Console console = System.console();
-				console.printf("!!!!! Please enter your name and password again: ");
-				initClient();
-			} else {
-				System.out.println("Error");
-				System.exit(0);
-			}
-			// bRmi.getAllBooks();
-		} catch (Exception ex) {
-			ex.printStackTrace();
+	public void newClientCreate(String name, String password) {
+		User user = new User();
+		user.setName(name);
+		user.setPassword(password);
+
+		try {
+			uRmi.insertUser(user);
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
-	
-	public static void menuforAdmin() {
-		Console console = System.console();
-		console.printf("Type");
-		console.printf("1-Kiadvany utani kereses");
-		console.printf("2-Uj felhasznalo letrehozasa");
-		console.printf("3-Felhasznalo adatainak modositasa");
-		console.printf("4-Felhasznalo torlese");
-		console.printf("5-Felhasznalo utani kereses");
-		console.printf("6-Uj kiadvany letrehozasa");
-		console.printf("7-Meglevo kiadvany adatainak modositasa");
-		console.printf("8-Meglevo kiadvany torlese");
-		console.printf("9-Kiadvany kolcsonzes");
-		console.printf("10-Kiadvany visszavetele");
-	
+
+	public void clientUpdate(String selectedUser, String newUserName) {
+		try {
+
+			List<User> userList = getAllUsers();
+			for (Entity entity : userList) {
+				User user = (User) entity;
+				if (user.getName().equals(selectedUser)) {
+					user.setName(newUserName);
+					uRmi.updateUser(user);
+				}
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
-	public static void menuforUser() {
-		Console console = System.console();
-		console.printf("Type");
-		console.printf("1-Kiadvany utani kereses");
+
+	public void clientDelete(String selectedUser) {
+		try {
+
+			List<User> userList = getAllUsers();
+			for (Entity entity : userList) {
+				User user = (User) entity;
+				if (user.getName().equals(selectedUser)) {
+
+					uRmi.deleteUser(user);
+				}
+			}
+
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<User> getAllUsers() {
+		try {
+			return uRmi.getAllUsers();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public void searchClient(String selectedUser) {
+
+		try {
+			uRmi.searchUser(selectedUser);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 }

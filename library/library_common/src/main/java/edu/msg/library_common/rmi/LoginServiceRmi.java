@@ -2,6 +2,8 @@ package edu.msg.library_common.rmi;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
+
 import edu.msg.library_common.model.LoginAccess;
 
 /**

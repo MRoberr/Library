@@ -19,33 +19,47 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 
 	}
 
-	public synchronized List<Entity> getAllUsers() throws RemoteException {
+	public synchronized List<User> getAllUsers() throws RemoteException {
 		User user = new User();
-		return SqlHandler.getInstance().executeSelect(user.getSelectAll(), "USER");
+//		return SqlHandler.getInstance().executeSelect(user.getSelectAll(), "USER");
+		return SqlHandler.getInstance().executeUserSelect(user.getSelectAll());
 
 	}
 
 	public synchronized boolean insertUser(User user) throws RemoteException {
 
-		return SqlHandler.getInstance().executeInsert(user.getInsert());
+		return SqlHandler.getInstance().executeSqlStatement(user.getInsert());
 	}
 
 	@Override
 	public synchronized boolean updateUser(User user) throws RemoteException {
 
-		return SqlHandler.getInstance().executeUpdate(user.getUpdate());
+		return SqlHandler.getInstance().executeSqlStatement(user.getUpdate());
 	}
 
 	@Override
-	public boolean deleteUser(User user) throws RemoteException {
-		return SqlHandler.getInstance().executeDelete(user.getDelete());
+	public synchronized boolean deleteUser(User user) throws RemoteException {
+		return SqlHandler.getInstance().executeSqlStatement(user.getDelete());
 	}
 
 	@Override
-	public Entity getUserByName(String name) throws RemoteException {
+	public synchronized Entity getUserByName(String name) throws RemoteException {
 		User user = new User();
 		return SqlHandler.getInstance().executeSingleSelect(user.getSelectByName(name), "USER");
 		
 	}
+
+	@Override
+	public synchronized Entity getUserByUUUID(String uuid) throws RemoteException {
+		User user = new User();
+		return SqlHandler.getInstance().executeSingleSelect(user.getSelectByUUID(uuid), "USER");
+	}
+
+	@Override
+	public List<Entity> searchUser(String name) {
+		return null;
+		
+	}
+	
 
 }

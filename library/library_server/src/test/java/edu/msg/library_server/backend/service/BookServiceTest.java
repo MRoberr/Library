@@ -19,15 +19,16 @@ public class BookServiceTest {
 
 	public BookServiceTest() {
 		book = new Book();
-		book.setUUID("d21d441c-0494-4b6e-9af8-1c0bc27299cb");
-		book.setTitle("Book");
-		book.setPublisher("NA");
-		book.setReleaseDate(2016);
-		book.setNumberOfCopies(5);
-		book.setCopiesLeft(4);
+		book.setUUID("d24v741c-0494-4b62-9af8-1c0bc27299cb");
+		book.setTitle("Moby Dick");
+		book.setPublisher("Herman Melville");
+		book.setReleaseDate(1851);
+		book.setNumberOfCopies(45);
+		book.setCopiesLeft(34);
 
 		try {
 			bookService = new BookService();
+			bookService.insertBook(book);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -71,7 +72,7 @@ public class BookServiceTest {
 	@Test
 	public void test5GetAllBooks() {
 		try {
-			List<Entity> dbList = new ArrayList<>();
+			List<Book> dbList = new ArrayList<>();
 			dbList = bookService.getAllBooks();
 			assertTrue(dbList.size()>0);
 			assertTrue(dbList.stream()

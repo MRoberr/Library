@@ -4,35 +4,34 @@ import java.util.Date;
 
 /**
  * 
- * @author gallb
- *
- * The representation of book borrowing, assign a book to a user, and stores the relevant dates.
+ * 
+ *         The representation of book borrowing, assign a book to a user, and
+ *         stores the relevant dates.
  */
 
-public class Borrowing extends BaseEntity{
-	
+public class Borrowing extends BaseEntity {
+
 	private static final long serialVersionUID = 1L;
 	private String publicationUuid;
 	private String userUuid;
 	private Date borrowingDate;
 	private Date deadline;
 	private Date returnDate;
-	
-//his will be my wok
+
 	public String getPublicationUuid() {
 		return publicationUuid;
+	}
+
+	public void setUserUuid(String userUuid) {
+		this.userUuid = userUuid;
 	}
 
 	public void setPublicationUuid(String publicationUuid) {
 		this.publicationUuid = publicationUuid;
 	}
-	
+
 	public String getUserUuid() {
 		return userUuid;
-	}
-
-	public void setUserUuid(String userUuid) {
-		this.userUuid = userUuid;
 	}
 
 	public Date getBorrowingDate() {
@@ -63,27 +62,29 @@ public class Borrowing extends BaseEntity{
 	public String getSelectAll() {
 		return "select * from publication_borrowings";
 	}
-	
+
 	@Override
 	public String getInsert() {
-		return "insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returnDate) " + "values ('" + publicationUuid + "','" + userUuid + "','"
-				+ getUUID() + "','" + borrowingDate + "','" + deadline  + "','"+ null + "')";
+		return "insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date) "
+				+ "values('" + publicationUuid + "','" + userUuid + "','" + getUUID() + "','" + borrowingDate + "','"
+				+ deadline + "','"+returnDate +"')";
 	}
 
 	@Override
 	public String getUpdate() {
-		return "update publication_borrowings set publicationUuid=" + publicationUuid +", set userUuid=" + userUuid +", set borrowingDate=" + borrowingDate +", set deadline=" + deadline +", set returnDate=" + returnDate + " where uuid=" + getUUID();
+		return "update publication_borrowings set publicationUuid='" + publicationUuid + "',userUuid='" + userUuid
+				+ "',borrowingDate='" + borrowingDate + "',deadline='" + deadline + "',returnDate='" + returnDate
+				+ "' where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getDelete() {
-		return "delete from publication_borrowings where uuid=" + getUUID();	
+		return "delete from publication_borrowings where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from publication_borrowings where uuid=" + getUUID();
+		return "select * from publication_borrowings where uuid='" + uuid + "'";
 	}
 
 }
-

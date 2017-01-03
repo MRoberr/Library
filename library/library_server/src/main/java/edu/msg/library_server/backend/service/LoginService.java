@@ -3,6 +3,7 @@ package edu.msg.library_server.backend.service;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 import java.util.List;
 
 import edu.msg.library_common.model.Entity;
@@ -22,7 +23,7 @@ public class LoginService extends UnicastRemoteObject implements LoginServiceRmi
 	}
 
 	@Override
-	public LoginAccess login(String user, String password) throws RemoteException {
+	public LoginAccess login(String user, String password) throws RemoteException, SQLException {
 		return SqlHandler.getInstance().executeLoginSelect(user, password);
 		//return LoginAccess.ADMIN;
 	}

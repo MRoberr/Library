@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-import edu.msg.library_common.model.Magazin;
+import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.rmi.MagazineServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
@@ -13,35 +13,40 @@ public class MagazineService extends UnicastRemoteObject implements MagazineServ
 
 	private static final long serialVersionUID = 1L;
 	private String magazineTemp;
-	private Magazin magazineSQL;
+	private Magazine magazineSQL;
 
 	protected MagazineService() throws RemoteException {
 		super();
-		magazineSQL = new Magazin();
+		magazineSQL = new Magazine();
 	}
 
 	@Override
-	public synchronized List<Entity> getAllMagazines() throws RemoteException {		
+	public synchronized List<Magazine> getAllMagazines() throws RemoteException {	
+		//getAllMagazine inkább
 		magazineTemp = magazineSQL.getSelectAll();
-		return SqlHandler.getInstance().executeSelect(magazineTemp, "MAGAZINE");
+//		return SqlHandler.getInstance().executeMagazineSelect(magazineTemp, "MAGAZINE");
+		return SqlHandler.getInstance().executeMagazineSelect(magazineTemp);
 	}
 
 	@Override
-	public synchronized boolean insertMagazine(Magazin magazine) throws RemoteException {
+	public synchronized boolean insertMagazine(Magazine magazine) throws RemoteException {
+		//insertMagazine inkabább
 		magazineTemp = magazine.getInsert();
-		return SqlHandler.getInstance().executeInsert(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override
-	public synchronized boolean updateMagazine(Magazin magazine) throws RemoteException {
+	public synchronized boolean updateMagazine(Magazine magazine) throws RemoteException {
+		//updateMagazine inkább
 		magazineTemp = magazine.getUpdate();
-		return SqlHandler.getInstance().executeUpdate(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override
-	public synchronized boolean deleteMagazine(Magazin magazine) throws RemoteException {
+	public synchronized boolean deleteMagazine(Magazine magazine) throws RemoteException {
+		//deleteMagazine inkább
 		magazineTemp = magazine.getDelete();
-		return SqlHandler.getInstance().executeDelete(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override

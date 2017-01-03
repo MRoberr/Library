@@ -2,7 +2,7 @@ package edu.msg.library_common.model;
 
 import java.util.Date;
 
-public class Newspaper extends BaseEntity{
+public class Newspaper extends Publication{
 
 	private static final long serialVersionUID = 1L;
 	private String title;

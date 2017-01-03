@@ -3,7 +3,7 @@ package edu.msg.library_common.model;
 import java.sql.Date;
 import java.util.List;
 
-public class Magazin extends BaseEntity {
+public class Magazine extends Publication {
 
 	private static final long serialVersionUID = 1L;
 	private String title;
@@ -97,6 +97,15 @@ public class Magazin extends BaseEntity {
 	@Override
 	public String getSelectByUUID(String uuid) {
 		return "select * from magazines where uuid='" + uuid + "'";
+	}
+	
+	public String insertAuthors(){
+		StringBuilder strBld = new StringBuilder();
+		for(Author author : authors){
+			strBld.append("insert into publications_authors (publications_uuid, authors_uuid) "
+					+ "values('" + getUUID() + "','" + author.getUUID() + "');");
+		}
+		return strBld.toString();
 	}
 
 }

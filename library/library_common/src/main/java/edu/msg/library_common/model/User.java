@@ -8,6 +8,18 @@ public class User extends BaseEntity {
 	private int loyalityIndex;
 	private String password;
 
+	public User() {
+		
+	}
+	
+	public User(String name, LoginAccess userType, String password) {
+		
+		this.name = name;
+		this.userType = userType;
+		this.password = password;
+		loyalityIndex = 10;
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -52,29 +64,33 @@ public class User extends BaseEntity {
 		} else {
 			userTypeNum = 0;
 		}
-		return "insert into library_users (uuid, name, user_type, loyality_index, password) " + "values ('" + getUUID() + "','" + this.name + "','"
-				+ userTypeNum + "','" + getLoyalityIndex() + "','" + getPassword() +"')";
+		return "insert into library_users (uuid, name, user_type, loyality_index, password) " + "values ('" + getUUID()
+				+ "','" + this.name + "','" + userTypeNum + "','" + getLoyalityIndex() + "','" + getPassword() + "')";
 	}
 
 	public String getUpdate() {
-		return "update library_users set name=" + this.name + " where uuid=" + getUUID();
+		return "update library_users set name='" + this.name + "' where uuid='" + getUUID() + "'";
 	}
 
 	public String getDelete() {
-		return "delete from library_users where uuid=" + getUUID();
+		return "delete from library_users where uuid='" + getUUID() + "'";
 	}
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + "]";
+		return "User [name=" + name + ", userType=" + userType + ", loyalityIndex=" + loyalityIndex + "]";
 	}
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		return "select * from library_users where uuid=" + uuid;
+		return "select * from library_users where uuid='" + uuid + "'";
 	}
 
 	public String getSelectByName(String name) {
-		return "select * from library_users where uuid=" + getName();
+		return "select * from library_users where name='" + name + "'";
+	}
+	
+	public String getSearchByName(String name) {
+		return "select * from library_users where name like '%" + name + "%'";
 	}
 }

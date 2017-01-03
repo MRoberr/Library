@@ -16,7 +16,6 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 
 	private String sqlStatement;
 	private Borrowing borrowTemp;
-	
 	protected BorrowingService() throws RemoteException {
 		super();
 		borrowTemp = new Borrowing();
@@ -29,27 +28,33 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 	}
 
 	@Override
-	public boolean insertPublication(Borrowing borrow) throws RemoteException {
+	public boolean insertBorrowing(Borrowing borrow) throws RemoteException {
 		sqlStatement = borrowTemp.getInsert();
-		return SqlHandler.getInstance().executeInsert(sqlStatement);
+		return SqlHandler.getInstance().executeSqlStatement(sqlStatement);
 	}
 
 	@Override
-	public boolean updatePublication(Borrowing borrow) throws RemoteException {
+	public boolean updateBorrowing(Borrowing borrow) throws RemoteException {
 		sqlStatement = borrowTemp.getUpdate();
-		return SqlHandler.getInstance().executeUpdate(sqlStatement);
+		return SqlHandler.getInstance().executeSqlStatement(sqlStatement);
 	}
 
 	@Override
-	public boolean deleteBook(Borrowing borrow) throws RemoteException {
+	public boolean deleteBorrow(Borrowing borrow) throws RemoteException {
 		sqlStatement = borrowTemp.getDelete();
-		return SqlHandler.getInstance().executeInsert(sqlStatement);
+		return SqlHandler.getInstance().executeSqlStatement(sqlStatement);
 	}
 
 	@Override
 	public Entity getBorrowByUUID(String uuid) throws RemoteException {
 		sqlStatement = borrowTemp.getSelectByUUID(uuid);
 		return SqlHandler.getInstance().executeSingleSelect(sqlStatement, "BORROW");
+	}
+
+	@Override
+	public boolean returnPublication(Borrowing borrow) throws RemoteException {
+		// TODO Auto-generated method stub
+		return false;
 	} 
 
 }
