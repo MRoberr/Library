@@ -127,7 +127,28 @@ public enum ConnectionModel {
 			userServiceRmi.insertUser(user);
 		} catch (RemoteException e) {
 
-			throw new ConnectionException("COnnction error");
+			throw new ConnectionException("Connction error", e);
+		}
+	}
+	
+	public void editUser(User user) throws ConnectionException {
+		
+		try {
+
+			userServiceRmi.updateUser(user);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public void deleteUser(User user) throws ConnectionException {
+		
+		try {
+			userServiceRmi.deleteUser(user);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
 		}
 	}
 
