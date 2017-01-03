@@ -49,6 +49,8 @@ public class AdminScene extends Scene{
 	private Button userManagerButton; //add or save
 	
 	
+	
+	
 	//shelf tab
 	private Tab shelfTab;
 	
@@ -158,6 +160,7 @@ public class AdminScene extends Scene{
 	private void createTable() {
 		
 		userTable = new TableView<User>();
+		userTable.setMinWidth(300);
 		userTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		userTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
@@ -214,7 +217,7 @@ public class AdminScene extends Scene{
 		return addUserButtonMenu;
 	}
 	
-	public Button getAddUserButton() {
+	public Button getUserManagerButton() {
 		
 		return userManagerButton;
 	}
@@ -269,6 +272,11 @@ public class AdminScene extends Scene{
 	public void setUserTypeCombo(LoginAccess userType) {
 		
 		userTypeCombo.getSelectionModel().select(userType.toString());
+	}
+	
+	public Button getDeleteUserButton() {
+		
+		return deleteUserButton;
 	}
 }
 
