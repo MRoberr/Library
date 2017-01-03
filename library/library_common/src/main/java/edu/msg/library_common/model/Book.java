@@ -1,5 +1,6 @@
  package edu.msg.library_common.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book extends Publication {
@@ -35,7 +36,12 @@ public class Book extends Publication {
 	 * Represents the number of book copies left in the library.
 	 */
 	private int copiesLeft;
+	
+	public Book() {
+		authors = new ArrayList<>();
+	}
 
+	
 	public String getTitle() {
 		return title;
 	}
@@ -92,9 +98,11 @@ public class Book extends Publication {
 		this.numberOfCopies = number_of_copies;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Book [name=" + title + "]";
+		return "Book [title=" + title + ", publisher=" + publisher + ", authors=" + authors + ", releaseDate="
+				+ releaseDate + ", numberOfCopies=" + numberOfCopies + ", copiesLeft=" + copiesLeft + "]";
 	}
 
 	@Override

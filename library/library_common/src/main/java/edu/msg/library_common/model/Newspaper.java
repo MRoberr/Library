@@ -1,5 +1,6 @@
 package edu.msg.library_common.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,14 @@ public class Newspaper extends Publication {
 	 * left in the library.
 	 */
 	private int copiesLeft;
+	
+
+	@Override
+	public String toString() {
+		return "Newspaper [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher
+				+ ", releaseDate=" + releaseDate + ", numberOfCopies=" + numberOfCopies + ", copiesLeft=" + copiesLeft
+				+ "]";
+	}
 
 	public Date getReleaseDate() {
 		return releaseDate;

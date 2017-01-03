@@ -1,6 +1,7 @@
 package edu.msg.library_common.model;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Magazine extends Publication {
@@ -37,6 +38,17 @@ public class Magazine extends Publication {
 	 * left in the library.
 	 */
 	private int copiesLeft;
+	
+	public Magazine() {
+		authors = new ArrayList<>();
+	}
+
+	@Override
+	public String toString() {
+		return "Magazine [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher
+				+ ", authors=" + authors + ", releaseDate=" + releaseDate + ", numberOfCopies=" + numberOfCopies
+				+ ", copiesLeft=" + copiesLeft + "]";
+	}
 
 	public String getTitle() {
 		return title;
