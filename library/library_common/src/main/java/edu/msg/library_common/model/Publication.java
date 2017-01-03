@@ -24,7 +24,7 @@ public abstract class Publication extends BaseEntity{
 	
 	public static String getSelectByTitle(String title) {		
 		
-		return "Select * from publications where title like '% "+ title +" %'";
+		return "Select * from publications where title like '%"+ title +"%'";
 	}
 	
 	public static String getSelectByRegexp(String regexp){
