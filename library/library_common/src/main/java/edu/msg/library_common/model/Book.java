@@ -69,9 +69,11 @@ public class Book extends Publication {
 		this.numberOfCopies = number_of_copies;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Book [name=" + title + "]";
+		return "Book [title=" + title + ", publisher=" + publisher + ", authors=" + authors + ", releaseDate="
+				+ releaseDate + ", numberOfCopies=" + numberOfCopies + ", copiesLeft=" + copiesLeft + "]";
 	}
 
 	@Override
