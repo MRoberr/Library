@@ -7,6 +7,7 @@ import java.util.Scanner;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.LoginAccess;
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
@@ -62,7 +63,20 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void createNewUser() {
-		clientService.newClientCreate(scanner.next(), scanner.next());
+		String userName = scanner.next();
+		String type=scanner.next();
+		LoginAccess loginAcces = null;
+		if(type.equals("ADMIN")){
+			loginAcces = LoginAccess.ADMIN;
+		}
+		else if(type.equals("USER")){
+			loginAcces = LoginAccess.USER;
+		}
+		if (loginAcces == null) {
+			System.out.println("invalid login access");
+		}else{
+			clientService.newClientCreate(userName,loginAcces,scanner.nextInt(),scanner.next());
+		}
 	}
 	private void updateClient(){
 		clientService.clientUpdate(scanner.next(), scanner.next());

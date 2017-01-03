@@ -96,9 +96,12 @@ public class ClientService {
 	// }
 	// }
 
-	public void newClientCreate(String name, String password) {
+	public void newClientCreate(String name,LoginAccess user_type,int index, String password) {
 		User user = new User();
 		user.setName(name);
+		
+		user.setUserType(user_type);
+		user.setLoyalityIndex(index);
 		user.setPassword(password);
 
 		try {
