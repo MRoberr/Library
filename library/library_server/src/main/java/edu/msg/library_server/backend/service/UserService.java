@@ -56,8 +56,9 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 	}
 
 	@Override
-	public List<Entity> searchUser(String name) {
-		return null;
+	public List<User> searchUser(String name) {
+		User user = new User();
+		return SqlHandler.getInstance().executeUserSelect(user.getSearchByName(name));
 		
 	}
 	
