@@ -28,7 +28,7 @@ public class BorrowingTest {
 		System.out.println("insert: " + insert);
 		assertEquals(
 				"insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date)"
-						+ " values('789456','123','456456','2015-12-01','2015-12-28',null)",
+						+ " values('789456','123','456456','2015-12-01','2015-12-28','null')",
 				insert);
 	}
 
