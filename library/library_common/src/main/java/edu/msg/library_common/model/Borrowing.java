@@ -22,6 +22,12 @@ public class Borrowing extends BaseEntity {
 		return publicationUuid;
 	}
 
+	@Override
+	public String toString() {
+		return "Borrowing [publicationUuid=" + publicationUuid + ", userUuid=" + userUuid + ", borrowingDate="
+				+ borrowingDate + ", deadline=" + deadline + ", returnDate=" + returnDate + "]";
+	}
+
 	public void setUserUuid(String userUuid) {
 		this.userUuid = userUuid;
 	}
@@ -65,9 +71,18 @@ public class Borrowing extends BaseEntity {
 
 	@Override
 	public String getInsert() {
-		return "insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date) "
+		String insert="insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date) "
 				+ "values('" + publicationUuid + "','" + userUuid + "','" + getUUID() + "','" + borrowingDate + "','"
-				+ deadline + "','"+returnDate +"')";
+				+ deadline + "',";
+		if(returnDate==null){
+			insert=insert+"NULL)";
+		}else {
+			insert=insert+"'"+returnDate +"')";
+		}
+		return insert;
+				/*"insert into publication_borrowings (publications_uuid, user_uuid, uuid, borrowing_date, deadline, returning_date) "
+				+ "values('" + publicationUuid + "','" + userUuid + "','" + getUUID() + "','" + borrowingDate + "','"
+				+ deadline + "','"+returnDate +"')";*/
 	}
 
 	@Override

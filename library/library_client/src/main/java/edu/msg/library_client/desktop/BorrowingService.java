@@ -13,6 +13,7 @@ import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BorrowingServiceRmi;
+import edu.msg.library_common.rmi.BorrowingServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
 import edu.msg.library_common.rmi.SearchServiceRmi;
 import edu.msg.library_common.rmi.UserServiceRmi;
@@ -37,6 +38,13 @@ public class BorrowingService {
 	public List<Publication> getAllPublications() throws RemoteException {
 		return searchServiceRmi.getAllPublications();
 	}
+
+	
+	public boolean borrow(Borrowing borrow) throws RemoteException{
+		return borrowServiceRmi.borrowPublication(borrow);
+	}
+	
+}
 
 	public boolean getBackPublication(User user) {
 		return false;

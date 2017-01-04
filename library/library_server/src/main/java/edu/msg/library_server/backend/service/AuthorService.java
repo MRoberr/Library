@@ -23,7 +23,7 @@ public class AuthorService extends UnicastRemoteObject implements AuthorServiceR
 	@Override
 	public List<Entity> getAllAuthors() throws RemoteException {
 		authorTemp = authorSQL.getSelectAll();
-		return SqlHandler.getInstance().executeSelect(authorTemp, "AUTHOR");
+		return SqlHandler.getInstance().returnEntityOfExecute(authorTemp, "AUTHOR");
 	}
 
 	@Override
