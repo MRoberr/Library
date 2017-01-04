@@ -14,11 +14,8 @@ import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
-
-
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
-import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 
@@ -47,9 +44,9 @@ public class MainConsole extends UiFactory {
 
 			menuforAdmin();
 			while (true) {
-				try{
-				handleAdminCommand();
-				System.out.println("Type the number of the next command!");
+				try {
+					handleAdminCommand();
+					System.out.println("Type the number of the next command!");
 				} catch (InputMismatchException e) {
 					System.out.println("Invalid command, try again...");
 					break;
@@ -67,48 +64,48 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void handleAdminCommand() {
-			int cmd = scanner.nextInt();
-			switch (cmd) {
-			case 1:
-				System.out.println("Enter title!");
-				searchPublications();
-				break;
-			case 2:
-				createNewUser();
-				break;
+		int cmd = scanner.nextInt();
+		switch (cmd) {
+		case 1:
+			System.out.println("Enter title!");
+			searchPublications();
+			break;
+		case 2:
+			createNewUser();
+			break;
 
-			case 3:
-				updateClient();
-				break;
-			case 4:
-				deleteClient();
-				break;
-			case 5:
-				searchClient();
-				break;
-			case 6:
-				newPublicationHandle();
-				break;
-			case 7:
-				publicationUpdateHandle();
-				break;
-			case 9:
-				try {
-					if (borrowing()) {
-						System.out.println("Borrow successful!");
-					} else
-						System.out.println("Borrow not successful, please try again!");
-				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("You are not allowed to borrow!");
-				}
-				break;
-			case 11:
-				listUsers();
-				break;
+		case 3:
+			updateClient();
+			break;
+		case 4:
+			deleteClient();
+			break;
+		case 5:
+			searchClient();
+			break;
+		case 6:
+			newPublicationHandle();
+			break;
+		case 7:
+			publicationUpdateHandle();
+			break;
+		case 9:
+			try {
+				if (borrowing()) {
+					System.out.println("Borrow successful!");
+				} else
+					System.out.println("Borrow not successful, please try again!");
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("You are not allowed to borrow!");
 			}
-		
+			break;
+		case 11:
+			listUsers();
+			break;
+		}
+
 	}
 
 	private void newPublicationHandle() {
@@ -148,7 +145,7 @@ public class MainConsole extends UiFactory {
 			updateMagazin();
 			break;
 		case 3:
-			
+
 			break;
 
 		case 0:
@@ -224,7 +221,7 @@ public class MainConsole extends UiFactory {
 	private void createNewspaper() {
 		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
-}
+	}
 
 	private void updateBook() {
 		List<Book> books = publicationService.getBooks();
@@ -237,16 +234,16 @@ public class MainConsole extends UiFactory {
 				scanner.nextInt(), scanner.nextInt());
 
 	}
-	
-	private void updateMagazin(){
+
+	private void updateMagazin() {
 		List<Magazine> magazines = publicationService.getMagazin();
 		for (Magazine magazine : magazines) {
 			System.out.println(magazines);
 		}
 
 		System.out.println("Enter old title and update al parameters!");
-		publicationService.updateMagazin(scanner.next(), scanner.next(), scanner.next(),scanner.next(), scanner.nextInt(),scanner.nextInt(),
-				scanner.nextInt(), scanner.nextInt());
+		publicationService.updateMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 	}
 
 	private void menuforAdmin() {
@@ -286,9 +283,9 @@ public class MainConsole extends UiFactory {
 		}
 
 		System.out.println("\nPlease select a user and one publication from the lists above!(Type name and title)");
-		String user=scanner.next();
+		String user = scanner.next();
 		scanner.nextLine();
-		String title=scanner.nextLine();
+		String title = scanner.nextLine();
 		System.out.println(title);
 		for (User u : users) {
 			if (u.getName().equals(user))
