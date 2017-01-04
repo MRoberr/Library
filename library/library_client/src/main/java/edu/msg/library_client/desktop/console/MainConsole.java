@@ -51,7 +51,8 @@ public class MainConsole extends UiFactory {
 					System.out.println("Type the number of the next command!");
 				} catch (InputMismatchException e) {
 					System.out.println("Invalid command, try again...");
-					break;
+					scanner.nextLine();
+					System.out.println();
 				}
 			}
 		} else {
@@ -131,6 +132,7 @@ public class MainConsole extends UiFactory {
 			break;
 
 		case 0:
+		default:
 			break;
 
 		}
@@ -151,51 +153,12 @@ public class MainConsole extends UiFactory {
 			break;
 
 		case 3:
-			updateClient();
+			// updateNewspaper();
 			break;
-		case 4:
-			deleteClient();
-			break;
-		case 5:
-			searchClient();
-			break;
-		case 6:
-			System.out.println("0-Go back");
-			System.out.println("1-Create book");
-			System.out.println("2-Create magazine");
-			System.out.println("3-Create newspaper");
-			admincmd = scanner.nextInt();
-			switch (admincmd) {
-			case 1:
-				createNewBook();
-				break;
-			case 2:
-				createMagazin();
-				break;
-			case 3:
-				createNewspaper();
-				break;
-
-			case 0:
-				break;
-
-			}
-			break;
-		case 7:
-			updateBook();
-			break;
-		case 9:
-			try {
-				borrowing();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		case 0:
+		default:
 			break;
 
-		case 11:
-			listUsers();
-			break;
 		}
 
 	}
@@ -244,10 +207,15 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void searchPublications() {
-		List<Publication> publications = publicationService.getPublications(scanner.next());
+		String reg="";
+		while(reg.isEmpty()){
+			reg=scanner.nextLine();
+		}
+		List<Publication> publications = publicationService.getPublications(reg);
 		if (publications.isEmpty()) {
 
 			System.out.println("Couldn't find this publication!");
+			return;
 		}
 		for (Publication publication : publications) {
 			System.out.println(publication.getTitle());
@@ -314,7 +282,7 @@ public class MainConsole extends UiFactory {
 
 	}
 
-	private void menuforUser() {		
+	private void menuforUser() {
 		System.out.println("1-Search for publication");
 	}
 
