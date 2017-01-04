@@ -30,6 +30,7 @@ public class ClientService {
 	private static String password;
 	private static LoginAccess loginAccess;
 	private static UserServiceRmi uRmi;
+	private static SearchServiceRmi searchRmi;
 	private Scanner scanner;
 
 	public ClientService() {
