@@ -123,9 +123,8 @@ public class PublicationService {
 	public void updateBook(String seletedBook,String newBooktitle,String newPublisher,int newRelaseDate,int newNrOfCopies,int newCopiesLeft){
 		try {
 
-			java.util.List<Book> userList = getBooks();
-			for (Entity entity : userList) {
-				Book book = (Book) entity;
+			java.util.List<Book> books = getBooks();
+			for (Book book : books) {
 				if (book.getTitle().equals(seletedBook)) {
 					book.setName(newBooktitle);
 					book.setPublisher(newPublisher);

@@ -8,15 +8,14 @@ import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
 import edu.msg.library_common.model.LoginAccess;
 
-
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
-
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
@@ -27,25 +26,24 @@ public class MainConsole extends UiFactory {
 
 	}
 
-	public void startConsole() {	
+	public void startConsole() {
 		System.out.println("Please enter your name and password!");
 		login();
 	}
-	
-	private void login(){
-		LoginAccess login=ConnectionModel.INSTANCE.login(scanner.next(), scanner.next());
-		if(login.equals(LoginAccess.DENIED)){
+
+	private void login() {
+		LoginAccess login = ConnectionModel.INSTANCE.login(scanner.next(), scanner.next());
+		if (login.equals(LoginAccess.DENIED)) {
 			System.out.println("Invalid user name or password, please try again!");
 			login();
-		}
-		else if(login.equals(LoginAccess.ADMIN)){
+		} else if (login.equals(LoginAccess.ADMIN)) {
 			System.out.println("logged in as admin");
 			menuforAdmin();
 			while (true) {
 				handleAdminCommand();
 				System.out.println("next command");
 			}
-		}else{
+		} else {
 			System.out.println("logged in as user");
 			menuforUser();
 			while (true) {
@@ -53,8 +51,6 @@ public class MainConsole extends UiFactory {
 			}
 		}
 	}
-	
-	
 
 	private void handleAdminCommand() {
 		try {
@@ -67,7 +63,7 @@ public class MainConsole extends UiFactory {
 			case 2:
 				createNewUser();
 				break;
-			
+
 			case 3:
 				updateClient();
 				break;
@@ -98,7 +94,9 @@ public class MainConsole extends UiFactory {
 					break;
 
 				}
-
+				break;
+			case 7:
+				updateBook();
 				break;
 			case 11:
 				listUsers();
@@ -108,7 +106,7 @@ public class MainConsole extends UiFactory {
 			System.out.println("invalid command, try again...");
 		}
 	}
-	
+
 	private void listUsers() {
 		List<User> users = clientService.getAllUsers();
 		for (Entity user : users) {
@@ -119,18 +117,17 @@ public class MainConsole extends UiFactory {
 	private void createNewUser() {
 		System.out.println("Enter name and password!");
 		String userName = scanner.next();
-		String type=scanner.next();
+		String type = scanner.next();
 		LoginAccess loginAcces = null;
-		if(type.equals("ADMIN")){
+		if (type.equals("ADMIN")) {
 			loginAcces = LoginAccess.ADMIN;
-		}
-		else if(type.equals("USER")){
+		} else if (type.equals("USER")) {
 			loginAcces = LoginAccess.USER;
 		}
 		if (loginAcces == null) {
 			System.out.println("invalid login access");
-		}else{
-			clientService.newClientCreate(userName,loginAcces,scanner.nextInt(),scanner.next());
+		} else {
+			clientService.newClientCreate(userName, loginAcces, scanner.nextInt(), scanner.next());
 		}
 	}
 
@@ -155,7 +152,7 @@ public class MainConsole extends UiFactory {
 			System.out.println("nem talahato ijen kony");
 		}
 		for (Publication publication : publications) {
-			System.out.println(publication);
+			System.out.println(publication.getTitle());
 		}
 	}
 
@@ -163,11 +160,26 @@ public class MainConsole extends UiFactory {
 		publicationService.insertBook(scanner.next(), scanner.next(), scanner.nextInt(), scanner.nextInt(),
 				scanner.nextInt());
 	}
-	private void createMagazin(){
-		publicationService.insertMagazin(scanner.next(),scanner.next(),scanner.next(),scanner.nextInt(),scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+
+	private void createMagazin() {
+		publicationService.insertMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 	}
-	private void createNewspaper(){
-		publicationService.insertNewspapaer(scanner.next(),scanner.next(),scanner.next(),scanner.nextInt(), scanner.nextInt(),scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+
+	private void createNewspaper() {
+		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+	}
+
+	private void updateBook() {
+		List<Book> books = publicationService.getBooks();
+		for (Book book : books) {
+			System.out.println(book);
+		}
+
+		System.out.println("Enter old title and update al parameters!");
+		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt());
 	}
 
 	private void menuforAdmin() {
@@ -184,10 +196,11 @@ public class MainConsole extends UiFactory {
 		System.out.println("10-Kiadvany visszavetele");
 		System.out.println("11-az osszes felhasznalo lekerese");
 	}
-	private void handleUserCommand(){
+
+	private void handleUserCommand() {
 		System.out.println("Enter title!");
 		searchPublications();
-		
+
 	}
 
 	private void menuforUser() {
