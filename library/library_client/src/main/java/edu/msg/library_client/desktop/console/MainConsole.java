@@ -7,7 +7,9 @@ import java.util.Scanner;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
+import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 
@@ -21,21 +23,40 @@ public class MainConsole extends UiFactory {
 	}
 
 	public void startConsole() {
-		// login ->
-		// if admin -> menuforadmin
-		// else -> menu for user
-		menuforAdmin();
-		while (true) {
-			handleCommand();
+		System.out.println("Please enter your name and password!");
+		login();
+	}
+	
+	private void login(){
+		LoginAccess login=ConnectionModel.INSTANCE.login(scanner.next(), scanner.next());
+		if(login.equals(LoginAccess.DENIED)){
+			System.out.println("Invalid user name or password, please try again!");
+			login();
+		}
+		else if(login.equals(LoginAccess.ADMIN)){
+			System.out.println("logged in as admin");
+			menuforAdmin();
+			while (true) {
+				handleAdminCommand();
+				System.out.println("next command");
+			}
+		}else{
+			System.out.println("logged in as user");
+			menuforUser();
+			while (true) {
+			//	handleUserCommand();
+			}
 		}
 	}
 
-	private void handleCommand() {
+	private void handleAdminCommand() {
 		try {
 			int cmd = scanner.nextInt();
 			switch (cmd) {
 			case 1:
+				System.out.println("Enter title!");
 				searchPublications();
+				break;
 			case 2:
 				createNewUser();
 				break;
@@ -89,18 +110,22 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void createNewUser() {
+		System.out.println("Enter name and password!");
 		clientService.newClientCreate(scanner.next(), scanner.next());
 	}
 
 	private void updateClient() {
+		System.out.println("Enter old name and new name!");
 		clientService.clientUpdate(scanner.next(), scanner.next());
 	}
 
 	private void deleteClient() {
+		System.out.println("Enter name!");
 		clientService.clientDelete(scanner.next());
 	}
 
 	private void searchClient() {
+		System.out.println("Enter name!");
 		clientService.searchClient(scanner.next());
 	}
 
@@ -126,7 +151,7 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void menuforAdmin() {
-		System.out.println("Type");
+		System.out.println("Please choose one option!");
 		System.out.println("1-Kiadvany utani kereses");
 		System.out.println("2-Uj felhasznalo letrehozasa");
 		System.out.println("3-Felhasznalo adatainak modositasa");
