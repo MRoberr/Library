@@ -159,8 +159,7 @@ public class MainConsole extends UiFactory {
 		default:
 			break;
 
-			}
-			
+		}
 
 	}
 
@@ -208,9 +207,9 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void searchPublications() {
-		String reg="";
-		while(reg.isEmpty()){
-			reg=scanner.nextLine();
+		String reg = "";
+		while (reg.isEmpty()) {
+			reg = scanner.nextLine();
 		}
 		List<Publication> publications = publicationService.getPublications(reg);
 		if (publications.isEmpty()) {
@@ -319,7 +318,7 @@ public class MainConsole extends UiFactory {
 
 	public void returning() {
 		System.out.println("Please type the readers username: ");
-		
+
 		List<User> users = clientService.getAllUsers();
 		List<Publication> borrowingsOfUser = new ArrayList<>();
 		User user = new User();
@@ -335,17 +334,17 @@ public class MainConsole extends UiFactory {
 					user = u;
 					userFlag = true;
 					break;
-				} 
-						
+				}
+
 			}
 			if (!userFlag) {
 				for (User u : users) {
 					System.out.print(u.getName() + " ");
 				}
-				System.out.println("\nInvalid username, see possible usernames above.\nPlease retry: ");				
+				System.out.println("\nInvalid username, see possible usernames above.\nPlease retry: ");
 			}
 		}
-		
+
 		if (!borrowingsOfUser.isEmpty()) {
 			int i = 0;
 			for (Publication p : borrowingsOfUser) {
@@ -362,7 +361,7 @@ public class MainConsole extends UiFactory {
 		} else {
 			System.out.println(userName + " doesn't have any borrowed books.");
 		}
-		
+
 		// borrowOne.setPublicationUuid(borrowingsOfUser.get(nr).getUUID());
 
 	}
