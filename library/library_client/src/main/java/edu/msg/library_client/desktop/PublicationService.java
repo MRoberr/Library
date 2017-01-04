@@ -51,7 +51,7 @@ public class PublicationService {
 
 	public java.util.List<Publication> getPublications(String title) {
 		try {
-			return searchServiceRmi.searchPublicationByTitles(title);
+			return searchServiceRmi.searchPublicationByRegexp(title);
 		} catch (RemoteException e) {
 			System.out.println("hiba");
 		}
