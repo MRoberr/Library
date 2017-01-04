@@ -36,7 +36,6 @@ public class MainConsole extends UiFactory {
 			switch (cmd) {
 			case 1:
 				searchPublications();
-				// kiadvany utani kerese
 			case 2:
 				createNewUser();
 				break;
@@ -59,15 +58,12 @@ public class MainConsole extends UiFactory {
 				switch (admincmd) {
 				case 1:
 					createNewBook();
-					System.out.println("megy1");
 					break;
 				case 2:
 					createMagazin();
-					System.out.println("megy2");
 					break;
 				case 3:
 					createNewspaper();
-					System.out.println("megy3");
 					break;
 
 				case 0:
