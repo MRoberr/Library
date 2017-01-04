@@ -154,5 +154,10 @@ public class Magazine extends Publication {
 	public String deleteAuthors() {
 		return "delete from publications_authors where publications_uuid='" + getUUID() + "'";
 	}
+	
+	@Override
+	public String publicationToString() {
+		return "Magazine " + title;
+	}
 
 }

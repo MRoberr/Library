@@ -6,7 +6,6 @@ public class Newspaper extends Publication {
 
 	private static final long serialVersionUID = 1L;
 
-	
 	/**
 	 * {@link newspaper#article_title} The title of the article.
 	 */
@@ -29,7 +28,7 @@ public class Newspaper extends Publication {
 	 * left in the library.
 	 */
 	private int copiesLeft;
-	
+
 	@Override
 	public String toString() {
 		return "Newspaper [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher
@@ -112,6 +111,11 @@ public class Newspaper extends Publication {
 	@Override
 	public String getSelectByUUID(String uuid) {
 		return "select * from newspapers where uuid='" + uuid + "'";
+	}
+
+	@Override
+	public String publicationToString() {
+		return "Newspaper " + title;
 	}
 
 }

@@ -1,4 +1,4 @@
- package edu.msg.library_common.model;
+package edu.msg.library_common.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,38 +6,35 @@ import java.util.List;
 public class Book extends Publication {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * {@link book#publisher}
-	 * The publisher of the book.
+	 * {@link book#publisher} The publisher of the book.
 	 */
 	private String publisher;
 	/**
-	 * {@link book#authors}
-	 * The authors of the book. A book has atleast one author.
+	 * {@link book#authors} The authors of the book. A book has atleast one
+	 * author.
 	 */
 	private List<Author> authors;
 	/**
-	 * {@link book#releaseDate}
-	 * The year when the book was released.
+	 * {@link book#releaseDate} The year when the book was released.
 	 */
 	private int releaseDate;
 	/**
-	 * {@link book#numberOfCopies}
-	 * Represents the maximum number of book copies the library has.
+	 * {@link book#numberOfCopies} Represents the maximum number of book copies
+	 * the library has.
 	 */
 	private int numberOfCopies;
 	/**
-	 * {@link book#copiesLeft}
-	 * Represents the number of book copies left in the library.
+	 * {@link book#copiesLeft} Represents the number of book copies left in the
+	 * library.
 	 */
 	private int copiesLeft;
-	
+
 	public Book() {
 		authors = new ArrayList<>();
 	}
 
-	
 	public String getTitle() {
 		return title;
 	}
@@ -94,7 +91,6 @@ public class Book extends Publication {
 		this.numberOfCopies = number_of_copies;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Book [title=" + title + ", publisher=" + publisher + ", authors=" + authors + ", releaseDate="
@@ -129,21 +125,20 @@ public class Book extends Publication {
 	public String getSelectByUUID(String uuid) {
 		return "select * from books where uuid='" + uuid + "'";
 	}
-	
-	
+
 	/**
 	 * 
 	 * @return a string representation of the SQL statement which inserts the
 	 *         authors' id and the books' id into the mapping table
 	 */
-	public String insertAuthors(){
+	public String insertAuthors() {
 		StringBuilder strBld = new StringBuilder();
-		for(Author author : authors){
-			strBld.append("insert into publications_authors (publications_uuid, authors_uuid) "
-					+ "values('" + getUUID() + "','" + author.getUUID() + "');");
+		for (Author author : authors) {
+			strBld.append("insert into publications_authors (publications_uuid, authors_uuid) " + "values('" + getUUID()
+					+ "','" + author.getUUID() + "');");
 		}
 		return strBld.toString();
-	} 
+	}
 
 	/**
 	 * 
@@ -152,5 +147,10 @@ public class Book extends Publication {
 	 */
 	public String deleteAuthors() {
 		return "delete from publications_authors where publications_uuid='" + getUUID() + "'";
+	}
+
+	@Override
+	public String publicationToString() {
+		return "Book " + title;
 	}
 }
