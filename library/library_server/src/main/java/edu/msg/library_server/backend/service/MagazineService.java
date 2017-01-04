@@ -4,9 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
-import edu.msg.library_common.model.Magazine;
-import edu.msg.library_common.model.Author;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.rmi.MagazineServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
 
