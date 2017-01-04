@@ -351,33 +351,50 @@ public class MainConsole extends UiFactory {
 
 	public void returning() {
 		System.out.println("Please type the readers username: ");
-		String userName = scanner.next();
-		User user = new User();
+		
 		List<User> users = clientService.getAllUsers();
 		List<Publication> borrowingsOfUser = new ArrayList<>();
+		User user = new User();
 		BorrowingService bs = new BorrowingService();
-		Borrowing borrowOne = new Borrowing();
-		for (User u : users) {
-			if (u.getName().equals(userName)) {
-				borrowingsOfUser = bs.getBackBorrowingList(u);
-				user = u;
-				break;
+		String userName = "";
+		boolean userFlag = false;
+		while (!userFlag) {
+			userName = scanner.next();
+			Borrowing borrowOne = new Borrowing();
+			for (User u : users) {
+				if (u.getName().equals(userName)) {
+					borrowingsOfUser = bs.getBackBorrowingList(u);
+					user = u;
+					userFlag = true;
+					break;
+				} 
+						
+			}
+			if (!userFlag) {
+				for (User u : users) {
+					System.out.print(u.getName() + " ");
+				}
+				System.out.println("\nInvalid username, see possible usernames above.\nPlease retry: ");				
 			}
 		}
+		
 		if (!borrowingsOfUser.isEmpty()) {
 			int i = 0;
 			for (Publication p : borrowingsOfUser) {
 				System.out.println(i++ + "-" + p.toString());
 			}
-		}
-		System.out.println("Type the number of the book");
-		int nr = scanner.nextInt();
+			System.out.println("Type the number of the book");
+			int nr = scanner.nextInt();
 
-		if (bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
-			System.out.println("Return was succesfull");
+			if (bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
+				System.out.println("Return was succesfull");
+			} else {
+				System.out.println("Return not succesfull");
+			}
 		} else {
-			System.out.println("Return not succesfull");
+			System.out.println(userName + " doesn't have any borrowed books.");
 		}
+		
 		// borrowOne.setPublicationUuid(borrowingsOfUser.get(nr).getUUID());
 
 	}

@@ -67,6 +67,8 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 	public boolean returnPublication(Borrowing borrow) throws RemoteException {
 		Date today = new Date();
 		borrow.setReturnDate(today);
+		System.out.println(borrow.getReturnDate());
+		System.out.println(borrow.getDeadline());
 
 		if (borrow.getReturnDate().after(borrow.getDeadline())) {
 			UserService us = new UserService();
