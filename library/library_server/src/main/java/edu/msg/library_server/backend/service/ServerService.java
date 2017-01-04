@@ -40,9 +40,7 @@ public class ServerService {
 			registry.rebind(NewspaperServiceRmi.RMI_NAME, nService);
 			
 			SearchService sService = new SearchService();
-			registry.rebind(SearchServiceRmi.RMI_NAME, sService);				
-
-			System.out.println("Server online");
+			registry.rebind(SearchServiceRmi.RMI_NAME, sService);	
 			
 		} catch (Exception ex) {
 			

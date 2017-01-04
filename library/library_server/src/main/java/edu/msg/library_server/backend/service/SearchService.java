@@ -28,8 +28,8 @@ public class SearchService extends UnicastRemoteObject implements SearchServiceR
 
 	@Override
 	public List<Publication> searchPublicationByRegexp(String regexp) throws RemoteException {
-		String reg = regexp.replace("+", "[a-zA-Z0-9 ]+");
-		reg = reg.replace("*", "[a-zA-Z0-9 ]*");
+		String reg = regexp.replace("+", "([a-zA-Z0-9 ]+)");
+		reg = reg.replace("*", "([a-zA-Z0-9 ]*)");
 		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectByRegexp(reg));
 	}
 

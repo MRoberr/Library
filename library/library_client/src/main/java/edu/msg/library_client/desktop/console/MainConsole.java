@@ -51,12 +51,13 @@ public class MainConsole extends UiFactory {
 					System.out.println("Type the number of the next command!");
 				} catch (InputMismatchException e) {
 					System.out.println("Invalid command, try again...");
-					break;
+					scanner.nextLine();
+					System.out.println();
 				}
 			}
 		} else {
 
-			System.out.println("Logged in as user....");
+			System.out.println("Logged in as user...");
 
 			menuforUser();
 			while (true) {
@@ -114,10 +115,10 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void newPublicationHandle() {
-		System.out.println("0-viszalepes");
-		System.out.println("1-Konyv letrehozasa");
-		System.out.println("2-Magazin letrehozasa");
-		System.out.println("3-Ujsag letrehozasa");
+		System.out.println("0-Go back");
+		System.out.println("1-Create book");
+		System.out.println("2-Create magazine");
+		System.out.println("3-Create newspaper");
 		int admincmd = scanner.nextInt();
 		switch (admincmd) {
 		case 1:
@@ -131,16 +132,17 @@ public class MainConsole extends UiFactory {
 			break;
 
 		case 0:
+		default:
 			break;
 
 		}
 	}
 
 	private void publicationUpdateHandle() {
-		System.out.println("0-viszalepes");
-		System.out.println("1-Konyv update");
-		System.out.println("2-Magazin update");
-		System.out.println("3-Ujsag update");
+		System.out.println("0-Go back");
+		System.out.println("1-Update book");
+		System.out.println("2-Update magazine");
+		System.out.println("3-Update newspaper");
 		int admincmd = scanner.nextInt();
 		switch (admincmd) {
 		case 1:
@@ -151,52 +153,14 @@ public class MainConsole extends UiFactory {
 			break;
 
 		case 3:
-			updateClient();
+			// updateNewspaper();
 			break;
-		case 4:
-			deleteClient();
+		case 0:
+		default:
 			break;
-		case 5:
-			searchClient();
-			break;
-		case 6:
-			System.out.println("0-Viszalepes");
-			System.out.println("1-Konyv letrehozasa");
-			System.out.println("2-Magazin letrehozasa");
-			System.out.println("3-Ujsag letrehozasa");
-			admincmd = scanner.nextInt();
-			switch (admincmd) {
-			case 1:
-				createNewBook();
-				break;
-			case 2:
-				createMagazin();
-				break;
-			case 3:
-				createNewspaper();
-				break;
-
-			case 0:
-				break;
 
 			}
-			break;
-		case 7:
-			updateBook();
-			break;
-		case 9:
-			try {
-				borrowing();
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			break;
-
-		case 11:
-			listUsers();
-			break;
-		}
+			
 
 	}
 
@@ -244,10 +208,15 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void searchPublications() {
-		List<Publication> publications = publicationService.getPublications(scanner.next());
+		String reg="";
+		while(reg.isEmpty()){
+			reg=scanner.nextLine();
+		}
+		List<Publication> publications = publicationService.getPublications(reg);
 		if (publications.isEmpty()) {
 
-			System.out.println("Nem talahato ilyen kiadvany!");
+			System.out.println("Couldn't find this publication!");
+			return;
 		}
 		for (Publication publication : publications) {
 			System.out.println(publication.getTitle());
@@ -276,7 +245,7 @@ public class MainConsole extends UiFactory {
 			System.out.println(book);
 		}
 
-		System.out.println("Enter old title and update al parameters!");
+		System.out.println("Enter old title and update all parameters!");
 		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt());
 
@@ -288,24 +257,24 @@ public class MainConsole extends UiFactory {
 			System.out.println(magazines);
 		}
 
-		System.out.println("Enter old title and update al parameters!");
+		System.out.println("Enter old title and update all parameters!");
 		publicationService.updateMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 	}
 
 	private void menuforAdmin() {
 		System.out.println("Please choose one option!");
-		System.out.println("1-Kiadvany utani kereses");
-		System.out.println("2-Uj felhasznalo letrehozasa");
-		System.out.println("3-Felhasznalo adatainak modositasa");
-		System.out.println("4-Felhasznalo torlese");
-		System.out.println("5-Felhasznalo utani kereses");
-		System.out.println("6-Uj kiadvany letrehozasa");
-		System.out.println("7-Meglevo kiadvany adatainak modositasa");
-		System.out.println("8-Meglevo kiadvany torlese");
-		System.out.println("9-Kiadvany kolcsonzes");
-		System.out.println("10-Kiadvany visszavetele");
-		System.out.println("11-az osszes felhasznalo lekerese");
+		System.out.println("1-Search for publication");
+		System.out.println("2-Create user");
+		System.out.println("3-Change user data");
+		System.out.println("4-Delete user");
+		System.out.println("5-Search for user");
+		System.out.println("6-Create publication");
+		System.out.println("7-Change publication data");
+		System.out.println("8-Delete publication");
+		System.out.println("9-Borrow publication");
+		System.out.println("10-Return publication");
+		System.out.println("11-Show all users");
 	}
 
 	private void handleUserCommand() {
@@ -315,8 +284,7 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void menuforUser() {
-		System.out.println("Type");
-		System.out.println("1-Kiadvany utani kereses");
+		System.out.println("1-Search for publication");
 	}
 
 	public boolean borrowing() throws RemoteException {
