@@ -192,13 +192,12 @@ public class MainConsole extends UiFactory {
 				e.printStackTrace();
 			}
 			break;
-		
-		
+
 		case 11:
 			listUsers();
 			break;
 		}
-	
+
 	}
 
 	private List<User> listUsers() {
@@ -352,14 +351,17 @@ public class MainConsole extends UiFactory {
 	}
 
 	public void returning() {
-		System.out.println("Kerem irja be a user nevet ");
+		System.out.println("Please type the readers username: ");
 		String userName = scanner.next();
+		User user = new User();
 		List<User> users = clientService.getAllUsers();
 		List<Publication> borrowingsOfUser = new ArrayList<>();
 		BorrowingService bs = new BorrowingService();
+		Borrowing borrowOne = new Borrowing();
 		for (User u : users) {
 			if (u.getName().equals(userName)) {
 				borrowingsOfUser = bs.getBackBorrowingList(u);
+				user = u;
 				break;
 			}
 		}
@@ -369,6 +371,15 @@ public class MainConsole extends UiFactory {
 				System.out.println(i++ + "-" + p.toString());
 			}
 		}
+		System.out.println("Type the number of the book");
+		int nr = scanner.nextInt();
+
+		if (bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
+			System.out.println("Return was succesfull");
+		} else {
+			System.out.println("Return not succesfull");
+		}
+		// borrowOne.setPublicationUuid(borrowingsOfUser.get(nr).getUUID());
 
 	}
 }
