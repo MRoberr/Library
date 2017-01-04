@@ -17,4 +17,6 @@ public interface SearchServiceRmi extends Remote {
 	public List<Publication> getAllPublications() throws RemoteException;
 	
 	public List<Publication> searchPublicationByRegexp(String regex) throws RemoteException;
+
+	public List<Publication> searchPublicationByUUID(String uuid) throws RemoteException;
 }

@@ -2,6 +2,7 @@ package edu.msg.library_client.desktop.console;
 
 import java.rmi.RemoteException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -22,6 +23,7 @@ import edu.msg.library_common.model.User;
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
 	private PublicationService publicationService = new PublicationService();
+
 	Scanner scanner = new Scanner(System.in);
 
 	public MainConsole() {
@@ -101,6 +103,9 @@ public class MainConsole extends UiFactory {
 				System.out.println("You are not allowed to borrow!");
 			}
 			break;
+		case 10:
+			returning();
+			break;
 		case 11:
 			listUsers();
 			break;
@@ -144,14 +149,56 @@ public class MainConsole extends UiFactory {
 		case 2:
 			updateMagazin();
 			break;
+
 		case 3:
-
+			updateClient();
 			break;
-
-		case 0:
+		case 4:
+			deleteClient();
 			break;
+		case 5:
+			searchClient();
+			break;
+		case 6:
+			System.out.println("0-Viszalepes");
+			System.out.println("1-Konyv letrehozasa");
+			System.out.println("2-Magazin letrehozasa");
+			System.out.println("3-Ujsag letrehozasa");
+			admincmd = scanner.nextInt();
+			switch (admincmd) {
+			case 1:
+				createNewBook();
+				break;
+			case 2:
+				createMagazin();
+				break;
+			case 3:
+				createNewspaper();
+				break;
 
+			case 0:
+				break;
+
+			}
+			break;
+		case 7:
+			updateBook();
+			break;
+		case 9:
+			try {
+				borrowing();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		
+		
+		case 11:
+			listUsers();
+			break;
 		}
+	
 	}
 
 	private List<User> listUsers() {
@@ -221,6 +268,7 @@ public class MainConsole extends UiFactory {
 	private void createNewspaper() {
 		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+
 	}
 
 	private void updateBook() {
@@ -301,5 +349,26 @@ public class MainConsole extends UiFactory {
 				}
 		}
 		return false;
+	}
+
+	public void returning() {
+		System.out.println("Kerem irja be a user nevet ");
+		String userName = scanner.next();
+		List<User> users = clientService.getAllUsers();
+		List<Publication> borrowingsOfUser = new ArrayList<>();
+		BorrowingService bs = new BorrowingService();
+		for (User u : users) {
+			if (u.getName().equals(userName)) {
+				borrowingsOfUser = bs.getBackBorrowingList(u);
+				break;
+			}
+		}
+		if (!borrowingsOfUser.isEmpty()) {
+			int i = 0;
+			for (Publication p : borrowingsOfUser) {
+				System.out.println(i++ + "-" + p.toString());
+			}
+		}
+
 	}
 }
