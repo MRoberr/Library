@@ -165,8 +165,9 @@ public class MainConsole extends UiFactory {
 
 	private List<User> listUsers() {
 		List<User> users = clientService.getAllUsers();
-		for (Entity user : users) {
-			System.out.println(user);
+		int i = 0;
+		for (User user : users) {
+			System.out.println(++i + "-" + user.getName() + " " + user.getLoyalityIndex());
 		}
 		return users;
 	}
@@ -207,9 +208,9 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void searchPublications() {
-		String reg="";
-		while(reg.isEmpty()){
-			reg=scanner.nextLine();
+		String reg = "";
+		while (reg.isEmpty()) {
+			reg = scanner.nextLine();
 		}
 		List<Publication> publications = publicationService.getPublications(reg);
 		if (publications.isEmpty()) {
@@ -292,28 +293,25 @@ public class MainConsole extends UiFactory {
 
 		System.out.println("\n");
 		List<Publication> publications = bs.getAllPublications();
+		int i = 0;
 		for (Publication publication : publications) {
-			System.out.println(publication.publicationToString());
+			System.out.println(++i + "-" + publication.publicationToString());
 		}
 
 		System.out.println("\nPlease select a user and one publication from the lists above!(Type name and title)");
-		String user = scanner.next();
-		scanner.nextLine();
-		String title = scanner.nextLine();
-		for (User u : users) {
-			if (u.getName().equals(user))
-				for (Publication pub : publications) {
-					if (pub.getTitle().equals(title)) {
-						Borrowing borrow = new Borrowing();
-						borrow.setUserUuid(u.getUUID());
-						borrow.setPublicationUuid(pub.getUUID());
-						borrow.setBorrowingDate(java.sql.Date.valueOf(LocalDate.now()));
-						borrow.setDeadline(java.sql.Date.valueOf(LocalDate.now().plusDays(20)));
-						return (bs.borrow(borrow));
-					}
-				}
+		int user = scanner.nextInt();
+		int publication = scanner.nextInt();
+		if (user > users.size() || publication > publications.size()) {
+			return false;
 		}
-		return false;
+		User u = users.get(user - 1);
+		Publication pub = publications.get(publication - 1);
+		Borrowing borrow = new Borrowing();
+		borrow.setUserUuid(u.getUUID());
+		borrow.setPublicationUuid(pub.getUUID());
+		borrow.setBorrowingDate(java.sql.Date.valueOf(LocalDate.now()));
+		borrow.setDeadline(java.sql.Date.valueOf(LocalDate.now().plusDays(20)));
+		return (bs.borrow(borrow));
 	}
 
 	public void returning() {
