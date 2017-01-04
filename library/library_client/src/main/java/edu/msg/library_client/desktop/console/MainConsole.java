@@ -12,7 +12,7 @@ import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
 import edu.msg.library_common.model.LoginAccess;
-
+import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
@@ -74,29 +74,10 @@ public class MainConsole extends UiFactory {
 				searchClient();
 				break;
 			case 6:
-				System.out.println("0-viszalepes");
-				System.out.println("1-Konyv letrehozasa");
-				System.out.println("2-Magazin letrehozasa");
-				System.out.println("3-Ujsag letrehozasa");
-				int admincmd = scanner.nextInt();
-				switch (admincmd) {
-				case 1:
-					createNewBook();
-					break;
-				case 2:
-					createMagazin();
-					break;
-				case 3:
-					createNewspaper();
-					break;
-
-				case 0:
-					break;
-
-				}
+				newPublicationHandle();
 				break;
 			case 7:
-				updateBook();
+				publicationUpdateHandle();
 				break;
 			case 11:
 				listUsers();
@@ -104,6 +85,52 @@ public class MainConsole extends UiFactory {
 			}
 		} catch (InputMismatchException e) {
 			System.out.println("invalid command, try again...");
+		}
+	}
+
+	private void newPublicationHandle() {
+		System.out.println("0-viszalepes");
+		System.out.println("1-Konyv letrehozasa");
+		System.out.println("2-Magazin letrehozasa");
+		System.out.println("3-Ujsag letrehozasa");
+		int admincmd = scanner.nextInt();
+		switch (admincmd) {
+		case 1:
+			createNewBook();
+			break;
+		case 2:
+			createMagazin();
+			break;
+		case 3:
+			createNewspaper();
+			break;
+
+		case 0:
+			break;
+
+		}
+	}
+
+	private void publicationUpdateHandle() {
+		System.out.println("0-viszalepes");
+		System.out.println("1-Konyv update");
+		System.out.println("2-Magazin update");
+		System.out.println("3-Ujsag update");
+		int admincmd = scanner.nextInt();
+		switch (admincmd) {
+		case 1:
+			updateBook();
+			break;
+		case 2:
+			updateMagazin();
+			break;
+		case 3:
+			
+			break;
+
+		case 0:
+			break;
+
 		}
 	}
 
@@ -179,6 +206,17 @@ public class MainConsole extends UiFactory {
 
 		System.out.println("Enter old title and update al parameters!");
 		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt());
+	}
+	
+	private void updateMagazin(){
+		List<Magazine> magazines = publicationService.getMagazin();
+		for (Magazine magazine : magazines) {
+			System.out.println(magazines);
+		}
+
+		System.out.println("Enter old title and update al parameters!");
+		publicationService.updateMagazin(scanner.next(), scanner.next(), scanner.next(),scanner.next(), scanner.nextInt(),scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt());
 	}
 

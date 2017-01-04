@@ -5,6 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -82,7 +83,7 @@ public class PublicationService {
 		magazine.setTitle(title);
 		magazine.setArticle_title(article_title);
 		magazine.setPublisher(publisher);
-		magazine.setReleaseDate(new java.sql.Date(month, year, 0));
+		magazine.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month,01)));
 		magazine.setNumberOfCopies(number_of_copies);
 		magazine.setCopiesLeft(copies_left);
 
@@ -100,7 +101,7 @@ public class PublicationService {
 		newspaper.setTitle(title);
 		newspaper.setArticle_title(article_title);
 		newspaper.setPublisher(publisher);
-		newspaper.setReleaseDate(new Date(year, month, day));
+		newspaper.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month,day)));
 		newspaper.setNumberOfCopies(number_of_copies);
 		newspaper.setCopiesLeft(copies_left);
 
@@ -111,16 +112,17 @@ public class PublicationService {
 		}
 	}
 
-	public java.util.List<Book> getBooks(){
-		try{
+	public java.util.List<Book> getBooks() {
+		try {
 			return bookServiceRmi.getAllBooks();
-		}catch (Exception e) {
-			
+		} catch (Exception e) {
+
 		}
 		return null;
 	}
 
-	public void updateBook(String seletedBook,String newBooktitle,String newPublisher,int newRelaseDate,int newNrOfCopies,int newCopiesLeft){
+	public void updateBook(String seletedBook, String newBooktitle, String newPublisher, int newRelaseDate,
+			int newNrOfCopies, int newCopiesLeft) {
 		try {
 
 			java.util.List<Book> books = getBooks();
@@ -132,6 +134,36 @@ public class PublicationService {
 					book.setNumberOfCopies(newNrOfCopies);
 					book.setCopiesLeft(newCopiesLeft);
 					bookServiceRmi.updateBook(book);
+				}
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public java.util.List<Magazine> getMagazin() {
+		try {
+			return magazineServiceRmi.getAllMagazines();
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	public void updateMagazin(String seletedMagazin, String newMagazintitle,String newArticleTitle, String newPublisher, int year,int month,
+			int newNrOfCopies, int newCopiesLeft) {
+		try {
+
+			java.util.List<Magazine> magazines = getMagazin();
+			for (Magazine magazin : magazines) {
+				if (magazin.getTitle().equals(seletedMagazin)) {
+					magazin.setTitle(newMagazintitle);
+					magazin.setArticle_title(newArticleTitle);
+					magazin.setPublisher(newPublisher);
+					magazin.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month,01)));
+					magazin.setNumberOfCopies(newNrOfCopies);
+					magazin.setCopiesLeft(newCopiesLeft);
+					magazineServiceRmi.updateMagazine(magazin);
 				}
 			}
 		} catch (RemoteException e) {
