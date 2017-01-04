@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.msg.library_client.desktop.BorrowingService;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
@@ -37,14 +38,18 @@ public class MainConsole extends UiFactory {
 			System.out.println("Invalid user name or password, please try again!");
 			login();
 		} else if (login.equals(LoginAccess.ADMIN)) {
-			System.out.println("logged in as admin");
+
+			System.out.println("Logged in as admin...");
+
 			menuforAdmin();
 			while (true) {
 				handleAdminCommand();
-				System.out.println("next command");
+				System.out.println("Type the number of the next command!");
 			}
 		} else {
-			System.out.println("logged in as user");
+
+			System.out.println("Logged in as user....");
+
 			menuforUser();
 			while (true) {
 				handleUserCommand();
@@ -78,13 +83,21 @@ public class MainConsole extends UiFactory {
 				break;
 			case 7:
 				publicationUpdateHandle();
+				break;				
+			case 9:				
+				try {
+					borrowing();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case 11:
 				listUsers();
 				break;
 			}
 		} catch (InputMismatchException e) {
-			System.out.println("invalid command, try again...");
+			System.out.println("Invalid command, try again...");
 		}
 	}
 
@@ -142,19 +155,22 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void createNewUser() {
-		System.out.println("Enter name and password!");
+		System.out.println("Enter name, password and type!");
 		String userName = scanner.next();
+
+		String password = scanner.next();
 		String type = scanner.next();
-		LoginAccess loginAcces = null;
+		LoginAccess loginAccess = null;
 		if (type.equals("ADMIN")) {
-			loginAcces = LoginAccess.ADMIN;
+			loginAccess = LoginAccess.ADMIN;
 		} else if (type.equals("USER")) {
-			loginAcces = LoginAccess.USER;
+			loginAccess = LoginAccess.USER;
 		}
-		if (loginAcces == null) {
-			System.out.println("invalid login access");
+		if (loginAccess == null) {
+			System.out.println("Invalid login access!");
 		} else {
-			clientService.newClientCreate(userName, loginAcces, scanner.nextInt(), scanner.next());
+			clientService.newClientCreate(userName, loginAccess, 10, password);
+
 		}
 	}
 
@@ -176,7 +192,8 @@ public class MainConsole extends UiFactory {
 	private void searchPublications() {
 		List<Publication> publications = publicationService.getPublications(scanner.next());
 		if (publications.isEmpty()) {
-			System.out.println("Nem talahato ilyen konyv!");
+
+			System.out.println("Nem talahato ilyen kiadvany!");
 		}
 		for (Publication publication : publications) {
 			System.out.println(publication.getTitle());
@@ -207,6 +224,7 @@ public class MainConsole extends UiFactory {
 		System.out.println("Enter old title and update al parameters!");
 		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt());
+
 	}
 	
 	private void updateMagazin(){
@@ -244,5 +262,15 @@ public class MainConsole extends UiFactory {
 	private void menuforUser() {
 		System.out.println("Type");
 		System.out.println("1-Kiadvany utani kereses");
+	}
+	
+	
+	public void borrowing() throws RemoteException{
+		BorrowingService bs=new BorrowingService();
+		List<User> users=listUsers();
+		List<Publication> publications=bs.getAllPublications();
+		for (Publication publication : publications) {
+		//	publication;
+		}
 	}
 }
