@@ -8,6 +8,7 @@ import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Entity;
 
 import edu.msg.library_common.model.LoginAccess;
@@ -36,14 +37,22 @@ public class MainConsole extends UiFactory {
 			System.out.println("Invalid user name or password, please try again!");
 			login();
 		} else if (login.equals(LoginAccess.ADMIN)) {
+<<<<<<< HEAD
 			System.out.println("Logged in as admin...");
+=======
+			System.out.println("logged in as admin");
+>>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
 			menuforAdmin();
 			while (true) {
 				handleAdminCommand();
 				System.out.println("Type the number of the next command!");
 			}
 		} else {
+<<<<<<< HEAD
 			System.out.println("Logged in as user....");
+=======
+			System.out.println("logged in as user");
+>>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
 			menuforUser();
 			while (true) {
 				handleUserCommand();
@@ -93,7 +102,9 @@ public class MainConsole extends UiFactory {
 					break;
 
 				}
-
+				break;
+			case 7:
+				updateBook();
 				break;
 			case 11:
 				listUsers();
@@ -114,6 +125,7 @@ public class MainConsole extends UiFactory {
 	private void createNewUser() {
 		System.out.println("Enter name, password and type!");
 		String userName = scanner.next();
+<<<<<<< HEAD
 		String password = scanner.next();
 		String type = scanner.next();
 		LoginAccess loginAccess = null;
@@ -126,6 +138,19 @@ public class MainConsole extends UiFactory {
 			System.out.println("Invalid login access!");
 		} else {
 			clientService.newClientCreate(userName, loginAccess, 10, password);
+=======
+		String type = scanner.next();
+		LoginAccess loginAcces = null;
+		if (type.equals("ADMIN")) {
+			loginAcces = LoginAccess.ADMIN;
+		} else if (type.equals("USER")) {
+			loginAcces = LoginAccess.USER;
+		}
+		if (loginAcces == null) {
+			System.out.println("invalid login access");
+		} else {
+			clientService.newClientCreate(userName, loginAcces, scanner.nextInt(), scanner.next());
+>>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
 		}
 	}
 
@@ -147,10 +172,14 @@ public class MainConsole extends UiFactory {
 	private void searchPublications() {
 		List<Publication> publications = publicationService.getPublications(scanner.next());
 		if (publications.isEmpty()) {
+<<<<<<< HEAD
 			System.out.println("Nem talahato ilyen kiadvany!");
+=======
+			System.out.println("Nem talahato ilyen konyv!");
+>>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
 		}
 		for (Publication publication : publications) {
-			System.out.println(publication);
+			System.out.println(publication.getTitle());
 		}
 	}
 
@@ -167,6 +196,20 @@ public class MainConsole extends UiFactory {
 	private void createNewspaper() {
 		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+<<<<<<< HEAD
+=======
+	}
+
+	private void updateBook() {
+		List<Book> books = publicationService.getBooks();
+		for (Book book : books) {
+			System.out.println(book);
+		}
+
+		System.out.println("Enter old title and update al parameters!");
+		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt());
+>>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
 	}
 
 	private void menuforAdmin() {
