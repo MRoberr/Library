@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import edu.msg.library_common.model.Book;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
@@ -105,6 +106,35 @@ public class PublicationService {
 
 		try {
 			newspaperServiceRmi.insertNewspaper(newspaper);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public java.util.List<Book> getBooks(){
+		try{
+			return bookServiceRmi.getAllBooks();
+		}catch (Exception e) {
+			
+		}
+		return null;
+	}
+
+	public void updateBook(String seletedBook,String newBooktitle,String newPublisher,int newRelaseDate,int newNrOfCopies,int newCopiesLeft){
+		try {
+
+			java.util.List<Book> userList = getBooks();
+			for (Entity entity : userList) {
+				Book book = (Book) entity;
+				if (book.getTitle().equals(seletedBook)) {
+					book.setName(newBooktitle);
+					book.setPublisher(newPublisher);
+					book.setReleaseDate(newRelaseDate);
+					book.setNumberOfCopies(newNrOfCopies);
+					book.setCopiesLeft(newCopiesLeft);
+					bookServiceRmi.updateBook(book);
+				}
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
