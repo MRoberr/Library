@@ -33,6 +33,7 @@ public class MainConsole extends UiFactory {
 	public void startConsole() {
 		System.out.println("Please enter your name and password!");
 		login();
+
 	}
 
 	private void login() {
@@ -91,6 +92,9 @@ public class MainConsole extends UiFactory {
 			break;
 		case 7:
 			publicationUpdateHandle();
+			break;
+		case 8:
+			deletePublication();
 			break;
 		case 9:
 			try {
@@ -249,6 +253,22 @@ public class MainConsole extends UiFactory {
 		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt());
 
+	}
+
+	private void deletePublication() {
+		List<Publication> publications = publicationService.getPublications();
+		for (Publication publication : publications) {
+			System.out.println(publication);
+		}
+		System.out.println("Please enter the type ");
+		String publicationName = scanner.nextLine();
+		for (Publication publication : publications) {
+			if (publicationName.equals(publication.getTitle()))
+
+			{
+				publicationService.deletePublication(publication);
+			}
+		}
 	}
 
 	private void updateMagazin() {

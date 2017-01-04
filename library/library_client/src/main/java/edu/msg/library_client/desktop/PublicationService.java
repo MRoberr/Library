@@ -1,12 +1,12 @@
 package edu.msg.library_client.desktop;
 
-import java.awt.List;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import edu.msg.library_common.model.Book;
@@ -171,4 +171,37 @@ public class PublicationService {
 		}
 	}
 
+	public void deletePublication(Publication publication){
+		if (publication instanceof Book) {
+			try {
+				bookServiceRmi.deleteBook((Book) publication);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		if(publication instanceof Magazine){
+			try {
+				magazineServiceRmi.deleteMagazine((Magazine) publication);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		if(publication instanceof Newspaper){
+			try {
+				newspaperServiceRmi.deleteNewspaper((Newspaper) publication);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<Publication> getPublications(){
+		try {
+			return searchServiceRmi.getAllPublications();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
