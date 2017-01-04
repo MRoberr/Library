@@ -153,4 +153,9 @@ public class Book extends Publication {
 	public String deleteAuthors() {
 		return "delete from publications_authors where publications_uuid='" + getUUID() + "'";
 	}
+	
+	@Override
+	public String publicationToString() {
+		return "Book "+title;	
+	}
 }

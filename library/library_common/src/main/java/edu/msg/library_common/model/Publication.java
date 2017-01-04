@@ -67,6 +67,7 @@ public abstract class Publication extends BaseEntity{
 	public static String getSelectByPublicationUUID(String uuid) {
 		return "Select * from publications where uuid = '" + uuid + "'";
 	}
+	public abstract String publicationToString() ;
 	
 	
 

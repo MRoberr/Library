@@ -113,5 +113,10 @@ public class Newspaper extends Publication {
 	public String getSelectByUUID(String uuid) {
 		return "select * from newspapers where uuid='" + uuid + "'";
 	}
+	
+	@Override
+	public String publicationToString() {
+		return "Newspaper "+ title;
+	}
 
 }
