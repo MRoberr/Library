@@ -93,4 +93,5 @@ public class User extends BaseEntity {
 	public String getSearchByName(String name) {
 		return "select * from library_users where name like '%" + name + "%'";
 	}
+
 }

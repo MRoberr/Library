@@ -1,9 +1,15 @@
 package edu.msg.library_client.desktop.jfxgui.controller;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Calendar;
+import java.sql.Date;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_client.desktop.jfxgui.view.scenes.AdminScene;
+import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import javafx.collections.FXCollections;
@@ -11,8 +17,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
 public class AdminController {
 
@@ -45,6 +51,16 @@ public class AdminController {
 		userData = FXCollections.observableArrayList();
 		loadUsers();
 		publicationsData = FXCollections.observableArrayList();
+
+//		TreeSet<User> users = new TreeSet<User>();
+//		
+//		for(User user: userData) {
+//			
+//			users.add(user)
+//		}
+		
+		adminScene.populateSearchAutoComplete(userData.stream().map(user -> user).collect(Collectors.toSet()));
+//		userData.stream().fi
 		//loadPublications();
 		
 	}
@@ -153,7 +169,26 @@ public class AdminController {
 			
 			
 		});
+		
+		adminScene.getLendButton().setOnAction(e -> {
+					
+			
+			Borrowing publication = new Borrowing();
+			publication.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
+			publication.setPublicationUuid(adminScene.getPublicationTable().getSelectionModel().getSelectedItem().getUUID());
+			
+//			Date now = Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+		
+			
+			publication.setBorrowingDate(Date.valueOf(LocalDate.now()));
+			publication.setDeadline(Date.valueOf(LocalDate.now().plusDays(20)));
+			
+			ConnectionModel.INSTANCE.borrow(publication);
+			
+			System.out.println("kiadva");
+		});
 	}
+	
 
 	private void showOrHideUserManagerMenu(Menu newMenu) {
 

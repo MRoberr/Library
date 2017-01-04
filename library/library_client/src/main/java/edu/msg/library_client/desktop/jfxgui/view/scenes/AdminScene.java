@@ -1,6 +1,12 @@
 package edu.msg.library_client.desktop.jfxgui.view.scenes;
 
+import java.util.Set;
+
+import edu.msg.library_client.desktop.jfxgui.model.AutoCompleteTextField;
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.LoginAccess;
+import edu.msg.library_common.model.Magazine;
+import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -18,9 +24,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -69,7 +75,17 @@ public class AdminScene extends Scene{
 	private TableColumn<Publication, String> titleColumn;
 	private TableColumn<Publication, String> pubTypeColumn;
 	
+	private Label searchUserLabel;
+	private AutoCompleteTextField searchUserWithHint;
 	
+	private TableView<Publication> userBorrowings;
+	private TableColumn<Publication, String> borrowedPublicationTitle;
+	private TableColumn<Publication, String> a;
+	
+	private TextField searchInUserBorrows;
+	
+	private Button lend;
+	private Button takeBack;
 	
 	
 	public AdminScene(Parent root) {
@@ -175,18 +191,61 @@ public class AdminScene extends Scene{
 		
 		createShelfTable();
 		createPublicationsSearchField();
+		createUserBorrowedTable();
+		
+		searchUserLabel = new Label("Search User");
+		searchUserWithHint = new AutoCompleteTextField();
+		
+		lend = new Button(">");
+		takeBack = new Button("<");
+		
+		searchInUserBorrows = new TextField();
+		searchInUserBorrows.setPromptText("Search in user borrows");
+		searchInUserBorrows.setMaxWidth(200);
+		
+		VBox center = new VBox();
+		center.setPadding(new Insets(0, 10, 0, 10));
+		center.setSpacing(15);
+		center.setAlignment(Pos.CENTER);
+		center.getChildren().addAll(lend, takeBack);
 		
 		VBox shelfLeftSide = new VBox();
 		shelfLeftSide.setPadding(new Insets(10, 10, 20, 10));
 		shelfLeftSide.setSpacing(15);
-		
+		shelfLeftSide.setAlignment(Pos.CENTER);
 		shelfLeftSide.getChildren().addAll(shelfTabTitle, publicationsTable, searchPublicationField);
+		
+		VBox shelfRightSide = new VBox();
+		shelfRightSide.setPadding(new Insets(10, 10, 20, 10));
+		shelfRightSide.setSpacing(15);
+		shelfRightSide.setAlignment(Pos.CENTER);
+		
+		shelfRightSide.getChildren().addAll(searchUserLabel, searchUserWithHint, userBorrowings, searchInUserBorrows);
+//		shelfRightSide.add(searchUserLabel, 0, 0);
+//		shelfRightSide.add(searchUserWithHint, 1, 0);
 		
 		BorderPane shelfTabPane = new BorderPane();
 		shelfTab.setContent(shelfTabPane);
 		shelfTabPane.setLeft(shelfLeftSide);
+		shelfTabPane.setRight(shelfRightSide);
+		
+		shelfTabPane.setCenter(center);
 		
 		
+	}
+	
+	private void createUserBorrowedTable() {
+		
+		userBorrowings = new TableView<Publication>();
+		userBorrowings.setMinWidth(100);
+		userBorrowings.setMaxHeight(370);
+		userBorrowings.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		userBorrowings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		userBorrowings.setEditable(false);
+		
+		//title
+		borrowedPublicationTitle = new TableColumn<Publication, String>("Title");
+		borrowedPublicationTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
 	}
 	
 	private void createPublicationsSearchField() {
@@ -357,6 +416,23 @@ public class AdminScene extends Scene{
 		
 		return publicationsTable;
 	}
+	
+	public void populateSearchAutoComplete(Set<User> users) {
+		
+		searchUserWithHint.getEntries().addAll(users);
+	}
+	
+	public Button getLendButton() {
+		
+		return lend;
+	}
+	
+	public AutoCompleteTextField getSearchUserWithHintField() {
+		
+		return searchUserWithHint;
+	}
+	
+	
 }
 
 

@@ -9,12 +9,14 @@ import java.util.List;
 
 import edu.msg.library_client.desktop.jfxgui.ConnectionException;
 import edu.msg.library_common.model.Book;
+import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BookServiceRmi;
+import edu.msg.library_common.rmi.BorrowingServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
 import edu.msg.library_common.rmi.MagazineServiceRmi;
 import edu.msg.library_common.rmi.NewspaperServiceRmi;
@@ -34,6 +36,7 @@ public enum ConnectionModel {
 	
 	private UserServiceRmi userServiceRmi;
 	private SearchServiceRmi searchServiceRmi;
+	private BorrowingServiceRmi borrowingServiceRmi;
 	
 	
 	{
@@ -48,6 +51,7 @@ public enum ConnectionModel {
 			
 			userServiceRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
 			searchServiceRmi = (SearchServiceRmi) registry.lookup(SearchServiceRmi.RMI_NAME);
+			borrowingServiceRmi = (BorrowingServiceRmi) registry.lookup(BorrowingServiceRmi.RMI_NAME);
 
 		} catch (RemoteException | NotBoundException e) {
 //			e.printStackTrace();
@@ -162,6 +166,17 @@ public enum ConnectionModel {
 		try {
 			
 			return searchServiceRmi.getAllPublications();
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public void borrow(Borrowing publication) {
+		
+		try {
+			
+			borrowingServiceRmi.borrowPublication(publication);
 		} catch (RemoteException e) {
 			
 			throw new ConnectionException("Connection error", e);
