@@ -22,7 +22,7 @@ public class MainConsole extends UiFactory {
 	}
 
 	public void startConsole() {
-		// login ->
+	
 		// if admin -> menuforadmin
 		// else -> menu for user
 		menuforAdmin();
@@ -58,7 +58,7 @@ public class MainConsole extends UiFactory {
 			System.out.println("invalid command, try again...");
 		}
 	}
-
+	
 	private void listUsers() {
 		List<User> users = clientService.getAllUsers();
 		for (Entity user : users) {
