@@ -149,7 +149,7 @@ public class MainConsole extends UiFactory {
 	private void searchPublications() {
 		List<Publication> publications = publicationService.getPublications(scanner.next());
 		if (publications.isEmpty()) {
-			System.out.println("nem talahato ijen kony");
+			System.out.println("Nem talahato ilyen konyv!");
 		}
 		for (Publication publication : publications) {
 			System.out.println(publication.getTitle());
