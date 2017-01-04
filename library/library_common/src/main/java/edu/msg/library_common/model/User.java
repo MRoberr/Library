@@ -78,7 +78,7 @@ public class User extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "User [name=" + name + ", userType=" + userType + ", loyalityIndex=" + loyalityIndex + "]";
+		return "User [name=" + name + ", userType=" + userType + ", loyalityIndex=" + loyalityIndex + ", password=" + password +"]";
 	}
 
 	@Override
@@ -87,6 +87,10 @@ public class User extends BaseEntity {
 	}
 
 	public String getSelectByName(String name) {
-		return "select * from library_users where uuid='" + getName() + "'";
+		return "select * from library_users where name='" + name + "'";
+	}
+	
+	public String getSearchByName(String name) {
+		return "select * from library_users where name like '%" + name + "%'";
 	}
 }

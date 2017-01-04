@@ -95,4 +95,12 @@ public class MagazinTest {
 					+ "insert into publications_authors (publications_uuid, authors_uuid) "
 					+ "values('456456','3698');", insertAuthor);
 	}
+	
+	@Test
+	public void deleteAuthorsTest() {
+		createMagazin();
+		String deleteAuthor = magazin.deleteAuthors();
+		System.out.println("delete: " + deleteAuthor);
+		assertEquals("delete from publications_authors where publications_uuid='456456'", deleteAuthor);
+	}
 }

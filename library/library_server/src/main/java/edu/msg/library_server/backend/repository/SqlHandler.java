@@ -166,6 +166,45 @@ public class SqlHandler {
 		}
 	}
 
+	public List<Publication> executePublicationSelect(String select) {
+		
+		ResultSet resultSet = null;
+		List<Publication> resultList = new ArrayList<>();
+		try {
+			
+			resultSet = connection.createStatement().executeQuery(select);	
+			while (resultSet.next()) {
+				
+				Publication publication;
+				
+				switch(resultSet.getString("type")) {
+				
+				case "1":
+					publication = new Book();
+					break;
+				case "2":
+					publication = new Newspaper();
+					break;
+				default:
+					publication = new Magazine();
+					break;
+				}
+				
+				publication.setUUID(resultSet.getString("uuid"));
+				publication.setTitle(resultSet.getString("title"));
+				
+				resultList.add(publication);
+			}			
+			return resultList;
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			System.err.println("Couldn't select users!");
+			return null;
+		}
+	}
+	
 	private List<Entity> returnEntityOfExecute(String select, String entityType) {
 		
 		ResultSet resultSet = null;
@@ -242,13 +281,13 @@ public class SqlHandler {
 				}
 				break;
 			case "PUBLICATION":   
-				while (resultSet.next()) {
-					Publication publcaion = new Publication();
-					publcaion.setUUID(resultSet.getString("uuid"));
-					publcaion.setTitle(resultSet.getString("title"));
-					publcaion.setType(resultSet.getInt("type"));
-					resultList.add(publcaion);
-				}
+//				while (resultSet.next()) {
+//					Publication publcaion = new Publication();
+//					publcaion.setUUID(resultSet.getString("uuid"));
+//					publcaion.setTitle(resultSet.getString("title"));
+//					publcaion.setType(resultSet.getInt("type"));
+//					resultList.add(publcaion);
+//				}
 				break;
 			case "BORROWING":   
 				while (resultSet.next()) {

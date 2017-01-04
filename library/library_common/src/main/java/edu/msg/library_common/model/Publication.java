@@ -1,11 +1,9 @@
 package edu.msg.library_common.model;
 
-public class Publication extends BaseEntity{
+public abstract class Publication extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
-	private String title;
-	private int type;//1-book, 2-news, 3-magazine
-	
+	protected String title;
 	
 	public static String getCreateView(){
 		return "CREATE OR REPLACE VIEW publications AS SELECT * FROM ("+
@@ -16,22 +14,32 @@ public class Publication extends BaseEntity{
 	}
 	
 	public String getTitle() {
+		
 		return title;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
+	public abstract void setTitle(String title);
+	
 	@Override
 	public String getSelectAll() {		
+		//Don't implement
+		return null;
+	}
+	
+	public static String getSelectByTitle(String title) {		
+		
+		return "Select * from publications where title like '%"+ title +"%'";
+	}
+	
+	public static String getSelectByRegexp(String regexp){
+		return "select * from publications where title REGEXP '"+regexp+"'";
+	}
+
+	public static String getSelectAllPublications() {
+		
 		return "Select * from publications";
 	}
 	
-	public String getSelectByTitle() {		
-		return "Select * from publications where title like '% "+ title +" %'";
-	}
-
 	@Override
 	public String getInsert() {
 		//Don t implement
@@ -52,16 +60,14 @@ public class Publication extends BaseEntity{
 
 	@Override
 	public String getSelectByUUID(String uuid) {
-		//Don t implement
+		//Don't implement
 		return null;
 	}
 
-	public int getType() {
-		return type;
+	public static String getSelectByPublicationUUID(String uuid) {
+		return "Select * from publications where uuid = '" + uuid + "'";
 	}
-
-	public void setType(int type) {
-		this.type = type;
-	}
+	
+	
 
 }

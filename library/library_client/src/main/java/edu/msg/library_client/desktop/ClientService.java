@@ -17,6 +17,7 @@ import java.util.Scanner;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
+import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
@@ -38,6 +39,7 @@ public class ClientService {
 			try {
 				uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
 				
+				searchRmi=(SearchServiceRmi)registry.lookup(SearchServiceRmi.RMI_NAME);
 			} catch (NotBoundException e) {
 
 				e.printStackTrace();
@@ -159,7 +161,19 @@ public class ClientService {
 	public void searchClient(String selectedUser) {
 
 		try {
-			uRmi.searchUser(selectedUser);
+			List<User> users=uRmi.searchUser(selectedUser);
+			users.forEach(u->System.out.println(u.toString()));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void searchPublication(String title) {
+		try {
+			List<Publication> pubs=searchRmi.searchPublicationByRegexp(title);
+			for(Publication p:pubs){
+				System.out.println(p.toString());
+			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
