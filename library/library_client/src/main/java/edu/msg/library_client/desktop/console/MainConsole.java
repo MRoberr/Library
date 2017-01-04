@@ -333,7 +333,6 @@ public class MainConsole extends UiFactory {
 		String user = scanner.next();
 		scanner.nextLine();
 		String title = scanner.nextLine();
-		System.out.println(title);
 		for (User u : users) {
 			if (u.getName().equals(user))
 				for (Publication pub : publications) {
