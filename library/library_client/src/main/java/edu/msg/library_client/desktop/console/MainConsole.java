@@ -1,9 +1,11 @@
 package edu.msg.library_client.desktop.console;
 
+import java.rmi.RemoteException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.msg.library_client.desktop.BorrowingService;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
@@ -101,6 +103,14 @@ public class MainConsole extends UiFactory {
 				break;
 			case 7:
 				updateBook();
+				break;				
+			case 9:				
+				try {
+					borrowing();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break;
 			case 11:
 				listUsers();
@@ -111,11 +121,12 @@ public class MainConsole extends UiFactory {
 		}
 	}
 
-	private void listUsers() {
+	private List<User> listUsers() {
 		List<User> users = clientService.getAllUsers();
 		for (Entity user : users) {
 			System.out.println(user);
 		}
+		return users;
 	}
 
 	private void createNewUser() {
@@ -216,5 +227,15 @@ public class MainConsole extends UiFactory {
 	private void menuforUser() {
 		System.out.println("Type");
 		System.out.println("1-Kiadvany utani kereses");
+	}
+	
+	
+	public void borrowing() throws RemoteException{
+		BorrowingService bs=new BorrowingService();
+		List<User> users=listUsers();
+		List<Publication> publications=bs.getAllPublications();
+		for (Publication publication : publications) {
+		//	publication;
+		}
 	}
 }
