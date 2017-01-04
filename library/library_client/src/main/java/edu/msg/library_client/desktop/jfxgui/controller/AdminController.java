@@ -1,15 +1,17 @@
 package edu.msg.library_client.desktop.jfxgui.controller;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Calendar;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import edu.msg.library_client.desktop.jfxgui.listeners.UserSelectedListener;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_client.desktop.jfxgui.view.scenes.AdminScene;
 import edu.msg.library_common.model.Borrowing;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import javafx.collections.FXCollections;
@@ -20,7 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 
-public class AdminController {
+public class AdminController implements UserSelectedListener{
 
 	private enum Menu {
 
@@ -31,8 +33,10 @@ public class AdminController {
 	
 	private ObservableList<User> userData;
 	private ObservableList<Publication> publicationsData;
+	private ObservableList<Publication> userBorrowedData;
 	private FilteredList<User> filteredUsers;
 	private FilteredList<Publication> filteredPublications;
+	private FilteredList<Publication> filteredUserBorrowed;
 
 	private Menu displayed;
 	private boolean userManagerMenuVisible;
@@ -41,6 +45,7 @@ public class AdminController {
 
 		adminScene = new AdminScene(root);
 
+		
 		setTabPaneEvents();
 		setupSearchFields();
 
@@ -51,7 +56,9 @@ public class AdminController {
 		userData = FXCollections.observableArrayList();
 		loadUsers();
 		publicationsData = FXCollections.observableArrayList();
-
+		
+		userBorrowedData = FXCollections.observableArrayList();
+		adminScene.getSearchUserWithHintField().addUserSelectedListener(this);
 //		TreeSet<User> users = new TreeSet<User>();
 //		
 //		for(User user: userData) {
@@ -187,8 +194,35 @@ public class AdminController {
 			
 			System.out.println("kiadva");
 		});
+		
+		adminScene.getTakeBackButton().setOnAction(e -> {
+			
+			Borrowing borrow = new Borrowing();
+			borrow.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
+			borrow.setPublicationUuid(adminScene.getUserBorrowingsTable().getSelectionModel().getSelectedItem().getUUID());
+
+			ConnectionModel.INSTANCE.handBackPublication(searchForBorrow(borrow.getUserUuid(), borrow.getPublicationUuid()));
+			
+		});
 	}
 	
+	private Borrowing searchForBorrow(String userUUID, String publicationUUID) {
+		
+		List<Entity> allBorrows = ConnectionModel.INSTANCE.getAllBorrows();
+
+		for (int i = 0; i < allBorrows.size(); i++) {
+
+			System.out.println(i);
+			Borrowing borrowTmp = (Borrowing) allBorrows.get(i);
+
+			if (borrowTmp.getUserUuid().equals(userUUID) && borrowTmp.getPublicationUuid().equals(publicationUUID)) {
+
+				return borrowTmp;
+			}
+		}
+		
+		return null;
+	}
 
 	private void showOrHideUserManagerMenu(Menu newMenu) {
 
@@ -260,6 +294,34 @@ public class AdminController {
 
 		filteredUsers = new FilteredList<User>(userData, p -> true);
 		adminScene.getUserTable().setItems(filteredUsers);
+	}
+	
+	@Override
+	public void loadUserBorrows(User user) {
+		
+		userBorrowedData.clear();
+
+		List<Publication> currentUserBorrows = new ArrayList<>();		
+			
+		List<Entity> allBorrows = ConnectionModel.INSTANCE.getAllBorrows();
+
+		for (int i = 0; i < allBorrows.size(); i++) {
+
+			System.out.println(i);
+			Borrowing borrowtemp = (Borrowing) allBorrows.get(i);
+
+			if (borrowtemp.getUserUuid().equals(user.getUUID())) {
+
+				Publication tmpPub;
+				tmpPub = ConnectionModel.INSTANCE.serchPublicationByUUID(borrowtemp.getPublicationUuid()).get(0);
+				currentUserBorrows.add(tmpPub);
+			}
+		}
+			
+		userBorrowedData.addAll(currentUserBorrows);
+		filteredUserBorrowed = new FilteredList<Publication>(userBorrowedData, p -> true);
+		adminScene.getUserBorrowingsTable().setItems(filteredUserBorrowed);
+		
 	}
 
 	private void setupSearchFields() {

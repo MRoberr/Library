@@ -24,12 +24,12 @@ public class Book extends Publication {
 	 * {@link book#numberOfCopies} Represents the maximum number of book copies
 	 * the library has.
 	 */
-	private int numberOfCopies;
+//	private int numberOfCopies;
 	/**
 	 * {@link book#copiesLeft} Represents the number of book copies left in the
 	 * library.
 	 */
-	private int copiesLeft;
+//	private int copiesLeft;
 
 	public Book() {
 		authors = new ArrayList<>();

@@ -3,14 +3,12 @@ package edu.msg.library_client.desktop.jfxgui.view.scenes;
 import java.util.Set;
 
 import edu.msg.library_client.desktop.jfxgui.model.AutoCompleteTextField;
-import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.LoginAccess;
-import edu.msg.library_common.model.Magazine;
-import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
+import javafx.beans.property.ReadOnlyIntegerWrapper;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +22,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -35,7 +32,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 public class AdminScene extends Scene{
 
@@ -74,6 +70,7 @@ public class AdminScene extends Scene{
 	private TableView<Publication> publicationsTable;
 	private TableColumn<Publication, String> titleColumn;
 	private TableColumn<Publication, String> pubTypeColumn;
+	private TableColumn<Publication, Integer> pubLeftColumn;
 	
 	private Label searchUserLabel;
 	private AutoCompleteTextField searchUserWithHint;
@@ -84,8 +81,8 @@ public class AdminScene extends Scene{
 	
 	private TextField searchInUserBorrows;
 	
-	private Button lend;
-	private Button takeBack;
+	private Button lendButton;
+	private Button takeBackButton;
 	
 	
 	public AdminScene(Parent root) {
@@ -196,8 +193,8 @@ public class AdminScene extends Scene{
 		searchUserLabel = new Label("Search User");
 		searchUserWithHint = new AutoCompleteTextField();
 		
-		lend = new Button(">");
-		takeBack = new Button("<");
+		lendButton = new Button(">");
+		takeBackButton = new Button("<");
 		
 		searchInUserBorrows = new TextField();
 		searchInUserBorrows.setPromptText("Search in user borrows");
@@ -207,7 +204,7 @@ public class AdminScene extends Scene{
 		center.setPadding(new Insets(0, 10, 0, 10));
 		center.setSpacing(15);
 		center.setAlignment(Pos.CENTER);
-		center.getChildren().addAll(lend, takeBack);
+		center.getChildren().addAll(lendButton, takeBackButton);
 		
 		VBox shelfLeftSide = new VBox();
 		shelfLeftSide.setPadding(new Insets(10, 10, 20, 10));
@@ -246,6 +243,8 @@ public class AdminScene extends Scene{
 		//title
 		borrowedPublicationTitle = new TableColumn<Publication, String>("Title");
 		borrowedPublicationTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+		
+		userBorrowings.getColumns().addAll(borrowedPublicationTitle);
 	}
 	
 	private void createPublicationsSearchField() {
@@ -291,18 +290,12 @@ public class AdminScene extends Scene{
 		
 		
 		pubTypeColumn = new TableColumn<Publication, String>("Type");
-		pubTypeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Publication,String>, ObservableValue<String>>() {
-			
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<Publication, String> cd) {
-				
-				System.out.println();
-				return new ReadOnlyStringWrapper(cd.getValue().getClass().getSimpleName());
-				
-			}
-		});
+		pubTypeColumn.setCellValueFactory(celldata -> new ReadOnlyStringWrapper(celldata.getValue().getClass().getSimpleName()));
 		
-		publicationsTable.getColumns().addAll(titleColumn, pubTypeColumn);
+		pubLeftColumn = new TableColumn<Publication, Integer>("Quantity");
+		pubLeftColumn.setCellValueFactory(celldata -> new ReadOnlyObjectWrapper<Integer>(celldata.getValue().getCopiesLeft()));
+		
+		publicationsTable.getColumns().addAll(titleColumn, pubTypeColumn, pubLeftColumn);
 	}
 	
 	public void showUserManagerMenu() {
@@ -424,7 +417,7 @@ public class AdminScene extends Scene{
 	
 	public Button getLendButton() {
 		
-		return lend;
+		return lendButton;
 	}
 	
 	public AutoCompleteTextField getSearchUserWithHintField() {
@@ -432,7 +425,15 @@ public class AdminScene extends Scene{
 		return searchUserWithHint;
 	}
 	
+	public TableView<Publication> getUserBorrowingsTable() {
 	
+		return userBorrowings;
+	}
+	
+	public Button getTakeBackButton() {
+		
+		return takeBackButton;
+	}
 }
 
 

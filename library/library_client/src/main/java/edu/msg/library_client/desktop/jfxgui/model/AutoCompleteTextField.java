@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import edu.msg.library_client.desktop.jfxgui.listeners.UserSelectedListener;
 import edu.msg.library_common.model.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,6 +24,8 @@ public class AutoCompleteTextField extends TextField {
 	private ContextMenu entriesPopup;
 	
 	private User selectedUser;
+	
+	private UserSelectedListener listener;
 
 	/** Construct a new AutoCompleteTextField. */
 	public AutoCompleteTextField() {
@@ -109,6 +112,7 @@ public class AutoCompleteTextField extends TextField {
 				public void handle(ActionEvent actionEvent) {
 					setText(resultName);
 					selectedUser = searchResult.get(userIndex);
+					listener.loadUserBorrows(selectedUser);
 					entriesPopup.hide();
 				}
 			});
@@ -122,5 +126,10 @@ public class AutoCompleteTextField extends TextField {
 	public User getSelecteduser() {
 		
 		return selectedUser;
+	}
+	
+	public void addUserSelectedListener(UserSelectedListener listener) {
+		
+		this.listener = listener;
 	}
 }

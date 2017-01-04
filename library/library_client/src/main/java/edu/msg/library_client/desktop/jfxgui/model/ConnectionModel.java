@@ -10,6 +10,7 @@ import java.util.List;
 import edu.msg.library_client.desktop.jfxgui.ConnectionException;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
@@ -182,5 +183,50 @@ public enum ConnectionModel {
 			throw new ConnectionException("Connection error", e);
 		}
 	}
-
+	
+	public List<Entity> getAllBorrows() throws ConnectionException {
+		
+		try {
+			
+			return borrowingServiceRmi.getAllBorrows();
+		} catch(RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public List<Publication> serchPublicationByUUID(String uuid) throws ConnectionException {
+		
+		try {
+			
+			return searchServiceRmi.searchPublicationByUUID(uuid);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public void handBackPublication(Borrowing borrow) throws ConnectionException{
+		
+		try {
+			
+			borrowingServiceRmi.returnPublication(borrow);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

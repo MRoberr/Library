@@ -22,12 +22,12 @@ public class Newspaper extends Publication {
 	 * {@link newspaper#copiesLeft} Represents the number of newspapers copies
 	 * left in the library.
 	 */
-	private int numberOfCopies;
+//	private int numberOfCopies;
 	/**
 	 * {@link newspaper#copiesLeft} Represents the number of newspapers copies
 	 * left in the library.
 	 */
-	private int copiesLeft;
+//	private int copiesLeft;
 
 	@Override
 	public String toString() {

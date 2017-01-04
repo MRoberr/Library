@@ -29,12 +29,12 @@ public class Magazine extends Publication {
 	 * {@link magazine#copiesLeft} Represents the number of magazines copies
 	 * left in the library.
 	 */
-	private int numberOfCopies;
+//	private int numberOfCopies;
 	/**
 	 * {@link magazine#copiesLeft} Represents the number of magazines copies
 	 * left in the library.
 	 */
-	private int copiesLeft;
+//	private int copiesLeft;
 	
 	public Magazine() {
 		authors = new ArrayList<>();
