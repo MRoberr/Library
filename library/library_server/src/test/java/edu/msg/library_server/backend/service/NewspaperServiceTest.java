@@ -13,6 +13,10 @@ import org.junit.runners.MethodSorters;
 import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Entity;
 
+/**
+ * @author simoz
+ *
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class NewspaperServiceTest {
 	Newspaper newspaper;

@@ -1,6 +1,6 @@
 package edu.msg.library_common.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 
@@ -8,17 +8,14 @@ import org.junit.Test;
 
 public class BorrowingTest {
 	private Borrowing borrowing;
-	
+
 	public void createBorrowing() {
 		borrowing = new Borrowing();
 		borrowing.setPublicationUuid("789456");
 		borrowing.setUUID("456456");
 		borrowing.setUserUuid("123");
-		
 		borrowing.setBorrowingDate(java.sql.Date.valueOf(LocalDate.of(2015, 12, 01)));
 		borrowing.setDeadline(java.sql.Date.valueOf(LocalDate.of(2015, 12, 28)));
-		//borrowing.setReturnDate(java.sql.Date.valueOf(LocalDate.of(2016, 01, 15)));
-		
 	}
 
 	@Test
@@ -45,14 +42,13 @@ public class BorrowingTest {
 		createBorrowing();
 
 		borrowing.setReturnDate(java.sql.Date.valueOf(LocalDate.of(2016, 02, 15)));
-		
 
 		String update = borrowing.getUpdate();
 		System.out.println("update: " + update);
 		assertEquals("update publication_borrowings set publicationUuid='789456',userUuid='123',"
-				+"borrowingDate='2015-12-01',deadline='2015-12-28',returnDate='2016-02-15'"		
-				+ " where uuid='456456'", update);
-		}
+				+ "borrowingDate='2015-12-01',deadline='2015-12-28',returnDate='2016-02-15'" + " where uuid='456456'",
+				update);
+	}
 
 	@Test
 	public void deleteTest() {

@@ -1,17 +1,12 @@
 package edu.msg.library_common.model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Newspaper extends Publication {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * {@link newspaper#title} The title of the newspaper.
-	 */
-	private String title;
+	
 	/**
 	 * {@link newspaper#article_title} The title of the article.
 	 */
@@ -35,7 +30,6 @@ public class Newspaper extends Publication {
 	 */
 	private int copiesLeft;
 	
-
 	@Override
 	public String toString() {
 		return "Newspaper [title=" + title + ", article_title=" + article_title + ", publisher=" + publisher

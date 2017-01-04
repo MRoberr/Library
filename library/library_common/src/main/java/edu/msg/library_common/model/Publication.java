@@ -3,7 +3,7 @@ package edu.msg.library_common.model;
 public abstract class Publication extends BaseEntity{
 
 	private static final long serialVersionUID = 1L;
-	
+	protected String title;
 	
 	public static String getCreateView(){
 		return "CREATE OR REPLACE VIEW publications AS SELECT * FROM ("+
@@ -13,24 +13,33 @@ public abstract class Publication extends BaseEntity{
 				") as p";
 	}
 	
-	public abstract String getTitle();
+	public String getTitle() {
+		
+		return title;
+	}
 
 	public abstract void setTitle(String title);
 	
 	@Override
 	public String getSelectAll() {		
-		return "Select * from publications";
+		//Don't implement
+		return null;
 	}
 	
 	public static String getSelectByTitle(String title) {		
 		
-		return "Select * from publications where title like '% "+ title +" %'";
+		return "Select * from publications where title like '%"+ title +"%'";
 	}
 	
-	public String getSelectByRegexp(String regexp){
+	public static String getSelectByRegexp(String regexp){
 		return "select * from publications where title REGEXP '"+regexp+"'";
 	}
 
+	public static String getSelectAllPublications() {
+		
+		return "Select * from publications";
+	}
+	
 	@Override
 	public String getInsert() {
 		//Don t implement
