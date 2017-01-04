@@ -157,7 +157,7 @@ public class Magazine extends Publication {
 	
 	@Override
 	public String publicationToString() {
-		return "Magazine "+ title;
+		return "Magazine " + title;
 	}
 
 }
