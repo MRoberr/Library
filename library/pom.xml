@@ -14,6 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
+		<slf4jVersion>1.6.1</slf4jVersion>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -29,6 +30,42 @@
 				<groupId>edu.msg.library</groupId>
 				<artifactId>library_common</artifactId>
 				<version>${project.version}</version>
+			</dependency>			
+			
+			<!-- remove the real commons-logging from classpath -->
+			<!-- declare as provided or exclude from spring jars -->
+			<dependency>
+				<artifactId>commons-logging</artifactId>
+				<groupId>commons-logging</groupId>
+				<version>1.0</version>				
+			</dependency>
+			<!-- add slf4j interfaces to classpath -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>1.6.4</version>
+			</dependency>
+			<!-- add commons logging to slf4j bridge to classpath -->
+			<!-- acts as jcl but routes commons-logging calls to slf4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jcl-over-slf4j</artifactId>
+				<version>1.6.4</version>
+			</dependency>
+
+			<!-- add log4j binding to classpath -->
+			<!-- routes slf4j calls to log4j -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+				<version>1.6.4</version>
+			</dependency>
+			<!-- add log4j to classpath -->
+			<!-- does the logging -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.16</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
