@@ -44,7 +44,7 @@ public class BorrowingService {
 		return borrowServiceRmi.borrowPublication(borrow);
 	}
 	
-}
+
 
 	public boolean getBackPublication(User user) {
 		return false;

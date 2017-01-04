@@ -1,6 +1,7 @@
 package edu.msg.library_client.desktop.console;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -14,12 +15,10 @@ import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
-
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
-import edu.msg.library_common.rmi.SearchServiceRmi;
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
@@ -354,44 +353,24 @@ public class MainConsole extends UiFactory {
 		return false;
 	}
 	
-	public void returning() {
-		System.out.println("Kerem irja be a user nevet ");
-		String userName = scanner.next();
-		List<User> users = clientService.getAllUsers();
-		List<Publication> borrowingsOfUser=new ArrayList<>();;
-		BorrowingService bs = new BorrowingService();
-		for (User u : users) {
-			if (u.getName().equals(userName)) {
-				borrowingsOfUser = bs.getBackBorrowingList(u);
-				break;
-			}
-		}
-		if (!borrowingsOfUser.isEmpty()) {
-			int i=0;
-			for (Publication p : borrowingsOfUser) {
-				System.out.println(i++ +"-" +p.toString());
-			}
-			System.out.println(publication.publicationToString());
-		}
-
-		System.out.println("\nPlease select a user and one publication from the lists above!(Type name and title)");
-		String user = scanner.next();
-		scanner.nextLine();
-		String title = scanner.nextLine();
-		System.out.println(title);
-		for (User u : users) {
-			if (u.getName().equals(user))
-				for (Publication pub : publications) {
-					if (pub.getTitle().equals(title)) {
-						Borrowing borrow = new Borrowing();
-						borrow.setUserUuid(u.getUUID());
-						borrow.setPublicationUuid(pub.getUUID());
-						borrow.setBorrowingDate(java.sql.Date.valueOf(LocalDate.now()));
-						borrow.setDeadline(java.sql.Date.valueOf(LocalDate.now().plusDays(20)));
-						return (bs.borrow(borrow));
-					}
+		public void returning() {
+			System.out.println("Kerem irja be a user nevet ");
+			String userName = scanner.next();
+			List<User> users = clientService.getAllUsers();
+			List<Publication> borrowingsOfUser=new ArrayList<>();;
+			BorrowingService bs = new BorrowingService();
+			for (User u : users) {
+				if (u.getName().equals(userName)) {
+					borrowingsOfUser = bs.getBackBorrowingList(u);
+					break;
 				}
-		}
+			}
+			if (!borrowingsOfUser.isEmpty()) {
+				int i=0;
+				for (Publication p : borrowingsOfUser) {
+					System.out.println(i++ +"-" +p.toString());
+				}
+			}
 
-	}
+		}
 }
