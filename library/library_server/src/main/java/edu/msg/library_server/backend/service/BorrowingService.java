@@ -112,8 +112,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					break;
 				}
 			}
-			
-			return true;
+			return deleteBorrow(borrow);
 		} catch (Exception e) {
 			return false;
 		}
