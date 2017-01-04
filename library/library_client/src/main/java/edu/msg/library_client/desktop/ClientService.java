@@ -14,6 +14,7 @@ import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
@@ -38,6 +39,7 @@ public class ClientService {
 			Registry registry = LocateRegistry.getRegistry("localhost", LoginServiceRmi.RMI_PORT);
 			try {
 				uRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
+				
 				searchRmi=(SearchServiceRmi)registry.lookup(SearchServiceRmi.RMI_NAME);
 			} catch (NotBoundException e) {
 
@@ -98,10 +100,14 @@ public class ClientService {
 	// ex.printStackTrace();
 	// }
 	// }
-
-	public void newClientCreate(String name, String password) {
+	
+	
+	public void newClientCreate(String name,LoginAccess user_type,int index, String password) {
 		User user = new User();
 		user.setName(name);
+		
+		user.setUserType(user_type);
+		user.setLoyalityIndex(index);
 		user.setPassword(password);
 
 		try {

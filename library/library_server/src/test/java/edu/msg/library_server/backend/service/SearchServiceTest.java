@@ -18,7 +18,7 @@ public class SearchServiceTest {
 	public SearchService searchService;
 
 	/**
-	 * Tests the publication view (Publication List) search by title At the
+	 * Tests the publication view (Publication List) search by title at the
 	 * moment is testing in local database, any time is used from a different
 	 * computer the test field it need's to be changed
 	 */
@@ -38,6 +38,11 @@ public class SearchServiceTest {
 		}
 	}
 
+	/**
+	 * Tests the publication view (Publication List) search by UUid at the
+	 * moment is testing in local database, any time is used from a different
+	 * computer the test field it need's to be changed
+	 */
 	@Test
 	public void TestSearchPublicationByUUID() {
 		try {

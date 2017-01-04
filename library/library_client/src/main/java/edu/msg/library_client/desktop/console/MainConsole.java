@@ -9,9 +9,14 @@ import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Entity;
+
+import edu.msg.library_common.model.LoginAccess;
+
+
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
+
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
@@ -22,7 +27,7 @@ public class MainConsole extends UiFactory {
 
 	}
 
-	public void startConsole() {
+	public void startConsole() {	
 		System.out.println("Please enter your name and password!");
 		login();
 	}
@@ -48,6 +53,8 @@ public class MainConsole extends UiFactory {
 			}
 		}
 	}
+	
+	
 
 	private void handleAdminCommand() {
 		try {
@@ -60,7 +67,7 @@ public class MainConsole extends UiFactory {
 			case 2:
 				createNewUser();
 				break;
-
+			
 			case 3:
 				updateClient();
 				break;
@@ -101,7 +108,7 @@ public class MainConsole extends UiFactory {
 			System.out.println("invalid command, try again...");
 		}
 	}
-
+	
 	private void listUsers() {
 		List<User> users = clientService.getAllUsers();
 		for (Entity user : users) {
@@ -111,7 +118,20 @@ public class MainConsole extends UiFactory {
 
 	private void createNewUser() {
 		System.out.println("Enter name and password!");
-		clientService.newClientCreate(scanner.next(), scanner.next());
+		String userName = scanner.next();
+		String type=scanner.next();
+		LoginAccess loginAcces = null;
+		if(type.equals("ADMIN")){
+			loginAcces = LoginAccess.ADMIN;
+		}
+		else if(type.equals("USER")){
+			loginAcces = LoginAccess.USER;
+		}
+		if (loginAcces == null) {
+			System.out.println("invalid login access");
+		}else{
+			clientService.newClientCreate(userName,loginAcces,scanner.nextInt(),scanner.next());
+		}
 	}
 
 	private void updateClient() {
