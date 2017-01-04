@@ -40,19 +40,20 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 
 	@Override
 	public boolean insertBorrowing(Borrowing borrow) throws RemoteException {
-		sqlStatement = borrowTemp.getInsert();
+		sqlStatement = borrow.getInsert();
+		System.out.println(sqlStatement);
 		return SqlHandler.getInstance().executeSqlStatement(sqlStatement);
 	}
 
 	@Override
 	public boolean updateBorrowing(Borrowing borrow) throws RemoteException {
-		sqlStatement = borrowTemp.getUpdate();
+		sqlStatement = borrow.getUpdate();
 		return SqlHandler.getInstance().executeSqlStatement(sqlStatement);
 	}
 
 	@Override
 	public boolean deleteBorrow(Borrowing borrow) throws RemoteException {
-		sqlStatement = borrowTemp.getDelete();
+		sqlStatement = borrow.getDelete();
 		return SqlHandler.getInstance().executeSqlStatement(sqlStatement);
 	}
 

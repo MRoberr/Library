@@ -280,15 +280,6 @@ public class SqlHandler {
 					resultList.add(newspaper);
 				}
 				break;
-			case "PUBLICATION":   
-//				while (resultSet.next()) {
-//					Publication publcaion = new Publication();
-//					publcaion.setUUID(resultSet.getString("uuid"));
-//					publcaion.setTitle(resultSet.getString("title"));
-//					publcaion.setType(resultSet.getInt("type"));
-//					resultList.add(publcaion);
-//				}
-				break;
 			case "BORROWING":   
 				while (resultSet.next()) {
 					Borrowing borrow = new Borrowing();
@@ -322,7 +313,7 @@ public class SqlHandler {
 	public boolean executeSqlStatement(String select) {
 		try {
 			int i = connection.createStatement().executeUpdate(select);
-			if (i == 1) {
+			if (i >=0) {
 				return true;
 			} else
 				return false;
@@ -331,33 +322,6 @@ public class SqlHandler {
 			return false;
 		}
 	}
-
-	//exact same function just with different name
-	
-//	public boolean executeUpdate(String select) {
-//		try {
-//			int i = connection.createStatement().executeUpdate(select);
-//			if (i == 1) {
-//				return true;
-//			} else
-//				return false;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
-
-//	public boolean executeDelete(String select) {
-//		try {
-//			int i = connection.createStatement().executeUpdate(select);
-//			if (i == 1) {
-//				return true;
-//			} else
-//				return false;
-//		} catch (SQLException e) {
-//			return false;
-//		}
-//	}
 
 	public Entity executeSingleSelect(String select, String entityType) {
 		

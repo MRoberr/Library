@@ -1,6 +1,7 @@
 package edu.msg.library_client.desktop.console;
 
 import java.rmi.RemoteException;
+import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -11,10 +12,8 @@ import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Book;
+import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
-
-import edu.msg.library_common.model.LoginAccess;
-
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
@@ -44,8 +43,13 @@ public class MainConsole extends UiFactory {
 
 			menuforAdmin();
 			while (true) {
+				try{
 				handleAdminCommand();
 				System.out.println("Type the number of the next command!");
+				} catch (InputMismatchException e) {
+					System.out.println("Invalid command, try again...");
+					break;
+				}
 			}
 		} else {
 
@@ -59,7 +63,6 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void handleAdminCommand() {
-		try {
 			int cmd = scanner.nextInt();
 			switch (cmd) {
 			case 1:
@@ -103,22 +106,24 @@ public class MainConsole extends UiFactory {
 				break;
 			case 7:
 				updateBook();
-				break;				
-			case 9:				
+				break;
+			case 9:
 				try {
-					borrowing();
+					if (borrowing()) {
+						System.out.println("Borrow successful!");
+					} else
+						System.out.println("Borrow not successful, please try again!");
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					System.out.println("You are not allowed to borrow!");
 				}
 				break;
 			case 11:
 				listUsers();
 				break;
 			}
-		} catch (InputMismatchException e) {
-			System.out.println("Invalid command, try again...");
-		}
+		
 	}
 
 	private List<User> listUsers() {
@@ -228,14 +233,35 @@ public class MainConsole extends UiFactory {
 		System.out.println("Type");
 		System.out.println("1-Kiadvany utani kereses");
 	}
-	
-	
-	public void borrowing() throws RemoteException{
-		BorrowingService bs=new BorrowingService();
-		List<User> users=listUsers();
-		List<Publication> publications=bs.getAllPublications();
+
+	public boolean borrowing() throws RemoteException {
+		BorrowingService bs = new BorrowingService();
+		List<User> users = listUsers();
+
+		System.out.println("\n");
+		List<Publication> publications = bs.getAllPublications();
 		for (Publication publication : publications) {
-		//	publication;
+			System.out.println(publication.publicationToString());
 		}
+
+		System.out.println("\nPlease select a user and one publication from the lists above!(Type name and title)");
+		String user=scanner.next();
+		scanner.nextLine();
+		String title=scanner.nextLine();
+		System.out.println(title);
+		for (User u : users) {
+			if (u.getName().equals(user))
+				for (Publication pub : publications) {
+					if (pub.getTitle().equals(title)) {
+						Borrowing borrow = new Borrowing();
+						borrow.setUserUuid(u.getUUID());
+						borrow.setPublicationUuid(pub.getUUID());
+						borrow.setBorrowingDate(java.sql.Date.valueOf(LocalDate.now()));
+						borrow.setDeadline(java.sql.Date.valueOf(LocalDate.now().plusDays(20)));
+						return (bs.borrow(borrow));
+					}
+				}
+		}
+		return false;
 	}
 }
