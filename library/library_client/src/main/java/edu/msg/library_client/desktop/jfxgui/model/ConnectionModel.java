@@ -10,13 +10,15 @@ import java.util.List;
 import edu.msg.library_client.desktop.jfxgui.ConnectionException;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.LoginAccess;
-import edu.msg.library_common.model.Newspaper;
-import edu.msg.library_common.model.User;
 import edu.msg.library_common.model.Magazine;
+import edu.msg.library_common.model.Newspaper;
+import edu.msg.library_common.model.Publication;
+import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
 import edu.msg.library_common.rmi.MagazineServiceRmi;
 import edu.msg.library_common.rmi.NewspaperServiceRmi;
+import edu.msg.library_common.rmi.SearchServiceRmi;
 import edu.msg.library_common.rmi.UserServiceRmi;
 
 public enum ConnectionModel {
@@ -31,6 +33,7 @@ public enum ConnectionModel {
 	private NewspaperServiceRmi newspaperServiceRmi;
 	
 	private UserServiceRmi userServiceRmi;
+	private SearchServiceRmi searchServiceRmi;
 	
 	
 	{
@@ -44,6 +47,7 @@ public enum ConnectionModel {
 			newspaperServiceRmi = (NewspaperServiceRmi) registry.lookup(NewspaperServiceRmi.RMI_NAME);
 			
 			userServiceRmi = (UserServiceRmi) registry.lookup(UserServiceRmi.RMI_NAME);
+			searchServiceRmi = (SearchServiceRmi) registry.lookup(SearchServiceRmi.RMI_NAME);
 
 		} catch (RemoteException | NotBoundException e) {
 //			e.printStackTrace();
@@ -145,7 +149,19 @@ public enum ConnectionModel {
 	public void deleteUser(User user) throws ConnectionException {
 		
 		try {
+			
 			userServiceRmi.deleteUser(user);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public List<Publication> getAllPublications() throws ConnectionException {
+		
+		try {
+			
+			return searchServiceRmi.getAllPublications();
 		} catch (RemoteException e) {
 			
 			throw new ConnectionException("Connection error", e);

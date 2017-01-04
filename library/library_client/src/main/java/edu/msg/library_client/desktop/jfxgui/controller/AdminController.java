@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_client.desktop.jfxgui.view.scenes.AdminScene;
+import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,8 +22,11 @@ public class AdminController {
 	}
 
 	private AdminScene adminScene;
+	
 	private ObservableList<User> userData;
+	private ObservableList<Publication> publicationsData;
 	private FilteredList<User> filteredUsers;
+	private FilteredList<Publication> filteredPublications;
 
 	private Menu displayed;
 	private boolean userManagerMenuVisible;
@@ -32,7 +36,7 @@ public class AdminController {
 		adminScene = new AdminScene(root);
 
 		setTabPaneEvents();
-		setupSearchField();
+		setupSearchFields();
 
 		displayed = Menu.none;
 		userManagerMenuVisible = false;
@@ -40,6 +44,9 @@ public class AdminController {
 
 		userData = FXCollections.observableArrayList();
 		loadUsers();
+		publicationsData = FXCollections.observableArrayList();
+		//loadPublications();
+		
 	}
 
 	private void createButtonEvents() {
@@ -110,28 +117,41 @@ public class AdminController {
 
 		adminScene.getDeleteUserButton().setOnAction(e -> {
 
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Delete User");
-			alert.setHeaderText("Are you sure you want to delete this user?");
-
-			ButtonType yes = new ButtonType("Yes");
-			ButtonType no = new ButtonType("No");
-
-			alert.getButtonTypes().setAll(yes, no);
-
-			Optional<ButtonType> result = alert.showAndWait();
-
-			if (result.get() == yes) {
-
-				ConnectionModel.INSTANCE.deleteUser(adminScene.getSelectedUser());
-			}
-
-			if (result.get() == no) {
+			try {
 				
-				alert.close();
+				adminScene.getSelectedUser().getName();
+				Alert alert = new Alert(AlertType.CONFIRMATION);
+				alert.setTitle("Delete User");
+				alert.setHeaderText("Are you sure you want to delete this user?");
+
+				ButtonType yes = new ButtonType("Yes");
+				ButtonType no = new ButtonType("No");
+
+				alert.getButtonTypes().setAll(yes, no);
+
+				Optional<ButtonType> result = alert.showAndWait();
+
+				if (result.get() == yes) {
+
+					ConnectionModel.INSTANCE.deleteUser(adminScene.getSelectedUser());
+				}
+
+				if (result.get() == no) {
+					
+					alert.close();
+				}
+				
+				loadUsers();
+			} catch (NullPointerException ex) {
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("No user is selected!");
+
+				alert.showAndWait();
 			}
 			
-			loadUsers();
+			
 		});
 	}
 
@@ -162,11 +182,16 @@ public class AdminController {
 					switch (newValue.intValue()) {
 
 					case 0:
-						adminScene.clearSearch();
+						
+						adminScene.clearUserSearch();
 						loadUsers();
 
 						break;
 					case 1:
+						
+						adminScene.clearPublicationSearch();
+						loadPublications();
+						
 						break;
 					}
 
@@ -183,6 +208,16 @@ public class AdminController {
 
 	}
 
+	private void loadPublications() {
+		
+		publicationsData.clear();
+		publicationsData.addAll(ConnectionModel.INSTANCE.getAllPublications());
+		
+		filteredPublications = new FilteredList<Publication>(publicationsData, p -> true);
+		adminScene.getPublicationTable().setItems(filteredPublications);
+		
+	}
+	
 	private void loadUsers() {
 
 		userData.clear();
@@ -192,13 +227,14 @@ public class AdminController {
 		adminScene.getUserTable().setItems(filteredUsers);
 	}
 
-	private void setupSearchField() {
+	private void setupSearchFields() {
 
-		adminScene.getSearchField().textProperty().addListener((observable, oldValue, newValue) -> {
+		adminScene.getUserSearchField().textProperty().addListener((observable, oldValue, newValue) -> {
 
 			filteredUsers.setPredicate((user -> {
 
 				if (newValue == null || newValue.isEmpty()) {
+					
 					return true;
 				}
 
@@ -210,6 +246,26 @@ public class AdminController {
 				}
 				return false;
 			}));
+		});
+		
+		adminScene.getPublicationSearchField().textProperty().addListener((observable, oldValue, newValue) -> {
+			
+			filteredPublications.setPredicate(publication -> {
+				
+				if (newValue == null || newValue.isEmpty()) {
+					
+					return true;
+				}
+				
+				String lowerCaseFilter = newValue.toLowerCase();
+				
+				if (publication.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+					
+					return true;
+				}
+				
+				return false;				
+			});			
 		});
 
 	}

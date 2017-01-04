@@ -6,11 +6,7 @@ import java.util.List;
 public class Book extends Publication {
 
 	private static final long serialVersionUID = 1L;
-	/**
-	 * {@link book#title}
-	 * The title of the book.
-	 */
-	private String title;
+	
 	/**
 	 * {@link book#publisher}
 	 * The publisher of the book.

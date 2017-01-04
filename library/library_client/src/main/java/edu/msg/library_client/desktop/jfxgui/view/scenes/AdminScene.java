@@ -1,7 +1,10 @@
 package edu.msg.library_client.desktop.jfxgui.view.scenes;
 
 import edu.msg.library_common.model.LoginAccess;
+import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,6 +20,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -25,16 +29,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
 public class AdminScene extends Scene{
 
-	private Label title;
 	
 	private TabPane tabPane;
 	
 	//user tab
+	private Label userTabTitle;
 	private Tab userTab;
-	private TextField searchField;
+	private TextField searchUserField;
 	private Button addUserButtonMenu;
 	private Button editUserButton;
 	private Button deleteUserButton;
@@ -48,12 +53,6 @@ public class AdminScene extends Scene{
 	private ComboBox<String> userTypeCombo;
 	private Button userManagerButton; //add or save
 	
-	
-	
-	
-	//shelf tab
-	private Tab shelfTab;
-	
 	private TableView<User> userTable;
 	private TableColumn<User, String> nameColumn;
 	private TableColumn<User, LoginAccess> userTypeColumn;
@@ -61,15 +60,29 @@ public class AdminScene extends Scene{
 	
 	
 	
+	//shelf tab
+	private Label shelfTabTitle;
+	private Tab shelfTab;
+	private TextField searchPublicationField;
+	
+	private TableView<Publication> publicationsTable;
+	private TableColumn<Publication, String> titleColumn;
+	private TableColumn<Publication, String> pubTypeColumn;
+	
+	
+	
+	
 	public AdminScene(Parent root) {
 		super(root, 600, 600);
 		
-		title = new Label("User Panel");
-		title.setFont(new Font("Arial", 20));
+		
 		
 		tabPane = new TabPane();
+		
 		createUserTab();
+		
 		createShelfTab();
+		
 		tabPane.getTabs().addAll(userTab, shelfTab);
 		
 		
@@ -79,26 +92,28 @@ public class AdminScene extends Scene{
 	private void createUserTab() {
 		
 		userTab = new Tab("Use Management");
+		userTabTitle = new Label("User Panel");
+		userTabTitle.setFont(new Font("Arial", 20));
 		
-		createTable();
-		createSearchField();
+		createUserTable();
+		createUserSearchField();
 		createUserButtons();
 		
 		
-		BorderPane pane = new BorderPane();
-		userTab.setContent(pane);
+		BorderPane userTabPane = new BorderPane();
+		userTab.setContent(userTabPane);
 		
-		VBox leftSide = new VBox();
-		leftSide.setPadding(new Insets(10, 10, 20, 10));
-		leftSide.setSpacing(15);
+		VBox userTabLeftSide = new VBox();
+		userTabLeftSide.setPadding(new Insets(10, 10, 20, 10));
+		userTabLeftSide.setSpacing(15);
 		
-		HBox hbox = new HBox();
-		hbox.setPadding(new Insets(0, 10, 0, 10));
-		hbox.setSpacing(10);
-		hbox.getChildren().addAll(addUserButtonMenu, editUserButton, deleteUserButton);
+		HBox bottomButtons = new HBox();
+		bottomButtons.setPadding(new Insets(0, 10, 0, 10));
+		bottomButtons.setSpacing(10);
+		bottomButtons.getChildren().addAll(addUserButtonMenu, editUserButton, deleteUserButton);
 		
-		leftSide.getChildren().addAll(title, userTable, searchField, hbox);
-		pane.setLeft(leftSide);
+		userTabLeftSide.getChildren().addAll(userTabTitle, userTable, searchUserField, bottomButtons);
+		userTabPane.setLeft(userTabLeftSide);
 		
 		userManagerMenu = new GridPane();
 		userManagerMenu.setVgap(15);
@@ -115,7 +130,7 @@ public class AdminScene extends Scene{
 		userManagerMenu.add(userTypeCombo, 0, 3);
 		userManagerMenu.add(userManagerButton, 0, 4);
 		
-		pane.setCenter(userManagerMenu);
+		userTabPane.setCenter(userManagerMenu);
 	}
 	
 	private void createUserManagerItems() {
@@ -145,25 +160,48 @@ public class AdminScene extends Scene{
 		deleteUserButton = new Button("Delete");
 	}
 	
-	private void createSearchField() {
+	private void createUserSearchField() {
 		
-		searchField = new TextField();
-		searchField.setPromptText("Search user");
-		searchField.setMaxWidth(200);
+		searchUserField = new TextField();
+		searchUserField.setPromptText("Search user");
+		searchUserField.setMaxWidth(200);
 	}
 	
 	private void createShelfTab() {
 		
 		shelfTab = new Tab("Library Shelf");
+		shelfTabTitle = new Label("Library Shelf");
+		shelfTabTitle.setFont(new Font("Arial", 20));
+		
+		createShelfTable();
+		createPublicationsSearchField();
+		
+		VBox shelfLeftSide = new VBox();
+		shelfLeftSide.setPadding(new Insets(10, 10, 20, 10));
+		shelfLeftSide.setSpacing(15);
+		
+		shelfLeftSide.getChildren().addAll(shelfTabTitle, publicationsTable, searchPublicationField);
+		
+		BorderPane shelfTabPane = new BorderPane();
+		shelfTab.setContent(shelfTabPane);
+		shelfTabPane.setLeft(shelfLeftSide);
+		
+		
 	}
 	
-	private void createTable() {
+	private void createPublicationsSearchField() {
+		
+		searchPublicationField = new TextField();
+		searchPublicationField.setPromptText("Search on shelf");
+		searchPublicationField.setMaxWidth(200);
+	}
+	
+	private void createUserTable() {
 		
 		userTable = new TableView<User>();
 		userTable.setMinWidth(300);
 		userTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		userTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		
+		userTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);		
 		userTable.setEditable(false);
 		
 		//name
@@ -180,6 +218,32 @@ public class AdminScene extends Scene{
 		
 		userTable.getColumns().addAll(nameColumn, userTypeColumn, loyaltyColumn);		
 		
+	}
+	
+	private void createShelfTable() {
+		
+		publicationsTable = new TableView<Publication>();
+		publicationsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		publicationsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		publicationsTable.setEditable(false);
+		
+		titleColumn = new TableColumn<Publication, String>("Title");
+		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+		
+		
+		pubTypeColumn = new TableColumn<Publication, String>("Type");
+		pubTypeColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Publication,String>, ObservableValue<String>>() {
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Publication, String> cd) {
+				
+				System.out.println();
+				return new ReadOnlyStringWrapper(cd.getValue().getClass().getSimpleName());
+				
+			}
+		});
+		
+		publicationsTable.getColumns().addAll(titleColumn, pubTypeColumn);
 	}
 	
 	public void showUserManagerMenu() {
@@ -202,14 +266,24 @@ public class AdminScene extends Scene{
 		return tabPane;
 	}
 	
-	public TextField getSearchField() {
+	public TextField getUserSearchField() {
 		
-		return searchField;
+		return searchUserField;
 	}
 	
-	public void clearSearch() {
+	public TextField getPublicationSearchField() {
 		
-		searchField.clear();
+		return searchPublicationField;
+	}
+	
+	public void clearUserSearch() {
+		
+		searchUserField.clear();
+	}
+	
+	public void clearPublicationSearch() {
+		
+		searchPublicationField.clear();
 	}
 	
 	public Button getAddUserButtonMenu() {
@@ -277,6 +351,11 @@ public class AdminScene extends Scene{
 	public Button getDeleteUserButton() {
 		
 		return deleteUserButton;
+	}
+	
+	public TableView<Publication> getPublicationTable() {
+		
+		return publicationsTable;
 	}
 }
 
