@@ -31,4 +31,10 @@ public class SearchService extends UnicastRemoteObject implements SearchServiceR
 		reg=reg.replace("*", "[a-zA-Z0-9 ]*");
 		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectByRegexp(reg));
 	}
+
+	@Override
+	public List<Publication> getAllPublications() throws RemoteException {
+
+		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectAllPublications());
+	}
 }
