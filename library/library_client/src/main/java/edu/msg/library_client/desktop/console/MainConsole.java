@@ -44,7 +44,7 @@ public class MainConsole extends UiFactory {
 			System.out.println("logged in as user");
 			menuforUser();
 			while (true) {
-			//	handleUserCommand();
+				handleUserCommand();
 			}
 		}
 	}
@@ -163,6 +163,11 @@ public class MainConsole extends UiFactory {
 		System.out.println("9-Kiadvany kolcsonzes");
 		System.out.println("10-Kiadvany visszavetele");
 		System.out.println("11-az osszes felhasznalo lekerese");
+	}
+	private void handleUserCommand(){
+		System.out.println("Enter title!");
+		searchPublications();
+		
 	}
 
 	private void menuforUser() {
