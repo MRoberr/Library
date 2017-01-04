@@ -35,7 +35,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 	@Override
 	public List<Entity> getAllBorrows() throws RemoteException {
 		sqlStatement = borrowTemp.getSelectAll();
-		return SqlHandler.getInstance().executeSelect(sqlStatement, "BOORROW");
+		return SqlHandler.getInstance().executeSelect(sqlStatement, "BORROWING");
 	}
 
 	@Override

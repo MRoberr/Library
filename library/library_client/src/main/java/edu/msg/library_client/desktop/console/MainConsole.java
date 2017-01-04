@@ -1,6 +1,7 @@
 package edu.msg.library_client.desktop.console;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -18,10 +19,12 @@ import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
+import edu.msg.library_common.rmi.SearchServiceRmi;
 
 public class MainConsole extends UiFactory {
 	private ClientService clientService = new ClientService();
 	private PublicationService publicationService = new PublicationService();
+
 	Scanner scanner = new Scanner(System.in);
 
 	public MainConsole() {
@@ -103,14 +106,17 @@ public class MainConsole extends UiFactory {
 				break;
 			case 7:
 				updateBook();
-				break;				
-			case 9:				
+				break;
+			case 9:
 				try {
 					borrowing();
 				} catch (RemoteException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				break;
+			case 10:
+				returning();
 				break;
 			case 11:
 				listUsers();
@@ -128,6 +134,8 @@ public class MainConsole extends UiFactory {
 		}
 		return users;
 	}
+	
+	
 
 	private void createNewUser() {
 		System.out.println("Enter name, password and type!");
@@ -228,14 +236,34 @@ public class MainConsole extends UiFactory {
 		System.out.println("Type");
 		System.out.println("1-Kiadvany utani kereses");
 	}
-	
-	
-	public void borrowing() throws RemoteException{
-		BorrowingService bs=new BorrowingService();
-		List<User> users=listUsers();
-		List<Publication> publications=bs.getAllPublications();
+
+	public void borrowing() throws RemoteException {
+		BorrowingService bs = new BorrowingService();
+		List<User> users = listUsers();
+		List<Publication> publications = bs.getAllPublications();
 		for (Publication publication : publications) {
-		//	publication;
+			// publication;
 		}
+	}
+
+	public void returning() {
+		System.out.println("Kerem irja be a user nevet ");
+		String userName = scanner.next();
+		List<User> users = clientService.getAllUsers();
+		List<Publication> borrowingsOfUser=new ArrayList<>();;
+		BorrowingService bs = new BorrowingService();
+		for (User u : users) {
+			if (u.getName().equals(userName)) {
+				borrowingsOfUser = bs.getBackBorrowingList(u);
+				break;
+			}
+		}
+		if (!borrowingsOfUser.isEmpty()) {
+			int i=0;
+			for (Publication p : borrowingsOfUser) {
+				System.out.println(i++ +"-" +p.toString());
+			}
+		}
+
 	}
 }
