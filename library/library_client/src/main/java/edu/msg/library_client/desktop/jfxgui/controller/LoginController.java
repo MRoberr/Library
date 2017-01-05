@@ -23,12 +23,10 @@ public class LoginController {
 			switch(ConnectionModel.INSTANCE.login(loginScene.getUserNameText(), loginScene.getPasswordText())) {
 			
 			case ADMIN:
-				System.out.println("admin");
 				listener.switchScene(new AdminController(parent).getScene());
 				break;
 			
 			case USER:
-				System.out.println("user");
 				listener.switchScene(new UserController(parent).getScene());				
 				break;
 				

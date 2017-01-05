@@ -324,7 +324,6 @@ public class MainConsole extends UiFactory {
 		BorrowingService bs = new BorrowingService();
 		List<User> users = listUsers();
 
-		System.out.println("\n");
 		List<Publication> publications = bs.getAllPublications();
 		for (Publication publication : publications) {
 			System.out.println(publication.publicationToString());

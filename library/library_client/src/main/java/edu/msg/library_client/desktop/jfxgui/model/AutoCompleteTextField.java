@@ -36,6 +36,8 @@ public class AutoCompleteTextField extends TextField {
 		textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observableValue, String s, String s2) {
+				
+				
 				if (getText().length() == 0) {
 					entriesPopup.hide();
 				} else {

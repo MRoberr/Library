@@ -179,30 +179,52 @@ public class AdminController implements UserSelectedListener{
 		
 		adminScene.getLendButton().setOnAction(e -> {
 					
+			try {
+				
+				Borrowing publication = new Borrowing();
+				publication.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
+				publication.setPublicationUuid(adminScene.getPublicationTable().getSelectionModel().getSelectedItem().getUUID());
+				
+				publication.setBorrowingDate(Date.valueOf(LocalDate.now()));
+				publication.setDeadline(Date.valueOf(LocalDate.now().plusDays(20)));
+				
+				ConnectionModel.INSTANCE.borrow(publication);
+				
+				loadPublications();
+				loadUserBorrows(adminScene.getSearchUserWithHintField().getSelecteduser());
 			
-			Borrowing publication = new Borrowing();
-			publication.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
-			publication.setPublicationUuid(adminScene.getPublicationTable().getSelectionModel().getSelectedItem().getUUID());
+			} catch (NullPointerException ex) {
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Select a publication and a user to lend to!");
+				alert.showAndWait();
 			
-//			Date now = Date.from(LocalDate.now().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-		
-			
-			publication.setBorrowingDate(Date.valueOf(LocalDate.now()));
-			publication.setDeadline(Date.valueOf(LocalDate.now().plusDays(20)));
-			
-			ConnectionModel.INSTANCE.borrow(publication);
-			
-			System.out.println("kiadva");
+			}
 		});
 		
 		adminScene.getTakeBackButton().setOnAction(e -> {
 			
-			Borrowing borrow = new Borrowing();
-			borrow.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
-			borrow.setPublicationUuid(adminScene.getUserBorrowingsTable().getSelectionModel().getSelectedItem().getUUID());
-
-			ConnectionModel.INSTANCE.handBackPublication(searchForBorrow(borrow.getUserUuid(), borrow.getPublicationUuid()));
+			try {
 			
+				Borrowing borrow = new Borrowing();
+				borrow.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
+				borrow.setPublicationUuid(adminScene.getUserBorrowingsTable().getSelectionModel().getSelectedItem().getUUID());
+	
+				ConnectionModel.INSTANCE.handBackPublication(searchForBorrow(borrow.getUserUuid(), borrow.getPublicationUuid()));
+				
+				loadPublications();
+				loadUserBorrows(adminScene.getSearchUserWithHintField().getSelecteduser());
+			
+			} catch (NullPointerException ex) {
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Select a publication and a user to lend to!");
+				alert.showAndWait();
+				
+			}
+
 		});
 	}
 	
@@ -212,7 +234,6 @@ public class AdminController implements UserSelectedListener{
 
 		for (int i = 0; i < allBorrows.size(); i++) {
 
-			System.out.println(i);
 			Borrowing borrowTmp = (Borrowing) allBorrows.get(i);
 
 			if (borrowTmp.getUserUuid().equals(userUUID) && borrowTmp.getPublicationUuid().equals(publicationUUID)) {
@@ -247,7 +268,7 @@ public class AdminController implements UserSelectedListener{
 
 		adminScene.getTabPane().getSelectionModel().selectedIndexProperty()
 				.addListener((obsValue, oldValue, newValue) -> {
-					System.out.println(oldValue);
+
 					switch (newValue.intValue()) {
 
 					case 0:
@@ -307,7 +328,6 @@ public class AdminController implements UserSelectedListener{
 
 		for (int i = 0; i < allBorrows.size(); i++) {
 
-			System.out.println(i);
 			Borrowing borrowtemp = (Borrowing) allBorrows.get(i);
 
 			if (borrowtemp.getUserUuid().equals(user.getUUID())) {
