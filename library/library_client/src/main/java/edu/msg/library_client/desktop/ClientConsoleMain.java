@@ -6,7 +6,6 @@ public class ClientConsoleMain {
 	public static void main(String[] args) throws NotBoundException {				
 		
 		UiFactory.getConsole();
-		//Proba
 	
 	}
 }
