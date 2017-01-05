@@ -257,13 +257,15 @@ public class MainConsole extends UiFactory {
 
 	private void deletePublication() {
 		List<Publication> publications = publicationService.getPublications();
+		int i = 0;
 		for (Publication publication : publications) {
-			System.out.println(publication);
+			System.out.println(++i + "-" + publication.getTitle());
 		}
-		System.out.println("Please enter the type ");
+		System.out.println("Please enter the number corresponding to the publication:");
+		int pubNr = scanner.nextInt();
 		String publicationName = scanner.nextLine();
 		for (Publication publication : publications) {
-			if (publicationName.equals(publication.getTitle()))
+			if (publications.get(pubNr-1).getTitle().equals(publication.getTitle()))
 
 			{
 				publicationService.deletePublication(publication);
@@ -366,7 +368,7 @@ public class MainConsole extends UiFactory {
 		if (!borrowingsOfUser.isEmpty()) {
 			int i = 0;
 			for (Publication p : borrowingsOfUser) {
-				System.out.println(i++ + "-" + p.toString());
+				System.out.println(i++ + "-" + p.getTitle());
 			}
 			System.out.println("Type the number of the book");
 			int nr = scanner.nextInt();
