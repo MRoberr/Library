@@ -173,11 +173,11 @@ public enum ConnectionModel {
 		}
 	}
 	
-	public void borrow(Borrowing publication) {
+	public boolean borrow(Borrowing publication) {
 		
 		try {
 			
-			borrowingServiceRmi.borrowPublication(publication);
+			return borrowingServiceRmi.borrowPublication(publication);
 		} catch (RemoteException e) {
 			
 			throw new ConnectionException("Connection error", e);
@@ -211,6 +211,39 @@ public enum ConnectionModel {
 		try {
 			
 			borrowingServiceRmi.returnPublication(borrow);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public void deleteBook(Book book) throws ConnectionException{
+		
+		try {
+			
+			bookServiceRmi.deleteBook(book);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public void deleteMagazine(Magazine magazine) throws ConnectionException {
+		
+		try {
+			
+			magazineServiceRmi.deleteMagazine(magazine);
+		} catch (RemoteException e) {
+			
+			throw new ConnectionException("Connection error", e);
+		}
+	}
+	
+	public void deleteNewspaper(Newspaper newspaper) throws ConnectionException {
+		
+		try {
+			
+			newspaperServiceRmi.deleteNewspaper(newspaper);
 		} catch (RemoteException e) {
 			
 			throw new ConnectionException("Connection error", e);
