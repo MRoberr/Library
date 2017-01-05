@@ -417,9 +417,9 @@ public class MainConsole extends UiFactory {
 			for (Publication p : borrowingsOfUser) {
 				System.out.println(i++ + "-" + p.getTitle());
 			}
-			System.out.println("Type the number of the book");
+			System.out.println("Type the number of the publication");
 			int nr = scanner.nextInt();
-			if(nr>=borrowingsOfUser.size() && bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
+			if(nr<=borrowingsOfUser.size() && bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
 				System.out.println("Return was succesful!");
 			} else {
 				System.out.println("Return not succesful!");
