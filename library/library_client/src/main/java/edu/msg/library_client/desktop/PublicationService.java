@@ -167,6 +167,36 @@ public class PublicationService {
 		}
 	}
 
+	public List<Newspaper> getNewspapers() {
+		try {
+			return newspaperServiceRmi.getAllNewspapers();
+		} catch (Exception e) {
+
+		}
+		return null;
+	}
+
+	public void updateNewspaper(String selectedNwespapaer, String newNwespapaertitle, String newArticleTitle,
+			String newPublisher, int year, int month, int day, int newNrOfCopies, int newCopiesLeft) {
+		try {
+
+			List<Newspaper> newspapers = getNewspapers();
+			for (Newspaper newspaper :newspapers ) {
+				if (newspaper.getTitle().equals(selectedNwespapaer)) {
+					newspaper.setTitle(newNwespapaertitle);
+					newspaper.setArticle_title(newArticleTitle);
+					newspaper.setPublisher(newPublisher);
+					newspaper.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, day)));
+					newspaper.setNumberOfCopies(newNrOfCopies);
+					newspaper.setCopiesLeft(newCopiesLeft);
+					newspaperServiceRmi.updateNewspaper(newspaper);
+				}
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void deletePublication(Publication publication) {
 		if (publication instanceof Book) {
 			try {
