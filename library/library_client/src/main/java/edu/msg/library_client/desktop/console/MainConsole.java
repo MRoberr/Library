@@ -221,16 +221,19 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void createNewBook() {
+		System.out.println("Title Publisher Authors ReleaseDate(Year) NumberOfCopies CopiesLeft");
 		publicationService.insertBook(scanner.next(), scanner.next(), scanner.nextInt(), scanner.nextInt(),
 				scanner.nextInt());
 	}
 
 	private void createMagazin() {
+		System.out.println("Title Article_Title Publisher Authors ReleaseDate(Year Month) Number of copies Copies left");
 		publicationService.insertMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 	}
 
 	private void createNewspaper() {
+		System.out.println("Title Article_Title Publisher ReleaseDate(Year Month Day) Number of copies Copies left");
 		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 
