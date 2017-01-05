@@ -16,34 +16,50 @@
 		</dependency>
 	</dependencies>
 
-
-
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-					<archive>
-						<manifest>
-							<mainClass>edu.msg.library_client.desktop.ClientMain</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.4.1</version>
 				<executions>
 					<execution>
-						<id>make-my-jar-with-dependencies</id>
+						<id>build-first</id>
 						<phase>package</phase>
 						<goals>
-							<goal>single</goal>
+							<goal>shade</goal>
 						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>edu.msg.library_client.desktop.ClientMain</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>library_gui</finalName>
+						</configuration>
+					</execution>
+					<execution>
+						<id>build-second</id>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<transformers>
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>edu.msg.library_client.desktop.ClientConsoleMain</mainClass>
+								</transformer>
+							</transformers>
+							<finalName>library_console</finalName>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
 
 
 

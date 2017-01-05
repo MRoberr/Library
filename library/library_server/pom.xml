@@ -30,17 +30,31 @@
 
 	</dependencies>
 	<build>
-
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
+				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
-					<source />
-					<target />
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+					<archive>
+						<manifest>
+							<mainClass>edu.msg.library_client.desktop.ClientMain</mainClass>
+						</manifest>
+					</archive>
 				</configuration>
+				<executions>
+					<execution>
+						<id>make-my-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>

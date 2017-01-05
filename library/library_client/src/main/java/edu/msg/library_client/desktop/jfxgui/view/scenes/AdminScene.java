@@ -219,9 +219,9 @@ public class AdminScene extends Scene{
 //		shelfRightSide.add(searchUserWithHint, 1, 0);
 		
 		BorderPane shelfTabPane = new BorderPane();
-		shelfTab.setContent(shelfTabPane);
 		shelfTabPane.setLeft(shelfLeftSide);
 		shelfTabPane.setRight(shelfRightSide);
+		shelfTab.setContent(shelfTabPane);
 		
 		shelfTabPane.setCenter(center);
 		
@@ -233,6 +233,7 @@ public class AdminScene extends Scene{
 		userBorrowings = new TableView<Publication>();
 //		userBorrowings.setMinWidth(100);
 //		userBorrowings.setMaxHeight(370);
+		userBorrowings.setMaxWidth(200);
 		userBorrowings.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		userBorrowings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		userBorrowings.setEditable(false);
@@ -281,6 +282,7 @@ public class AdminScene extends Scene{
 		publicationsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		publicationsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		publicationsTable.setEditable(false);
+		publicationsTable.setMinWidth(300);
 		
 		titleColumn = new TableColumn<Publication, String>("Title");
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
