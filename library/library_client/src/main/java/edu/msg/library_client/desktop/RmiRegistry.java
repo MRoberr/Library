@@ -6,6 +6,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import edu.msg.library_common.model.LoginAccess;
+import edu.msg.library_common.rmi.AuthorServiceRmi;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.BorrowingServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
@@ -23,6 +24,7 @@ public class RmiRegistry {
 	public static MagazineServiceRmi magazineServiceRmi;
 	public static NewspaperServiceRmi newspaperServiceRmi;
 	public static BorrowingServiceRmi borrowServiceRmi;
+	public static AuthorServiceRmi authorServiceRmi;
 
 	static{
 		try {
@@ -33,6 +35,7 @@ public class RmiRegistry {
 			magazineServiceRmi = (MagazineServiceRmi) registry.lookup(MagazineServiceRmi.RMI_NAME);
 			newspaperServiceRmi = (NewspaperServiceRmi) registry.lookup(NewspaperServiceRmi.RMI_NAME);
 			borrowServiceRmi = (BorrowingServiceRmi) registry.lookup(BorrowingServiceRmi.RMI_NAME);
+			authorServiceRmi =(AuthorServiceRmi) registry.lookup(AuthorServiceRmi.RMI_NAME);
 		
 		} catch (RemoteException | NotBoundException e) {
 			// TODO Auto-generated catch block

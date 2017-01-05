@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.List;
 
+import edu.msg.library_common.model.Author;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
@@ -20,13 +21,14 @@ public class PublicationService {
 		return null;
 	}
 
-	public boolean insertBook(String title, String publisher, int release_date, int number_of_copies, int copies_left) {
+	public boolean insertBook(String title, String publisher, int release_date, int number_of_copies, int copies_left,List<Author> authors) {
 		Book book = new Book();
 		book.setTitle(title);
 		book.setPublisher(publisher);
 		book.setReleaseDate(release_date);
 		book.setNumberOfCopies(number_of_copies);
 		book.setCopiesLeft(copies_left);
+		book.setAuthors(authors);
 
 		try {
 			return RmiRegistry.bookServiceRmi.insertBook(book);

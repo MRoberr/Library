@@ -7,13 +7,16 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import edu.msg.library_client.desktop.AuthorService;
 import edu.msg.library_client.desktop.BorrowingService;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
+import edu.msg.library_common.model.Author;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
@@ -118,6 +121,19 @@ public class MainConsole extends UiFactory {
 		case 11:
 			listUsers();
 			break;
+		case 12:
+			insertAuthor();
+			break;
+		case 13:
+			updateAuthor();
+			break;
+
+		case 14:
+			deleteAuthor();
+			break;
+		case 15:
+			listAuthors();
+			break;
 		}
 
 	}
@@ -211,11 +227,11 @@ public class MainConsole extends UiFactory {
 
 	private void deleteClient() {
 		System.out.println("Enter name!");
-		if(clientService.clientDelete(getLine())){
-			System.out.println("Delete successful!");			
+		if (clientService.clientDelete(getLine())) {
+			System.out.println("Delete successful!");
 		} else {
 			System.out.println("Delete not successful!");
-			
+
 		}
 	}
 
@@ -237,9 +253,24 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void createNewBook() {
-		System.out.println("Title Publisher Authors ReleaseDate(Year) NumberOfCopies CopiesLeft");
-		if (publicationService.insertBook(getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
-				scanner.nextInt())) {
+
+		System.out.println("\nTitle Publisher ReleaseDate(Year) NumberOfCopies CopiesLeft");
+		String title = getLine();
+		String publisher = getLine();
+		Integer releaseDate = scanner.nextInt();
+		Integer nrOfCopyes = scanner.nextInt();
+		Integer copyesLeft = scanner.nextInt();
+		List<Entity> authorList = listAuthors();
+		System.out.println("\nPlease choose from author list. If finished please type '-1'");
+		int nr = 0;
+		List<Author> authorListforSetting = new ArrayList<>();
+		nr = scanner.nextInt();
+		while ((nr > -1) && (nr < authorList.size())) {
+			authorListforSetting.add((Author) authorList.get(nr));
+			nr = scanner.nextInt();
+		}
+		if (publicationService.insertBook(title, publisher, releaseDate, nrOfCopyes, copyesLeft,
+				authorListforSetting)) {
 			System.out.println("Create successful");
 		} else {
 			System.out.println("Create not successful");
@@ -297,7 +328,7 @@ public class MainConsole extends UiFactory {
 					if (publicationService.deletePublication(publication)) {
 						System.out.println("Delete successful");
 						return;
-					} 
+					}
 				}
 			}
 		}
@@ -346,6 +377,10 @@ public class MainConsole extends UiFactory {
 		System.out.println("9-Borrow publication");
 		System.out.println("10-Return publication");
 		System.out.println("11-Show all users");
+		System.out.println("12-Insert author");
+		System.out.println("13-Update author");
+		System.out.println("14-Delete author");
+		System.out.println("15-Show all authors");
 	}
 
 	private void handleUserCommand() {
@@ -419,7 +454,7 @@ public class MainConsole extends UiFactory {
 			}
 			System.out.println("Type the number of the publication");
 			int nr = scanner.nextInt();
-			if(nr<=borrowingsOfUser.size() && bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
+			if (nr <= borrowingsOfUser.size() && bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
 				System.out.println("Return was succesful!");
 			} else {
 				System.out.println("Return not succesful!");
@@ -427,5 +462,53 @@ public class MainConsole extends UiFactory {
 		} else {
 			System.out.println(userName + " doesn't have any borrowed books.");
 		}
+	}
+
+	private void insertAuthor() {
+		System.out.println("\nPlease write author Name: \n");
+		AuthorService author = new AuthorService();
+		if (author.newAuthorCreate(getLine())) {
+			System.out.println("Insert successful");
+		} else {
+			System.out.println("Insert not successful");
+		}
+	}
+
+	private void updateAuthor() {
+		System.out.println("\nPlease write author ActualName and NewName to update: \n");
+		AuthorService author = new AuthorService();
+		if (author.authorUpdate(getLine(), getLine())) {
+			System.out.println("Update successful");
+		} else {
+			System.out.println("Update not successful");
+
+		}
+	}
+
+	private void deleteAuthor() {
+		System.out.println("\nPlease write author Name to delete: \n");
+		AuthorService author = new AuthorService();
+		if (author.deleteAuthor(getLine())) {
+			System.out.println("Delete successful");
+		} else {
+			System.out.println("Delete not successful");
+
+		}
+	}
+
+	private List<Entity> listAuthors() {
+		AuthorService author = new AuthorService();
+		List<Entity> authorList = author.getAllAuthors();
+		if (authorList.isEmpty()) {
+			System.out.println("No authors in db");
+		} else {
+			int i = 0;
+			for (Entity e : authorList) {
+				Author a = (Author) e;
+				System.out.println(i++ + "-" + a);
+			}
+
+		}
+		return authorList;
 	}
 }
