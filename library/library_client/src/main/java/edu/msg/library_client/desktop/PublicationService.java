@@ -133,7 +133,7 @@ public class PublicationService {
 
 	public List<Newspaper> getNewspapers() {
 		try {
-			return newspaperServiceRmi.getAllNewspapers();
+			return RmiRegistry.newspaperServiceRmi.getAllNewspapers();
 		} catch (Exception e) {
 
 		}
@@ -153,7 +153,7 @@ public class PublicationService {
 					newspaper.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, day)));
 					newspaper.setNumberOfCopies(newNrOfCopies);
 					newspaper.setCopiesLeft(newCopiesLeft);
-					newspaperServiceRmi.updateNewspaper(newspaper);
+					RmiRegistry.newspaperServiceRmi.updateNewspaper(newspaper);
 				}
 			}
 		} catch (RemoteException e) {
