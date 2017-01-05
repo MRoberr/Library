@@ -81,6 +81,11 @@ public class AdminScene extends Scene{
 	private Button lendButton;
 	private Button takeBackButton;
 	
+	private Button addPubButton;
+	private Button editPubButton;
+	private Button deletePubButton;
+	
+	
 	
 	public AdminScene(Parent root) {
 		super(root, 600, 600);
@@ -102,6 +107,7 @@ public class AdminScene extends Scene{
 	private void createUserTab() {
 		
 		userTab = new Tab("Use Management");
+		userTab.setClosable(false);
 		userTabTitle = new Label("User Panel");
 		userTabTitle.setFont(new Font("Arial", 20));
 		
@@ -180,12 +186,17 @@ public class AdminScene extends Scene{
 	private void createShelfTab() {
 		
 		shelfTab = new Tab("Library Shelf");
+		shelfTab.setClosable(false);
 		shelfTabTitle = new Label("Library Shelf");
 		shelfTabTitle.setFont(new Font("Arial", 20));
 		
 		createShelfTable();
 		createPublicationsSearchField();
 		createUserBorrowedTable();
+		
+		addPubButton = new Button("Add");
+		editPubButton = new Button("Edit");
+		deletePubButton = new Button("Delete");
 		
 		searchUserWithHint = new AutoCompleteTextField();
 		searchUserWithHint.setPromptText("Search User");
@@ -207,7 +218,17 @@ public class AdminScene extends Scene{
 		shelfLeftSide.setPadding(new Insets(10, 10, 20, 10));
 		shelfLeftSide.setSpacing(15);
 		shelfLeftSide.setAlignment(Pos.CENTER);
-		shelfLeftSide.getChildren().addAll(shelfTabTitle, publicationsTable, searchPublicationField);
+		
+		HBox pubManageButton = new HBox();
+		pubManageButton.setPadding(new Insets(0, 10, 0, 10));
+		pubManageButton.setSpacing(15);
+		pubManageButton.getChildren().addAll(addPubButton, editPubButton, deletePubButton);
+		
+		HBox searchPubOnLeft = new HBox();
+		searchPubOnLeft.getChildren().add(searchPublicationField);
+		searchPubOnLeft.setAlignment(Pos.CENTER_LEFT);
+		
+		shelfLeftSide.getChildren().addAll(shelfTabTitle, publicationsTable, searchPubOnLeft, pubManageButton);
 		
 		VBox shelfRightSide = new VBox();
 		shelfRightSide.setPadding(new Insets(10, 10, 20, 10));
@@ -437,6 +458,21 @@ public class AdminScene extends Scene{
 	public TextField getSearchInUserBorrowsField() {
 		
 		return searchInUserBorrows;
+	}
+	
+	public Button getAddPubButton() {
+		
+		return addPubButton;
+	}
+	
+	public Button getEditPubButton() {
+		
+		return editPubButton;
+	}
+	
+	public Button getDeletePubButton() {
+		
+		return deletePubButton;
 	}
 }
 

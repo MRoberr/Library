@@ -1,5 +1,6 @@
 package edu.msg.library_client.desktop.jfxgui.controller;
 
+import java.rmi.RemoteException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -7,11 +8,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import edu.msg.library_client.desktop.RmiRegistry;
 import edu.msg.library_client.desktop.jfxgui.listeners.UserSelectedListener;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_client.desktop.jfxgui.view.scenes.AdminScene;
+import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
+import edu.msg.library_common.model.Magazine;
+import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import javafx.collections.FXCollections;
@@ -91,8 +96,7 @@ public class AdminController implements UserSelectedListener{
 
 			case "Add":
 
-				ConnectionModel.INSTANCE.addUser(adminScene.getUserNameText(), adminScene.getUserPassText(),
-						adminScene.getUserType());
+				ConnectionModel.INSTANCE.addUser(adminScene.getUserNameText(), adminScene.getUserPassText(), adminScene.getUserType());
 				break;
 			case "Save":
 
@@ -188,7 +192,13 @@ public class AdminController implements UserSelectedListener{
 				publication.setBorrowingDate(Date.valueOf(LocalDate.now()));
 				publication.setDeadline(Date.valueOf(LocalDate.now().plusDays(20)));
 				
-				ConnectionModel.INSTANCE.borrow(publication);
+				if(!ConnectionModel.INSTANCE.borrow(publication)) {
+					
+					Alert alert = new Alert(AlertType.ERROR);
+					alert.setTitle("Error");
+					alert.setHeaderText("Product out of stock!");
+					alert.showAndWait();
+				}
 				
 				loadPublications();
 				loadUserBorrows(adminScene.getSearchUserWithHintField().getSelecteduser());
@@ -225,6 +235,53 @@ public class AdminController implements UserSelectedListener{
 				
 			}
 
+		});
+		
+		adminScene.getDeletePubButton().setOnAction(e -> {
+			
+			try {
+
+				Publication pub = adminScene.getPublicationTable().getSelectionModel().getSelectedItem();
+				pub.getTitle();
+
+				if (pub instanceof Book) {
+					
+					ConnectionModel.INSTANCE.deleteBook((Book) pub);					
+				}
+				
+				if (pub instanceof Magazine) {
+
+					ConnectionModel.INSTANCE.deleteMagazine((Magazine) pub);
+				
+				}
+				
+				if (pub instanceof Newspaper) {
+					
+					ConnectionModel.INSTANCE.deleteNewspaper((Newspaper) pub);					
+				}
+				
+				loadPublications();
+				
+			} catch (NullPointerException ex) {
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("No publication selected!");
+				alert.showAndWait();
+			}
+			
+		});
+		
+		adminScene.getEditPubButton().setOnAction(e -> {
+			
+			//ide jön az edit gomb
+			
+		});
+		
+		adminScene.getAddPubButton().setOnAction(e -> {
+			
+			//ide jön az add gomb 
+			
 		});
 	}
 	

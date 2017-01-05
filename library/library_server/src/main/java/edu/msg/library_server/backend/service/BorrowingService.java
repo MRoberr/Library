@@ -147,6 +147,9 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					if (book.getCopiesLeft() > 0) {
 						book.setCopiesLeft(book.getCopiesLeft() - 1);
 						bs.updateBook(book);
+					} else {
+						
+						return false;
 					}
 					break;
 				case "Newspaper":
@@ -157,6 +160,10 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 						paper.setCopiesLeft(paper.getCopiesLeft() - 1);
 						ns.updateNewspaper(paper);
 					}
+					else {
+						
+						return false;
+					}
 					break;
 				case "Magazine":
 					
@@ -165,6 +172,9 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					if (mag.getCopiesLeft() > 0) {
 						mag.setCopiesLeft(mag.getCopiesLeft() - 1);
 						ms.updateMagazine(mag);
+					} else {
+						
+						return false;
 					}
 					break;
 				default:

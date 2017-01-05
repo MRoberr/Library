@@ -76,10 +76,15 @@ public class ClientService {
 	public void searchClient(String selectedUser) {
 		try {
 			List<User> users=RmiRegistry.userRmi.searchUser(selectedUser);
+			if (users.isEmpty()){
+				System.out.println("Can't find client!");
+			}
 			users.forEach(u->System.out.println(u.toString()));
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 			System.out.println("Can't find client!");
 		}
+		
 	}
 }
