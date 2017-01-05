@@ -31,6 +31,7 @@ public class SqlHandler {
 			connection.createStatement().executeUpdate(Publication.getCreateView());
 		} catch (SQLException e) {
 			e.printStackTrace();
+			throw new SqlHandlerException("Connection failed",e);
 		}
 	}
 
@@ -63,7 +64,7 @@ public class SqlHandler {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.err.println("Couldn't select users!");
-			return null;
+			throw new SqlHandlerException("Couldn't select users!",e);
 		}
 	}
 
@@ -85,8 +86,8 @@ public class SqlHandler {
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Couldn't select users!");
-			return null;
+			System.err.println("Couldn't select books!");
+			throw new SqlHandlerException("Couldn't select books!",e);
 		}
 	}
 
@@ -109,8 +110,8 @@ public class SqlHandler {
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Couldn't select users!");
-			return null;
+			System.err.println("Couldn't select magazine!");
+			throw new SqlHandlerException("Couldn't select magazine!",e);
 		}
 	}
 
@@ -133,8 +134,8 @@ public class SqlHandler {
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Couldn't select users!");
-			return null;
+			System.err.println("Couldn't select newspaper!");
+			throw new SqlHandlerException("Couldn't select newspaper!",e);
 		}
 	}
 
@@ -164,8 +165,8 @@ public class SqlHandler {
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Couldn't select users!");
-			return null;
+			System.err.println("Couldn't select publications!");
+			throw new SqlHandlerException("Couldn't select publications!",e);
 		}
 	}
 
@@ -257,15 +258,10 @@ public class SqlHandler {
 			return resultList;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.err.println("Couldn't select users!");
-			return null;
+			System.err.println("Couldn't select Entity!");
+			throw new SqlHandlerException("Couldn't select Entity!",e);
 		}
 	}
-
-	/*
-	 * public List<Entity> executeSelect(String select, String entityType) {
-	 * return returnEntityOfExecute(select, entityType); }
-	 */
 
 	public boolean executeSqlStatement(String select) {
 		try {
@@ -305,10 +301,9 @@ public class SqlHandler {
 				return LoginAccess.DENIED;
 			}
 		} catch (SQLException e) {
-			throw new SQLException();
+			throw new SqlHandlerException("Login failed!",e);
 		}
 
 	}
 
-	// entityType USER, BORROW, BOOK, MAGAZINE, NEWSPAPER, AUTHOR
 }

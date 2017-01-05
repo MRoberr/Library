@@ -49,58 +49,7 @@ public class ClientService {
 
 			e.printStackTrace();
 		}
-	}
-
-	public static void LoginCheck() {
-		Console console = System.console();
-		if (console == null) {
-			System.out.println("Couldn't get Console instance");
-			System.exit(0);
-		}
-		console.printf("Please enter your username: ");
-		username = console.readLine();
-		console.printf("Please enter your password: ");
-		char passwordArray[] = console.readPassword("");
-		password = new String(passwordArray);
-	}
-
-	// public static void initClient() {
-	//
-	//// LoginCheck();
-	//
-	// try {
-	// Registry registry = LocateRegistry.getRegistry("localhost",
-	// LoginServiceRmi.RMI_PORT);
-	//
-	// LoginServiceRmi lRmi = (LoginServiceRmi)
-	// registry.lookup(LoginServiceRmi.RMI_NAME);
-	// UserServiceRmi uRmi = (UserServiceRmi)
-	// registry.lookup(UserServiceRmi.RMI_NAME);
-	// bRmi = (BookServiceRmi) registry.lookup(BookServiceRmi.RMI_NAME);
-	//
-	// loginAccess = lRmi.login("Zoli", "1234");
-	// System.out.println("itt");
-	// System.out.println(loginAccess);
-	//
-	// if (loginAccess == LoginAccess.ADMIN) {
-	// uRmi.getAllUsers().forEach(u -> System.out.println(((User)
-	// u).getName()));
-	// } else if (loginAccess == LoginAccess.USER) {
-	//
-	// } else if (loginAccess == LoginAccess.DENIED) {
-	// Console console = System.console();
-	// console.printf("!!!!! Please enter your name and password again: ");
-	// initClient();
-	// } else {
-	// System.out.println("Error");
-	// System.exit(0);
-	// }
-	// bRmi.getAllBooks();
-	// } catch (Exception ex) {
-	// ex.printStackTrace();
-	// }
-	// }
-	
+	}	
 	
 	public void newClientCreate(String name,LoginAccess user_type,int index, String password) {
 		User user = new User();
@@ -144,7 +93,6 @@ public class ClientService {
 					uRmi.deleteUser(user);
 				}
 			}
-
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -164,17 +112,6 @@ public class ClientService {
 		try {
 			List<User> users=uRmi.searchUser(selectedUser);
 			users.forEach(u->System.out.println(u.toString()));
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void searchPublication(String title) {
-		try {
-			List<Publication> pubs=searchRmi.searchPublicationByRegexp(title);
-			for(Publication p:pubs){
-				System.out.println(p.toString());
-			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

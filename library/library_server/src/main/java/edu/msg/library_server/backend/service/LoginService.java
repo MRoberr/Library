@@ -23,12 +23,10 @@ public class LoginService extends UnicastRemoteObject implements LoginServiceRmi
 	@Override
 	public LoginAccess login(String user, String password) throws RemoteException, SQLException {
 		return SqlHandler.getInstance().executeLoginSelect(user, password);
-		//return LoginAccess.ADMIN;
 	}
 
 	@Override
 	public synchronized String logout() throws RemoteException {
-		// return SqlHandler.getInstance().executeLogOut();
 		return null;
 	}
 

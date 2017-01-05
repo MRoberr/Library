@@ -21,19 +21,16 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 
 	public synchronized List<User> getAllUsers() throws RemoteException {
 		User user = new User();
-//		return SqlHandler.getInstance().executeSelect(user.getSelectAll(), "USER");
 		return SqlHandler.getInstance().executeUserSelect(user.getSelectAll());
 
 	}
 
 	public synchronized boolean insertUser(User user) throws RemoteException {
-
 		return SqlHandler.getInstance().executeSqlStatement(user.getInsert());
 	}
 
 	@Override
 	public synchronized boolean updateUser(User user) throws RemoteException {
-
 		return SqlHandler.getInstance().executeSqlStatement(user.getUpdate());
 	}
 
@@ -58,8 +55,7 @@ public class UserService extends UnicastRemoteObject implements UserServiceRmi {
 	@Override
 	public List<User> searchUser(String name) {
 		User user = new User();
-		return SqlHandler.getInstance().executeUserSelect(user.getSearchByName(name));
-		
+		return SqlHandler.getInstance().executeUserSelect(user.getSearchByName(name));		
 	}
 	
 

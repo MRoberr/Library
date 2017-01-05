@@ -68,8 +68,14 @@ public class User extends BaseEntity {
 				+ "','" + this.name + "','" + userTypeNum + "','" + getLoyalityIndex() + "','" + getPassword() + "')";
 	}
 
-	public String getUpdate() {
-		return "update library_users set name='" + this.name + "' where uuid='" + getUUID() + "'";
+	public String getUpdate() {		
+		int user = 0;
+		System.out.println("User " + this.userType);
+		if (this.userType.equals(LoginAccess.ADMIN)){
+			user = 1;
+		}		
+		return "update library_users set name='" + this.name + "', user_type='" + user + 
+				"', loyality_index='" + this.loyalityIndex + "' where uuid='" + getUUID() + "'";
 	}
 
 	public String getDelete() {

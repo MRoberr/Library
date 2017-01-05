@@ -1,26 +1,22 @@
 package edu.msg.library_client.desktop;
 
-import java.awt.List;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 import edu.msg.library_common.model.Book;
-import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
-import edu.msg.library_common.model.User;
 import edu.msg.library_common.rmi.BookServiceRmi;
 import edu.msg.library_common.rmi.LoginServiceRmi;
 import edu.msg.library_common.rmi.MagazineServiceRmi;
 import edu.msg.library_common.rmi.NewspaperServiceRmi;
 import edu.msg.library_common.rmi.SearchServiceRmi;
-import edu.msg.library_common.rmi.UserServiceRmi;
 
 public class PublicationService {
 
@@ -51,7 +47,7 @@ public class PublicationService {
 
 	}
 
-	public java.util.List<Publication> getPublications(String title) {
+	public List<Publication> getPublications(String title) {
 		try {
 			return searchServiceRmi.searchPublicationByRegexp(title);
 		} catch (RemoteException e) {
@@ -83,7 +79,7 @@ public class PublicationService {
 		magazine.setTitle(title);
 		magazine.setArticle_title(article_title);
 		magazine.setPublisher(publisher);
-		magazine.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month,01)));
+		magazine.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, 01)));
 		magazine.setNumberOfCopies(number_of_copies);
 		magazine.setCopiesLeft(copies_left);
 
@@ -101,7 +97,7 @@ public class PublicationService {
 		newspaper.setTitle(title);
 		newspaper.setArticle_title(article_title);
 		newspaper.setPublisher(publisher);
-		newspaper.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month,day)));
+		newspaper.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, day)));
 		newspaper.setNumberOfCopies(number_of_copies);
 		newspaper.setCopiesLeft(copies_left);
 
@@ -112,7 +108,7 @@ public class PublicationService {
 		}
 	}
 
-	public java.util.List<Book> getBooks() {
+	public List<Book> getBooks() {
 		try {
 			return bookServiceRmi.getAllBooks();
 		} catch (Exception e) {
@@ -125,7 +121,7 @@ public class PublicationService {
 			int newNrOfCopies, int newCopiesLeft) {
 		try {
 
-			java.util.List<Book> books = getBooks();
+			List<Book> books = getBooks();
 			for (Book book : books) {
 				if (book.getTitle().equals(seletedBook)) {
 					book.setName(newBooktitle);
@@ -141,7 +137,7 @@ public class PublicationService {
 		}
 	}
 
-	public java.util.List<Magazine> getMagazin() {
+	public List<Magazine> getMagazin() {
 		try {
 			return magazineServiceRmi.getAllMagazines();
 		} catch (Exception e) {
@@ -150,17 +146,17 @@ public class PublicationService {
 		return null;
 	}
 
-	public void updateMagazin(String seletedMagazin, String newMagazintitle,String newArticleTitle, String newPublisher, int year,int month,
-			int newNrOfCopies, int newCopiesLeft) {
+	public void updateMagazin(String seletedMagazin, String newMagazintitle, String newArticleTitle,
+			String newPublisher, int year, int month, int newNrOfCopies, int newCopiesLeft) {
 		try {
 
-			java.util.List<Magazine> magazines = getMagazin();
+			List<Magazine> magazines = getMagazin();
 			for (Magazine magazin : magazines) {
 				if (magazin.getTitle().equals(seletedMagazin)) {
 					magazin.setTitle(newMagazintitle);
 					magazin.setArticle_title(newArticleTitle);
 					magazin.setPublisher(newPublisher);
-					magazin.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month,01)));
+					magazin.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, 01)));
 					magazin.setNumberOfCopies(newNrOfCopies);
 					magazin.setCopiesLeft(newCopiesLeft);
 					magazineServiceRmi.updateMagazine(magazin);
@@ -171,4 +167,37 @@ public class PublicationService {
 		}
 	}
 
+	public void deletePublication(Publication publication) {
+		if (publication instanceof Book) {
+			try {
+				bookServiceRmi.deleteBook((Book) publication);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		if (publication instanceof Magazine) {
+			try {
+				magazineServiceRmi.deleteMagazine((Magazine) publication);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+		if (publication instanceof Newspaper) {
+			try {
+				newspaperServiceRmi.deleteNewspaper((Newspaper) publication);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public List<Publication> getPublications() {
+		try {
+			return searchServiceRmi.getAllPublications();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
