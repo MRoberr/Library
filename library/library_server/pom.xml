@@ -39,7 +39,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>edu.msg.library_client.desktop.ClientMain</mainClass>
+							<mainClass>edu.msg.library_server.backend.ServerMain</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
