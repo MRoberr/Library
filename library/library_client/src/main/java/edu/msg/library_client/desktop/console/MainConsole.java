@@ -259,16 +259,16 @@ public class MainConsole extends UiFactory {
 		List<Publication> publications = publicationService.getPublications();
 		int i = 0;
 		for (Publication publication : publications) {
-			System.out.println(++i + "-" + publication.getTitle());
+			System.out.println(++i + "-" + publication.publicationToString());
 		}
 		System.out.println("Please enter the number corresponding to the publication:");
 		int pubNr = scanner.nextInt();
 		String publicationName = scanner.nextLine();
 		for (Publication publication : publications) {
-			if (publications.get(pubNr-1).getTitle().equals(publication.getTitle()))
-
-			{
-				publicationService.deletePublication(publication);
+			if (pubNr > 0 && pubNr <= publications.size()) {
+				if (publications.get(pubNr - 1).getTitle().equals(publication.getTitle())) {
+					publicationService.deletePublication(publication);
+				}
 			}
 		}
 	}
@@ -374,15 +374,12 @@ public class MainConsole extends UiFactory {
 			int nr = scanner.nextInt();
 
 			if (bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
-				System.out.println("Return was succesfull");
+				System.out.println("Return was succesful!");
 			} else {
-				System.out.println("Return not succesfull");
+				System.out.println("Return not succesful!");
 			}
 		} else {
 			System.out.println(userName + " doesn't have any borrowed books.");
 		}
-
-		// borrowOne.setPublicationUuid(borrowingsOfUser.get(nr).getUUID());
-
 	}
 }
