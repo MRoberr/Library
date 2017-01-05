@@ -5,10 +5,6 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.LocalDate;
-<<<<<<< HEAD
-=======
-import java.util.Date;
->>>>>>> branch 'master' of https://github.com/MRoberr/Library.git
 import java.util.List;
 import java.util.Scanner;
 
@@ -171,7 +167,7 @@ public class PublicationService {
 		}
 	}
 
-	public void deletePublication(Publication publication){
+	public void deletePublication(Publication publication) {
 		if (publication instanceof Book) {
 			try {
 				bookServiceRmi.deleteBook((Book) publication);
@@ -179,14 +175,14 @@ public class PublicationService {
 				e.printStackTrace();
 			}
 		}
-		if(publication instanceof Magazine){
+		if (publication instanceof Magazine) {
 			try {
 				magazineServiceRmi.deleteMagazine((Magazine) publication);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
-		if(publication instanceof Newspaper){
+		if (publication instanceof Newspaper) {
 			try {
 				newspaperServiceRmi.deleteNewspaper((Newspaper) publication);
 			} catch (RemoteException e) {
@@ -194,8 +190,8 @@ public class PublicationService {
 			}
 		}
 	}
-	
-	public List<Publication> getPublications(){
+
+	public List<Publication> getPublications() {
 		try {
 			return searchServiceRmi.getAllPublications();
 		} catch (RemoteException e) {
