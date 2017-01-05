@@ -17,7 +17,8 @@ import edu.msg.library_server.backend.repository.SqlHandler;
 
 /**
  * 
- * @author gallb See BorrowingServiceRmi
+ * @author gallb
+ * See BorrowingServiceRmi
  */
 
 public class BorrowingService extends UnicastRemoteObject implements BorrowingServiceRmi {
@@ -26,7 +27,6 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 
 	private String sqlStatement;
 	private Borrowing borrowTemp;
-
 	protected BorrowingService() throws RemoteException {
 		super();
 		borrowTemp = new Borrowing();
@@ -35,7 +35,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 	@Override
 	public List<Entity> getAllBorrows() throws RemoteException {
 		sqlStatement = borrowTemp.getSelectAll();
-
+		
 		return SqlHandler.getInstance().returnEntityOfExecute(sqlStatement, "BORROWING");
 	}
 
@@ -65,114 +65,121 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 
 	@Override
 	public boolean returnPublication(Borrowing borrow) throws RemoteException {
-		Date today = new Date();		
-		borrow.setReturnDate(today);
-		System.out.println(borrow.getReturnDate());
-		System.out.println(borrow.getDeadline());
-		System.out.println(borrow.getReturnDate() + " " + borrow.getDeadline());
-		if (borrow.getReturnDate().after(borrow.getDeadline())) {
+		try {
 			
-			UserService us = new UserService();
-			User user = (User) us.getUserByUUUID(borrow.getUserUuid());
-			System.out.println(user.getUserType());
-			user.setLoyalityIndex(user.getLoyalityIndex() - 1);
-			System.out.println(borrow.getReturnDate() + " " + borrow.getDeadline() + " " + user.getLoyalityIndex());
-			us.updateUser(user);
+			Date today = new Date();
+			borrow.setReturnDate(today);
 			
-		}
-
-		SearchService ss = new SearchService();
-		List<Publication> publicationList = ss.searchPublicationByUUID(borrow.getPublicationUuid());
-
-		if (publicationList.isEmpty()) {
-			return false;
-
-		} else {
-			Class<? extends Publication> type = publicationList.get(0).getClass();
-
-			switch (type.getName()) {
-			case "Book":
-
-				BookService bs = new BookService();
-				Book book = (Book) bs.getBookByUUID(borrow.getPublicationUuid());
-				book.setCopiesLeft(book.getCopiesLeft() + 1);
-				bs.updateBook(book);
-				break;
-			case "Newspaper":
-
-				NewspaperService ns = new NewspaperService();
-				Newspaper paper = (Newspaper) ns.getNewspaperByUUID(borrow.getPublicationUuid());
-				paper.setCopiesLeft(paper.getCopiesLeft() + 1);
-				ns.updateNewspaper(paper);
-				break;
-			case "Magazine":
-
-				MagazineService ms = new MagazineService();
-				Magazine mag = (Magazine) ms.getMagazineByUUID(borrow.getPublicationUuid());
-				mag.setCopiesLeft(mag.getCopiesLeft() + 1);
-				ms.updateMagazine(mag);
-				break;
-			default:
-
-				break;
+			if (borrow.getReturnDate().after(borrow.getDeadline())) {
+				UserService us = new UserService();
+				User user = (User)us.getUserByUUUID(borrow.getUserUuid());
+				user.setLoyalityIndex(user.getLoyalityIndex() - 1);
+				us.updateUser(user);
 			}
+			
+			SearchService ss = new SearchService();
+			List<Publication> publicationList = ss.searchPublicationByUUID(borrow.getPublicationUuid());
+			
+			if (publicationList.isEmpty()) {
+				return false;
+				
+			} else {
+				Class<? extends Publication> type = publicationList.get(0).getClass();
+				
+				switch (type.getSimpleName()) {
+				case "Book":
+					
+					BookService bs = new BookService();
+					Book book = (Book)bs.getBookByUUID(borrow.getPublicationUuid());
+					book.setCopiesLeft(book.getCopiesLeft() + 1);
+					System.out.println("copies left" + book.getCopiesLeft());
+					bs.updateBook(book);
+					break;
+				case "Newspaper":
+					
+					NewspaperService ns = new NewspaperService();
+					Newspaper paper = (Newspaper)ns.getNewspaperByUUID(borrow.getPublicationUuid());
+					paper.setCopiesLeft(paper.getCopiesLeft() + 1);
+					ns.updateNewspaper(paper);
+					break;
+				case "Magazine":
+					
+					MagazineService ms = new MagazineService();
+					Magazine mag = (Magazine)ms.getMagazineByUUID(borrow.getPublicationUuid());
+					mag.setCopiesLeft(mag.getCopiesLeft() + 1);
+					ms.updateMagazine(mag);
+					break;
+				default:
+					
+					break;
+				}
+			}
+			return deleteBorrow(borrow);
+		} catch (Exception e) {
+			return false;
 		}
-		return deleteBorrow(borrow);
-
+		
 	}
 
 	@Override
 	public boolean borrowPublication(Borrowing borrow) throws RemoteException {
-		UserService us = new UserService();
-			User user = (User) us.getUserByUUUID(borrow.getUserUuid());
-
+		try {
+			
+			UserService us = new UserService();
+			User user = (User)us.getUserByUUUID(borrow.getUserUuid());
+			
 			if (user.getLoyalityIndex() <= 0) {
 				return false;
 			}
-
+			
 			SearchService ss = new SearchService();
 			List<Publication> publicationList = ss.searchPublicationByUUID(borrow.getPublicationUuid());
-
+			
 			if (publicationList.isEmpty()) {
 				return false;
-
+				
 			} else {
 				Class<? extends Publication> type = publicationList.get(0).getClass();
-
-				switch (type.getName()) {
+				System.out.println(type.getSimpleName());
+				switch (type.getSimpleName()) {
 				case "Book":
-
+					
 					BookService bs = new BookService();
-					Book book = (Book) bs.getBookByUUID(borrow.getPublicationUuid());
+					Book book = (Book)bs.getBookByUUID(borrow.getPublicationUuid());
 					if (book.getCopiesLeft() >= 0) {
 						book.setCopiesLeft(book.getCopiesLeft() - 1);
 						bs.updateBook(book);
 					}
 					break;
 				case "Newspaper":
-
+					
 					NewspaperService ns = new NewspaperService();
-					Newspaper paper = (Newspaper) ns.getNewspaperByUUID(borrow.getPublicationUuid());
+					Newspaper paper = (Newspaper)ns.getNewspaperByUUID(borrow.getPublicationUuid());
+					System.out.println(paper);
 					if (paper.getCopiesLeft() >= 0) {
 						paper.setCopiesLeft(paper.getCopiesLeft() - 1);
 						ns.updateNewspaper(paper);
 					}
 					break;
 				case "Magazine":
-
+					
 					MagazineService ms = new MagazineService();
-					Magazine mag = (Magazine) ms.getMagazineByUUID(borrow.getPublicationUuid());
+					Magazine mag = (Magazine)ms.getMagazineByUUID(borrow.getPublicationUuid());
 					if (mag.getCopiesLeft() >= 0) {
 						mag.setCopiesLeft(mag.getCopiesLeft() - 1);
 						ms.updateMagazine(mag);
 					}
 					break;
 				default:
-
+					
 					break;
 				}
 			}
 			return insertBorrowing(borrow);
-		} 
+		} catch (Exception e) {
+			return false;
+		}
+	
+	}
 
 }

@@ -1,9 +1,17 @@
 package edu.msg.library_client.desktop.jfxgui.controller;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import edu.msg.library_client.desktop.jfxgui.listeners.UserSelectedListener;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_client.desktop.jfxgui.view.scenes.AdminScene;
+import edu.msg.library_common.model.Borrowing;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 import javafx.collections.FXCollections;
@@ -11,10 +19,10 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 
-public class AdminController {
+public class AdminController implements UserSelectedListener{
 
 	private enum Menu {
 
@@ -25,8 +33,10 @@ public class AdminController {
 	
 	private ObservableList<User> userData;
 	private ObservableList<Publication> publicationsData;
+	private ObservableList<Publication> userBorrowedData;
 	private FilteredList<User> filteredUsers;
 	private FilteredList<Publication> filteredPublications;
+	private FilteredList<Publication> filteredUserBorrowed;
 
 	private Menu displayed;
 	private boolean userManagerMenuVisible;
@@ -35,6 +45,7 @@ public class AdminController {
 
 		adminScene = new AdminScene(root);
 
+		
 		setTabPaneEvents();
 		setupSearchFields();
 
@@ -45,6 +56,18 @@ public class AdminController {
 		userData = FXCollections.observableArrayList();
 		loadUsers();
 		publicationsData = FXCollections.observableArrayList();
+		
+		userBorrowedData = FXCollections.observableArrayList();
+		adminScene.getSearchUserWithHintField().addUserSelectedListener(this);
+//		TreeSet<User> users = new TreeSet<User>();
+//		
+//		for(User user: userData) {
+//			
+//			users.add(user)
+//		}
+		
+		adminScene.populateSearchAutoComplete(userData.stream().map(user -> user).collect(Collectors.toSet()));
+//		userData.stream().fi
 		//loadPublications();
 		
 	}
@@ -153,6 +176,73 @@ public class AdminController {
 			
 			
 		});
+		
+		adminScene.getLendButton().setOnAction(e -> {
+					
+			try {
+				
+				Borrowing publication = new Borrowing();
+				publication.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
+				publication.setPublicationUuid(adminScene.getPublicationTable().getSelectionModel().getSelectedItem().getUUID());
+				
+				publication.setBorrowingDate(Date.valueOf(LocalDate.now()));
+				publication.setDeadline(Date.valueOf(LocalDate.now().plusDays(20)));
+				
+				ConnectionModel.INSTANCE.borrow(publication);
+				
+				loadPublications();
+				loadUserBorrows(adminScene.getSearchUserWithHintField().getSelecteduser());
+			
+			} catch (NullPointerException ex) {
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Select a publication and a user to lend to!");
+				alert.showAndWait();
+			
+			}
+		});
+		
+		adminScene.getTakeBackButton().setOnAction(e -> {
+			
+			try {
+			
+				Borrowing borrow = new Borrowing();
+				borrow.setUserUuid(adminScene.getSearchUserWithHintField().getSelecteduser().getUUID());
+				borrow.setPublicationUuid(adminScene.getUserBorrowingsTable().getSelectionModel().getSelectedItem().getUUID());
+	
+				ConnectionModel.INSTANCE.handBackPublication(searchForBorrow(borrow.getUserUuid(), borrow.getPublicationUuid()));
+				
+				loadPublications();
+				loadUserBorrows(adminScene.getSearchUserWithHintField().getSelecteduser());
+			
+			} catch (NullPointerException ex) {
+				
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Warning");
+				alert.setHeaderText("Select a publication and a user to lend to!");
+				alert.showAndWait();
+				
+			}
+
+		});
+	}
+	
+	private Borrowing searchForBorrow(String userUUID, String publicationUUID) {
+		
+		List<Entity> allBorrows = ConnectionModel.INSTANCE.getAllBorrows();
+
+		for (int i = 0; i < allBorrows.size(); i++) {
+
+			Borrowing borrowTmp = (Borrowing) allBorrows.get(i);
+
+			if (borrowTmp.getUserUuid().equals(userUUID) && borrowTmp.getPublicationUuid().equals(publicationUUID)) {
+
+				return borrowTmp;
+			}
+		}
+		
+		return null;
 	}
 
 	private void showOrHideUserManagerMenu(Menu newMenu) {
@@ -178,7 +268,7 @@ public class AdminController {
 
 		adminScene.getTabPane().getSelectionModel().selectedIndexProperty()
 				.addListener((obsValue, oldValue, newValue) -> {
-					System.out.println(oldValue);
+
 					switch (newValue.intValue()) {
 
 					case 0:
@@ -225,6 +315,33 @@ public class AdminController {
 
 		filteredUsers = new FilteredList<User>(userData, p -> true);
 		adminScene.getUserTable().setItems(filteredUsers);
+	}
+	
+	@Override
+	public void loadUserBorrows(User user) {
+		
+		userBorrowedData.clear();
+
+		List<Publication> currentUserBorrows = new ArrayList<>();		
+			
+		List<Entity> allBorrows = ConnectionModel.INSTANCE.getAllBorrows();
+
+		for (int i = 0; i < allBorrows.size(); i++) {
+
+			Borrowing borrowtemp = (Borrowing) allBorrows.get(i);
+
+			if (borrowtemp.getUserUuid().equals(user.getUUID())) {
+
+				Publication tmpPub;
+				tmpPub = ConnectionModel.INSTANCE.serchPublicationByUUID(borrowtemp.getPublicationUuid()).get(0);
+				currentUserBorrows.add(tmpPub);
+			}
+		}
+			
+		userBorrowedData.addAll(currentUserBorrows);
+		filteredUserBorrowed = new FilteredList<Publication>(userBorrowedData, p -> true);
+		adminScene.getUserBorrowingsTable().setItems(filteredUserBorrowed);
+		
 	}
 
 	private void setupSearchFields() {
