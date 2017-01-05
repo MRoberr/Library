@@ -14,7 +14,6 @@ import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Book;
 import edu.msg.library_common.model.Borrowing;
-import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
@@ -37,8 +36,16 @@ public class MainConsole extends UiFactory {
 
 	}
 
+	private String getLine() {
+		String str = "";
+		while (str.isEmpty()) {
+			str = scanner.nextLine();
+		}
+		return str;
+	}
+
 	private void login() {
-		LoginAccess login = ConnectionModel.INSTANCE.login(scanner.next(), scanner.next());
+		LoginAccess login = ConnectionModel.INSTANCE.login(getLine(), getLine());
 		if (login.equals(LoginAccess.DENIED)) {
 			System.out.println("Invalid user name or password, please try again!");
 			login();
@@ -153,7 +160,7 @@ public class MainConsole extends UiFactory {
 			updateMagazin();
 			break;
 		case 3:
-			 updateNewspaper();
+			updateNewspaper();
 			break;
 		case 0:
 		default:
@@ -172,10 +179,10 @@ public class MainConsole extends UiFactory {
 
 	private void createNewUser() {
 		System.out.println("Enter name, password and type!");
-		String userName = scanner.next();
+		String userName = getLine();
 
-		String password = scanner.next();
-		String type = scanner.next();
+		String password = getLine();
+		String type = getLine();
 		LoginAccess loginAccess = null;
 		if (type.equals("ADMIN")) {
 			loginAccess = LoginAccess.ADMIN;
@@ -185,31 +192,40 @@ public class MainConsole extends UiFactory {
 		if (loginAccess == null) {
 			System.out.println("Invalid login access!");
 		} else {
-			clientService.newClientCreate(userName, loginAccess, 10, password);
+			if (clientService.newClientCreate(userName, loginAccess, 10, password)) {
+				System.out.println("Create successful!");
+			} else {
+				System.out.println("Create not successful!");
+			}
 		}
 	}
 
 	private void updateClient() {
 		System.out.println("Enter old name and new name!");
-		clientService.clientUpdate(scanner.next(), scanner.next());
+		if (clientService.clientUpdate(getLine(), getLine())) {
+			System.out.println("Update successful!");
+		} else {
+			System.out.println("Update not successful!");
+		}
 	}
 
 	private void deleteClient() {
 		System.out.println("Enter name!");
-		clientService.clientDelete(scanner.next());
+		if(clientService.clientDelete(getLine())){
+			System.out.println("Delete successful!");			
+		} else {
+			System.out.println("Delete not successful!");
+			
+		}
 	}
 
 	private void searchClient() {
 		System.out.println("Enter name!");
-		clientService.searchClient(scanner.next());
+		clientService.searchClient(getLine());
 	}
 
 	private void searchPublications() {
-		String reg = "";
-		while (reg.isEmpty()) {
-			reg = scanner.nextLine();
-		}
-		List<Publication> publications = publicationService.getPublications(reg);
+		List<Publication> publications = publicationService.getPublications(getLine());
 		if (publications.isEmpty()) {
 
 			System.out.println("Couldn't find this publication!");
@@ -222,20 +238,33 @@ public class MainConsole extends UiFactory {
 
 	private void createNewBook() {
 		System.out.println("Title Publisher Authors ReleaseDate(Year) NumberOfCopies CopiesLeft");
-		publicationService.insertBook(scanner.next(), scanner.next(), scanner.nextInt(), scanner.nextInt(),
-				scanner.nextInt());
+		if (publicationService.insertBook(getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
+				scanner.nextInt())) {
+			System.out.println("Create successful");
+		} else {
+			System.out.println("Create not successful");
+		}
 	}
 
 	private void createMagazin() {
-		System.out.println("Title Article_Title Publisher Authors ReleaseDate(Year Month) Number of copies Copies left");
-		publicationService.insertMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
-				scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+		System.out
+				.println("Title Article_Title Publisher Authors ReleaseDate(Year Month) Number of copies Copies left");
+		if (publicationService.insertMagazin(getLine(), getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt())) {
+			System.out.println("Create successful");
+		} else {
+			System.out.println("Create not successful");
+		}
 	}
 
 	private void createNewspaper() {
 		System.out.println("Title Article_Title Publisher ReleaseDate(Year Month Day) Number of copies Copies left");
-		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
-				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+		if (publicationService.insertNewspapaer(getLine(), getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt())) {
+			System.out.println("Create successful");
+		} else {
+			System.out.println("Create not successful");
+		}
 
 	}
 
@@ -244,10 +273,13 @@ public class MainConsole extends UiFactory {
 		for (Book book : books) {
 			System.out.println(book);
 		}
-
 		System.out.println("Enter old title and update all parameters!");
-		publicationService.updateBook(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
-				scanner.nextInt(), scanner.nextInt());
+		if (publicationService.updateBook(getLine(), getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
+				scanner.nextInt())) {
+			System.out.println("Update successful");
+		} else {
+			System.out.println("Update not successful");
+		}
 
 	}
 
@@ -259,14 +291,17 @@ public class MainConsole extends UiFactory {
 		}
 		System.out.println("Please enter the number corresponding to the publication:");
 		int pubNr = scanner.nextInt();
-		String publicationName = scanner.nextLine();
 		for (Publication publication : publications) {
 			if (pubNr > 0 && pubNr <= publications.size()) {
 				if (publications.get(pubNr - 1).getTitle().equals(publication.getTitle())) {
-					publicationService.deletePublication(publication);
+					if (publicationService.deletePublication(publication)) {
+						System.out.println("Delete successful");
+						return;
+					} 
 				}
 			}
 		}
+		System.out.println("Delete not successful");
 	}
 
 	private void updateMagazin() {
@@ -274,21 +309,28 @@ public class MainConsole extends UiFactory {
 		for (Magazine magazine : magazines) {
 			System.out.println(magazine);
 		}
-
 		System.out.println("Enter old title and update all parameters!");
-		publicationService.updateMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
-				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+		if (publicationService.updateMagazin(getLine(), getLine(), getLine(), getLine(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt())) {
+			System.out.println("Update successful");
+		} else {
+			System.out.println("Update not successful");
+		}
 	}
-	
-	private void updateNewspaper(){
+
+	private void updateNewspaper() {
 		List<Newspaper> newspapers = publicationService.getNewspapers();
 		for (Newspaper newspaper : newspapers) {
 			System.out.println(newspaper);
 		}
 
 		System.out.println("Enter old title and update all parameters!");
-		publicationService.updateNewspaper(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
-				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),scanner.nextInt(), scanner.nextInt());
+		if (publicationService.updateNewspaper(getLine(), getLine(), getLine(), getLine(), scanner.nextInt(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt())) {
+			System.out.println("Update successful");
+		} else {
+			System.out.println("Update not successful");
+		}
 	}
 
 	private void menuforAdmin() {
@@ -352,8 +394,7 @@ public class MainConsole extends UiFactory {
 		String userName = "";
 		boolean userFlag = false;
 		while (!userFlag) {
-			userName = scanner.next();
-			Borrowing borrowOne = new Borrowing();
+			userName = getLine();
 			for (User u : users) {
 				if (u.getName().equals(userName)) {
 					borrowingsOfUser = bs.getBackBorrowingList(u);
@@ -365,7 +406,7 @@ public class MainConsole extends UiFactory {
 			}
 			if (!userFlag) {
 				for (User u : users) {
-					System.out.print(u.getName() + " ");
+					System.out.println(u.getName());
 				}
 				System.out.println("\nInvalid username, see possible usernames above.\nPlease retry: ");
 			}
@@ -376,10 +417,9 @@ public class MainConsole extends UiFactory {
 			for (Publication p : borrowingsOfUser) {
 				System.out.println(i++ + "-" + p.getTitle());
 			}
-			System.out.println("Type the number of the book");
+			System.out.println("Type the number of the publication");
 			int nr = scanner.nextInt();
-
-			if (bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
+			if(nr<=borrowingsOfUser.size() && bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
 				System.out.println("Return was succesful!");
 			} else {
 				System.out.println("Return not succesful!");

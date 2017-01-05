@@ -20,7 +20,7 @@ public class PublicationService {
 		return null;
 	}
 
-	public void insertBook(String title, String publisher, int release_date, int number_of_copies, int copies_left) {
+	public boolean insertBook(String title, String publisher, int release_date, int number_of_copies, int copies_left) {
 		Book book = new Book();
 		book.setTitle(title);
 		book.setPublisher(publisher);
@@ -29,14 +29,15 @@ public class PublicationService {
 		book.setCopiesLeft(copies_left);
 
 		try {
-			RmiRegistry.bookServiceRmi.insertBook(book);
+			return RmiRegistry.bookServiceRmi.insertBook(book);
 		} catch (RemoteException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 	}
 
-	public void insertMagazin(String title, String article_title, String publisher, int year, int month,
+	public boolean insertMagazin(String title, String article_title, String publisher, int year, int month,
 			int number_of_copies, int copies_left) {
 		Magazine magazine = new Magazine();
 
@@ -48,14 +49,15 @@ public class PublicationService {
 		magazine.setCopiesLeft(copies_left);
 
 		try {
-			RmiRegistry.magazineServiceRmi.insertMagazine(magazine);
+			return RmiRegistry.magazineServiceRmi.insertMagazine(magazine);
 		} catch (RemoteException e) {
 			e.printStackTrace();
+			return false;
 		}
 
 	}
 
-	public void insertNewspapaer(String title, String article_title, String publisher, int year, int month, int day,
+	public boolean insertNewspapaer(String title, String article_title, String publisher, int year, int month, int day,
 			int number_of_copies, int copies_left) {
 		Newspaper newspaper = new Newspaper();
 		newspaper.setTitle(title);
@@ -66,9 +68,10 @@ public class PublicationService {
 		newspaper.setCopiesLeft(copies_left);
 
 		try {
-			RmiRegistry.newspaperServiceRmi.insertNewspaper(newspaper);
+			return RmiRegistry.newspaperServiceRmi.insertNewspaper(newspaper);
 		} catch (RemoteException e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 
@@ -81,7 +84,7 @@ public class PublicationService {
 		return null;
 	}
 
-	public void updateBook(String seletedBook, String newBooktitle, String newPublisher, int newRelaseDate,
+	public boolean updateBook(String seletedBook, String newBooktitle, String newPublisher, int newRelaseDate,
 			int newNrOfCopies, int newCopiesLeft) {
 		try {
 
@@ -93,12 +96,13 @@ public class PublicationService {
 					book.setReleaseDate(newRelaseDate);
 					book.setNumberOfCopies(newNrOfCopies);
 					book.setCopiesLeft(newCopiesLeft);
-					RmiRegistry.bookServiceRmi.updateBook(book);
+					return RmiRegistry.bookServiceRmi.updateBook(book);
 				}
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public List<Magazine> getMagazin() {
@@ -110,7 +114,7 @@ public class PublicationService {
 		return null;
 	}
 
-	public void updateMagazin(String seletedMagazin, String newMagazintitle, String newArticleTitle,
+	public boolean updateMagazin(String seletedMagazin, String newMagazintitle, String newArticleTitle,
 			String newPublisher, int year, int month, int newNrOfCopies, int newCopiesLeft) {
 		try {
 
@@ -123,12 +127,13 @@ public class PublicationService {
 					magazin.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, 01)));
 					magazin.setNumberOfCopies(newNrOfCopies);
 					magazin.setCopiesLeft(newCopiesLeft);
-					RmiRegistry.magazineServiceRmi.updateMagazine(magazin);
+					return RmiRegistry.magazineServiceRmi.updateMagazine(magazin);
 				}
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public List<Newspaper> getNewspapers() {
@@ -140,7 +145,7 @@ public class PublicationService {
 		return null;
 	}
 
-	public void updateNewspaper(String selectedNwespapaer, String newNwespapaertitle, String newArticleTitle,
+	public boolean updateNewspaper(String selectedNwespapaer, String newNwespapaertitle, String newArticleTitle,
 			String newPublisher, int year, int month, int day, int newNrOfCopies, int newCopiesLeft) {
 		try {
 
@@ -153,36 +158,38 @@ public class PublicationService {
 					newspaper.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, day)));
 					newspaper.setNumberOfCopies(newNrOfCopies);
 					newspaper.setCopiesLeft(newCopiesLeft);
-					RmiRegistry.newspaperServiceRmi.updateNewspaper(newspaper);
+					return RmiRegistry.newspaperServiceRmi.updateNewspaper(newspaper);
 				}
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
-	public void deletePublication(Publication publication) {
+	public boolean deletePublication(Publication publication) {
 		if (publication instanceof Book) {
 			try {
-				RmiRegistry.bookServiceRmi.deleteBook((Book) publication);
+				return RmiRegistry.bookServiceRmi.deleteBook((Book) publication);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
 		if (publication instanceof Magazine) {
 			try {
-				RmiRegistry.magazineServiceRmi.deleteMagazine((Magazine) publication);
+				return RmiRegistry.magazineServiceRmi.deleteMagazine((Magazine) publication);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
 		if (publication instanceof Newspaper) {
 			try {
-				RmiRegistry.newspaperServiceRmi.deleteNewspaper((Newspaper) publication);
+				return RmiRegistry.newspaperServiceRmi.deleteNewspaper((Newspaper) publication);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}
+		return false;
 	}
 
 	public List<Publication> getPublications() {

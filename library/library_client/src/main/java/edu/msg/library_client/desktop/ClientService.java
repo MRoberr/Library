@@ -15,7 +15,7 @@ import edu.msg.library_common.model.User;
 
 public class ClientService {
 
-	public void newClientCreate(String name,LoginAccess user_type,int index, String password) {
+	public boolean newClientCreate(String name,LoginAccess user_type,int index, String password) {
 		User user = new User();
 		user.setName(name);
 		
@@ -23,13 +23,14 @@ public class ClientService {
 		user.setLoyalityIndex(index);
 		user.setPassword(password);
 		try {
-			RmiRegistry.userRmi.insertUser(user);
+			return RmiRegistry.userRmi.insertUser(user);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
-	public void clientUpdate(String selectedUser, String newUserName) {
+	public boolean clientUpdate(String selectedUser, String newUserName) {
 		try {
 
 			List<User> userList = getAllUsers();
@@ -37,15 +38,16 @@ public class ClientService {
 				User user = (User) entity;
 				if (user.getName().equals(selectedUser)) {
 					user.setName(newUserName);
-					RmiRegistry.userRmi.updateUser(user);
+					return RmiRegistry.userRmi.updateUser(user);
 				}
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
-	public void clientDelete(String selectedUser) {
+	public boolean clientDelete(String selectedUser) {
 		try {
 
 			List<User> userList = getAllUsers();
@@ -53,12 +55,13 @@ public class ClientService {
 				User user = (User) entity;
 				if (user.getName().equals(selectedUser)) {
 
-					RmiRegistry.userRmi.deleteUser(user);
+					return RmiRegistry.userRmi.deleteUser(user);
 				}
 			}
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	public List<User> getAllUsers() {
@@ -71,12 +74,17 @@ public class ClientService {
 	}
 
 	public void searchClient(String selectedUser) {
-
 		try {
 			List<User> users=RmiRegistry.userRmi.searchUser(selectedUser);
+			if (users.isEmpty()){
+				System.out.println("Can't find client!");
+			}
 			users.forEach(u->System.out.println(u.toString()));
+			
 		} catch (RemoteException e) {
 			e.printStackTrace();
+			System.out.println("Can't find client!");
 		}
+		
 	}
 }
