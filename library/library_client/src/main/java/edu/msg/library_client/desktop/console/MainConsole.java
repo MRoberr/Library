@@ -41,9 +41,7 @@ public class MainConsole extends UiFactory {
 			System.out.println("Invalid user name or password, please try again!");
 			login();
 		} else if (login.equals(LoginAccess.ADMIN)) {
-
 			System.out.println("Logged in as admin...");
-
 			menuforAdmin();
 			while (true) {
 				try {
@@ -56,9 +54,7 @@ public class MainConsole extends UiFactory {
 				}
 			}
 		} else {
-
 			System.out.println("Logged in as user...");
-
 			menuforUser();
 			while (true) {
 				handleUserCommand();
@@ -151,16 +147,13 @@ public class MainConsole extends UiFactory {
 		case 2:
 			updateMagazin();
 			break;
-
 		case 3:
 			// updateNewspaper();
 			break;
 		case 0:
 		default:
 			break;
-
 		}
-
 	}
 
 	private List<User> listUsers() {
@@ -188,7 +181,6 @@ public class MainConsole extends UiFactory {
 			System.out.println("Invalid login access!");
 		} else {
 			clientService.newClientCreate(userName, loginAccess, 10, password);
-
 		}
 	}
 
