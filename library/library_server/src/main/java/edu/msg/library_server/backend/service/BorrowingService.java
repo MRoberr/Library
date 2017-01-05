@@ -92,7 +92,6 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					BookService bs = new BookService();
 					Book book = (Book)bs.getBookByUUID(borrow.getPublicationUuid());
 					book.setCopiesLeft(book.getCopiesLeft() + 1);
-					System.out.println("copies left" + book.getCopiesLeft());
 					bs.updateBook(book);
 					break;
 				case "Newspaper":
@@ -140,7 +139,6 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 				
 			} else {
 				Class<? extends Publication> type = publicationList.get(0).getClass();
-				System.out.println(type.getSimpleName());
 				switch (type.getSimpleName()) {
 				case "Book":
 					
@@ -155,7 +153,6 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					
 					NewspaperService ns = new NewspaperService();
 					Newspaper paper = (Newspaper)ns.getNewspaperByUUID(borrow.getPublicationUuid());
-					System.out.println(paper);
 					if (paper.getCopiesLeft() > 0) {
 						paper.setCopiesLeft(paper.getCopiesLeft() - 1);
 						ns.updateNewspaper(paper);
