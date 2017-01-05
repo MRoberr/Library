@@ -70,7 +70,6 @@ public class User extends BaseEntity {
 
 	public String getUpdate() {		
 		int user = 0;
-		System.out.println("User " + this.userType);
 		if (this.userType.equals(LoginAccess.ADMIN)){
 			user = 1;
 		}		
