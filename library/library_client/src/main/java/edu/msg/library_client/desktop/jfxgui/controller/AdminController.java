@@ -271,6 +271,18 @@ public class AdminController implements UserSelectedListener{
 			}
 			
 		});
+		
+		adminScene.getEditPubButton().setOnAction(e -> {
+			
+			//ide jön az edit gomb
+			
+		});
+		
+		adminScene.getAddPubButton().setOnAction(e -> {
+			
+			//ide jön az add gomb 
+			
+		});
 	}
 	
 	private Borrowing searchForBorrow(String userUUID, String publicationUUID) {
