@@ -159,6 +159,7 @@ public class SqlHandler {
 				}
 				publication.setUUID(resultSet.getString("uuid"));
 				publication.setTitle(resultSet.getString("title"));
+				publication.setCopiesLeft(resultSet.getInt("stock"));
 				resultList.add(publication);
 			}
 			return resultList;

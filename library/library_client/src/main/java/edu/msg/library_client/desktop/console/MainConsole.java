@@ -317,7 +317,6 @@ public class MainConsole extends UiFactory {
 		BorrowingService bs = new BorrowingService();
 		List<User> users = listUsers();
 
-		System.out.println("\n");
 		List<Publication> publications = bs.getAllPublications();
 		int i = 0;
 		for (Publication publication : publications) {
