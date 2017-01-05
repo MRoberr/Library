@@ -17,6 +17,7 @@ import edu.msg.library_common.model.Borrowing;
 import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Magazine;
+import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
 
@@ -152,7 +153,7 @@ public class MainConsole extends UiFactory {
 			updateMagazin();
 			break;
 		case 3:
-			// updateNewspaper();
+			 updateNewspaper();
 			break;
 		case 0:
 		default:
@@ -215,21 +216,24 @@ public class MainConsole extends UiFactory {
 			return;
 		}
 		for (Publication publication : publications) {
-			System.out.println(publication.getTitle());
+			System.out.println(publication.publicationToString());
 		}
 	}
 
 	private void createNewBook() {
+		System.out.println("Title Publisher Authors ReleaseDate(Year) NumberOfCopies CopiesLeft");
 		publicationService.insertBook(scanner.next(), scanner.next(), scanner.nextInt(), scanner.nextInt(),
 				scanner.nextInt());
 	}
 
 	private void createMagazin() {
+		System.out.println("Title Article_Title Publisher Authors ReleaseDate(Year Month) Number of copies Copies left");
 		publicationService.insertMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 	}
 
 	private void createNewspaper() {
+		System.out.println("Title Article_Title Publisher ReleaseDate(Year Month Day) Number of copies Copies left");
 		publicationService.insertNewspapaer(scanner.next(), scanner.next(), scanner.next(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
 
@@ -268,12 +272,23 @@ public class MainConsole extends UiFactory {
 	private void updateMagazin() {
 		List<Magazine> magazines = publicationService.getMagazin();
 		for (Magazine magazine : magazines) {
-			System.out.println(magazines);
+			System.out.println(magazine);
 		}
 
 		System.out.println("Enter old title and update all parameters!");
 		publicationService.updateMagazin(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt());
+	}
+	
+	private void updateNewspaper(){
+		List<Newspaper> newspapers = publicationService.getNewspapers();
+		for (Newspaper newspaper : newspapers) {
+			System.out.println(newspaper);
+		}
+
+		System.out.println("Enter old title and update all parameters!");
+		publicationService.updateNewspaper(scanner.next(), scanner.next(), scanner.next(), scanner.next(),
+				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(),scanner.nextInt(), scanner.nextInt());
 	}
 
 	private void menuforAdmin() {
