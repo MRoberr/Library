@@ -33,6 +33,7 @@ public class MainConsole extends UiFactory {
 	public void startConsole() {
 		System.out.println("Please enter your name and password!");
 		login();
+
 	}
 
 	private void login() {
@@ -87,6 +88,9 @@ public class MainConsole extends UiFactory {
 			break;
 		case 7:
 			publicationUpdateHandle();
+			break;
+		case 8:
+			deletePublication();
 			break;
 		case 9:
 			try {
@@ -243,6 +247,24 @@ public class MainConsole extends UiFactory {
 
 	}
 
+	private void deletePublication() {
+		List<Publication> publications = publicationService.getPublications();
+		int i = 0;
+		for (Publication publication : publications) {
+			System.out.println(++i + "-" + publication.publicationToString());
+		}
+		System.out.println("Please enter the number corresponding to the publication:");
+		int pubNr = scanner.nextInt();
+		String publicationName = scanner.nextLine();
+		for (Publication publication : publications) {
+			if (pubNr > 0 && pubNr <= publications.size()) {
+				if (publications.get(pubNr - 1).getTitle().equals(publication.getTitle())) {
+					publicationService.deletePublication(publication);
+				}
+			}
+		}
+	}
+
 	private void updateMagazin() {
 		List<Magazine> magazines = publicationService.getMagazin();
 		for (Magazine magazine : magazines) {
@@ -338,21 +360,18 @@ public class MainConsole extends UiFactory {
 		if (!borrowingsOfUser.isEmpty()) {
 			int i = 0;
 			for (Publication p : borrowingsOfUser) {
-				System.out.println(i++ + "-" + p.toString());
+				System.out.println(i++ + "-" + p.getTitle());
 			}
 			System.out.println("Type the number of the book");
 			int nr = scanner.nextInt();
 
 			if (bs.returnBookInLibrary(user, borrowingsOfUser.get(nr)) == true) {
-				System.out.println("Return was succesfull");
+				System.out.println("Return was succesful!");
 			} else {
-				System.out.println("Return not succesfull");
+				System.out.println("Return not succesful!");
 			}
 		} else {
 			System.out.println(userName + " doesn't have any borrowed books.");
 		}
-
-		// borrowOne.setPublicationUuid(borrowingsOfUser.get(nr).getUUID());
-
 	}
 }
