@@ -7,7 +7,7 @@ GRANT ALL privileges on library.* to 'library_admin'@'localhost';
 Drop table if exists  `library`.`library_users`;
 CREATE TABLE `library`.`library_users` (
   `uuid` VARCHAR(80) NOT NULL,
-  `name` VARCHAR(45) NULL,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
   `user_type` TINYINT(1),
   `loyality_index` INT(2),
    `password` VARCHAR(80),
@@ -17,7 +17,7 @@ CREATE TABLE `library`.`library_users` (
   Drop table if exists  `library`.`books`;
   CREATE TABLE `library`.`books` (
   `uuid` VARCHAR(80) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(45) NOT NULL UNIQUE,
   `publisher` VARCHAR(45),  
   `release_date` INT(5),
   `nr_of_copies` INT(5),
@@ -28,14 +28,14 @@ CREATE TABLE `library`.`library_users` (
    Drop table if exists  `library`.`authors`;
    CREATE TABLE `library`.`authors` (
   `uuid` VARCHAR(80) NOT NULL,
-  `name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL UNIQUE,
   PRIMARY KEY (`uuid`),
   UNIQUE INDEX `uuid_UNIQUE` (`uuid` ASC)); 
   
     Drop table if exists  `library`.`newspapers`;
   CREATE TABLE `library`.`newspapers` (
   `uuid` VARCHAR(80) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(45) NOT NULL UNIQUE,
   `article_title` VARCHAR(45),
   `publisher` VARCHAR(45),  
   `release_date` DATE,
@@ -47,7 +47,7 @@ CREATE TABLE `library`.`library_users` (
 Drop table if exists  `library`.`magazines`;
   CREATE TABLE `library`.`magazines` (
   `uuid` VARCHAR(80) NOT NULL,
-  `title` VARCHAR(45) NOT NULL,
+  `title` VARCHAR(45) NOT NULL UNIQUE,
   `article_title` VARCHAR(45),
   `publisher` VARCHAR(45),  
   `release_date` DATE,
