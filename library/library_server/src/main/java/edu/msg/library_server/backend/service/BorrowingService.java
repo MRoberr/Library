@@ -146,7 +146,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					
 					BookService bs = new BookService();
 					Book book = (Book)bs.getBookByUUID(borrow.getPublicationUuid());
-					if (book.getCopiesLeft() >= 0) {
+					if (book.getCopiesLeft() > 0) {
 						book.setCopiesLeft(book.getCopiesLeft() - 1);
 						bs.updateBook(book);
 					}
@@ -156,7 +156,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					NewspaperService ns = new NewspaperService();
 					Newspaper paper = (Newspaper)ns.getNewspaperByUUID(borrow.getPublicationUuid());
 					System.out.println(paper);
-					if (paper.getCopiesLeft() >= 0) {
+					if (paper.getCopiesLeft() > 0) {
 						paper.setCopiesLeft(paper.getCopiesLeft() - 1);
 						ns.updateNewspaper(paper);
 					}
@@ -165,7 +165,7 @@ public class BorrowingService extends UnicastRemoteObject implements BorrowingSe
 					
 					MagazineService ms = new MagazineService();
 					Magazine mag = (Magazine)ms.getMagazineByUUID(borrow.getPublicationUuid());
-					if (mag.getCopiesLeft() >= 0) {
+					if (mag.getCopiesLeft() > 0) {
 						mag.setCopiesLeft(mag.getCopiesLeft() - 1);
 						ms.updateMagazine(mag);
 					}

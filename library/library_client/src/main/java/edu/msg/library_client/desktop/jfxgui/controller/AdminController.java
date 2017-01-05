@@ -384,6 +384,26 @@ public class AdminController implements UserSelectedListener{
 				return false;				
 			});			
 		});
+		
+		adminScene.getSearchInUserBorrowsField().textProperty().addListener((observable, oldValue, newValue) -> {
+			
+			filteredUserBorrowed.setPredicate(borrows -> {
+				
+				if (newValue == null || newValue.isEmpty()) {
+					
+					return true;
+				}
+				
+				String lowerCaseFilter = newValue.toLowerCase();
+				
+				if (borrows.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+					
+					return true;
+				}
+				
+				return false;
+			});
+		});
 
 	}
 

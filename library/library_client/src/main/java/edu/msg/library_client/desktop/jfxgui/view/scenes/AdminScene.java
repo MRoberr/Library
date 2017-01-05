@@ -6,7 +6,6 @@ import edu.msg.library_client.desktop.jfxgui.model.AutoCompleteTextField;
 import edu.msg.library_common.model.LoginAccess;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
-import javafx.beans.property.ReadOnlyIntegerWrapper;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -72,12 +71,10 @@ public class AdminScene extends Scene{
 	private TableColumn<Publication, String> pubTypeColumn;
 	private TableColumn<Publication, Integer> pubLeftColumn;
 	
-	private Label searchUserLabel;
 	private AutoCompleteTextField searchUserWithHint;
 	
 	private TableView<Publication> userBorrowings;
 	private TableColumn<Publication, String> borrowedPublicationTitle;
-	private TableColumn<Publication, String> a;
 	
 	private TextField searchInUserBorrows;
 	
@@ -190,8 +187,8 @@ public class AdminScene extends Scene{
 		createPublicationsSearchField();
 		createUserBorrowedTable();
 		
-		searchUserLabel = new Label("Search User");
 		searchUserWithHint = new AutoCompleteTextField();
+		searchUserWithHint.setPromptText("Search User");
 		
 		lendButton = new Button(">");
 		takeBackButton = new Button("<");
@@ -217,7 +214,7 @@ public class AdminScene extends Scene{
 		shelfRightSide.setSpacing(15);
 		shelfRightSide.setAlignment(Pos.CENTER);
 		
-		shelfRightSide.getChildren().addAll(searchUserLabel, searchUserWithHint, userBorrowings, searchInUserBorrows);
+		shelfRightSide.getChildren().addAll(searchUserWithHint, userBorrowings, searchInUserBorrows);
 //		shelfRightSide.add(searchUserLabel, 0, 0);
 //		shelfRightSide.add(searchUserWithHint, 1, 0);
 		
@@ -234,8 +231,8 @@ public class AdminScene extends Scene{
 	private void createUserBorrowedTable() {
 		
 		userBorrowings = new TableView<Publication>();
-		userBorrowings.setMinWidth(100);
-		userBorrowings.setMaxHeight(370);
+//		userBorrowings.setMinWidth(100);
+//		userBorrowings.setMaxHeight(370);
 		userBorrowings.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		userBorrowings.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		userBorrowings.setEditable(false);
@@ -433,6 +430,11 @@ public class AdminScene extends Scene{
 	public Button getTakeBackButton() {
 		
 		return takeBackButton;
+	}
+	
+	public TextField getSearchInUserBorrowsField() {
+		
+		return searchInUserBorrows;
 	}
 }
 
