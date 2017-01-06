@@ -1,5 +1,6 @@
 package edu.msg.library_server.backend.repository;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,6 +18,7 @@ import edu.msg.library_common.model.Magazine;
 import edu.msg.library_common.model.Newspaper;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.model.User;
+import edu.msg.library_server.backend.service.AuthorService;
 
 public class SqlHandler {
 	private static final String DBURL = "jdbc:mysql://localhost:3306/library?useSSL=false";
@@ -304,6 +306,20 @@ public class SqlHandler {
 			throw new SqlHandlerException("Login failed!",e);
 		}
 
+	}
+	public List<Author> executeAuthorSelect(String select) {
+		List<Author> authorList=new ArrayList<>();
+		try {
+			AuthorService authorService=new AuthorService();
+			ResultSet resultSet = connection.createStatement().executeQuery(select);
+			while (resultSet.next()) {
+				authorList.add((Author)authorService.getAuthorByUUID(resultSet.getString("authors_uuid")));
+			}
+		} catch (SQLException | RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		return authorList;
 	}
 
 }

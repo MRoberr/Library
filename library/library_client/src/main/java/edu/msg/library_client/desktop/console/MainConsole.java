@@ -11,6 +11,7 @@ import edu.msg.library_client.desktop.AuthorService;
 import edu.msg.library_client.desktop.BorrowingService;
 import edu.msg.library_client.desktop.ClientService;
 import edu.msg.library_client.desktop.PublicationService;
+import edu.msg.library_client.desktop.RmiRegistry;
 import edu.msg.library_client.desktop.UiFactory;
 import edu.msg.library_client.desktop.jfxgui.model.ConnectionModel;
 import edu.msg.library_common.model.Author;
@@ -302,9 +303,14 @@ public class MainConsole extends UiFactory {
 	private void updateBook() {
 		List<Book> books = publicationService.getBooks();
 		for (Book book : books) {
-			System.out.println(book);
+			try {
+				book.setAuthors(RmiRegistry.searchRmi.getPublicationAuthors(book.getUUID()));
+				System.out.println(book);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
-		System.out.println("Enter old title and update all parameters!");
+		System.out.println("Enter old title and update parameters!");
 		if (publicationService.updateBook(getLine(), getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
 				scanner.nextInt())) {
 			System.out.println("Update successful");
@@ -338,9 +344,14 @@ public class MainConsole extends UiFactory {
 	private void updateMagazin() {
 		List<Magazine> magazines = publicationService.getMagazin();
 		for (Magazine magazine : magazines) {
+			try {
+				magazine.setAuthors(RmiRegistry.searchRmi.getPublicationAuthors(magazine.getUUID()));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 			System.out.println(magazine);
 		}
-		System.out.println("Enter old title and update all parameters!");
+		System.out.println("Enter old title and update parameters!");
 		if (publicationService.updateMagazin(getLine(), getLine(), getLine(), getLine(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt())) {
 			System.out.println("Update successful");
@@ -354,7 +365,6 @@ public class MainConsole extends UiFactory {
 		for (Newspaper newspaper : newspapers) {
 			System.out.println(newspaper);
 		}
-
 		System.out.println("Enter old title and update all parameters!");
 		if (publicationService.updateNewspaper(getLine(), getLine(), getLine(), getLine(), scanner.nextInt(),
 				scanner.nextInt(), scanner.nextInt(), scanner.nextInt(), scanner.nextInt())) {
@@ -386,7 +396,6 @@ public class MainConsole extends UiFactory {
 	private void handleUserCommand() {
 		System.out.println("Enter title!");
 		searchPublications();
-
 	}
 
 	private void menuforUser() {
@@ -396,13 +405,11 @@ public class MainConsole extends UiFactory {
 	public boolean borrowing() throws RemoteException {
 		BorrowingService bs = new BorrowingService();
 		List<User> users = listUsers();
-
 		List<Publication> publications = bs.getAllPublications();
 		int i = 0;
 		for (Publication publication : publications) {
 			System.out.println(++i + "-" + publication.publicationToString());
 		}
-
 		System.out.println("\nPlease select a user and one publication from the lists above!(Type name and title)");
 		int user = scanner.nextInt();
 		int publication = scanner.nextInt();
@@ -421,7 +428,6 @@ public class MainConsole extends UiFactory {
 
 	public void returning() {
 		System.out.println("Please type the readers username: ");
-
 		List<User> users = clientService.getAllUsers();
 		List<Publication> borrowingsOfUser = new ArrayList<>();
 		User user = new User();
@@ -437,7 +443,6 @@ public class MainConsole extends UiFactory {
 					userFlag = true;
 					break;
 				}
-
 			}
 			if (!userFlag) {
 				for (User u : users) {
@@ -481,7 +486,6 @@ public class MainConsole extends UiFactory {
 			System.out.println("Update successful");
 		} else {
 			System.out.println("Update not successful");
-
 		}
 	}
 
@@ -492,7 +496,6 @@ public class MainConsole extends UiFactory {
 			System.out.println("Delete successful");
 		} else {
 			System.out.println("Delete not successful");
-
 		}
 	}
 
@@ -507,7 +510,6 @@ public class MainConsole extends UiFactory {
 				Author a = (Author) e;
 				System.out.println(i++ + "-" + a);
 			}
-
 		}
 		return authorList;
 	}

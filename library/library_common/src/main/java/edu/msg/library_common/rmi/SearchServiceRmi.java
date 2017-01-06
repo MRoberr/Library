@@ -4,6 +4,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
+import edu.msg.library_common.model.Author;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Publication;
 
 public interface SearchServiceRmi extends Remote {
@@ -19,4 +21,6 @@ public interface SearchServiceRmi extends Remote {
 	public List<Publication> searchPublicationByRegexp(String regex) throws RemoteException;
 
 	public List<Publication> searchPublicationByUUID(String uuid) throws RemoteException;
+	
+	public List<Author> getPublicationAuthors(String uuid) throws RemoteException;
 }

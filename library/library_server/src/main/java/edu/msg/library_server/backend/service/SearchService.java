@@ -4,6 +4,8 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import edu.msg.library_common.model.Author;
+import edu.msg.library_common.model.Entity;
 import edu.msg.library_common.model.Publication;
 import edu.msg.library_common.rmi.SearchServiceRmi;
 import edu.msg.library_server.backend.repository.SqlHandler;
@@ -36,5 +38,10 @@ public class SearchService extends UnicastRemoteObject implements SearchServiceR
 	@Override
 	public List<Publication> getAllPublications() throws RemoteException {
 		return SqlHandler.getInstance().executePublicationSelect(Publication.getSelectAllPublications());
+	}
+
+	@Override
+	public List<Author> getPublicationAuthors(String uuid) throws RemoteException {
+		return SqlHandler.getInstance().executeAuthorSelect(Publication.getPublicationAuthors(uuid));
 	}
 }

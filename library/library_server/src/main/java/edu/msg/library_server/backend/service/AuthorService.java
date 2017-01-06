@@ -15,7 +15,7 @@ public class AuthorService extends UnicastRemoteObject implements AuthorServiceR
 	private Author authorSQL;
 	private String authorTemp;
 
-	protected AuthorService() throws RemoteException {
+	public AuthorService() throws RemoteException {
 		super();
 		authorSQL = new Author();
 	}
