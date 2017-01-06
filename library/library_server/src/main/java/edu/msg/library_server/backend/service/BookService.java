@@ -35,8 +35,14 @@ public class BookService extends UnicastRemoteObject implements BookServiceRmi{
 	public synchronized boolean insertBook(Book book) throws RemoteException {
 		bookTemp = book.getInsert();
 		ret = SqlHandler.getInstance().executeSqlStatement(bookTemp);
+		if (!ret) {
+			return false;
+		} 
+		if (book.getAuthors().isEmpty()) {
+			return true;
+		}
 		bookTemp = book.insertAuthors();	
-		return ret && SqlHandler.getInstance().executeSqlStatement(bookTemp);
+		return SqlHandler.getInstance().executeSqlStatement(bookTemp);
 	}
 
 	@Override

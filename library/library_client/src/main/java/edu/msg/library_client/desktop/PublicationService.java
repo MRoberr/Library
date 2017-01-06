@@ -40,7 +40,7 @@ public class PublicationService {
 	}
 
 	public boolean insertMagazin(String title, String article_title, String publisher, int year, int month,
-			int number_of_copies, int copies_left) {
+			int number_of_copies, int copies_left, List<Author> authorList) {
 		Magazine magazine = new Magazine();
 
 		magazine.setTitle(title);
@@ -49,7 +49,7 @@ public class PublicationService {
 		magazine.setReleaseDate(java.sql.Date.valueOf(LocalDate.of(year, month, 01)));
 		magazine.setNumberOfCopies(number_of_copies);
 		magazine.setCopiesLeft(copies_left);
-
+		magazine.setAuthors(authorList);
 		try {
 			return RmiRegistry.magazineServiceRmi.insertMagazine(magazine);
 		} catch (RemoteException e) {

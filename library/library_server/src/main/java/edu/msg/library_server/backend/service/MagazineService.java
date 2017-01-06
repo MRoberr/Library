@@ -35,8 +35,14 @@ public class MagazineService extends UnicastRemoteObject implements MagazineServ
 	public synchronized boolean insertMagazine(Magazine magazine) throws RemoteException {		
 		magazineTemp = magazine.getInsert();		
 		ret = SqlHandler.getInstance().executeSqlStatement(magazineTemp);
+		if (!ret) {
+			return false;
+		}	
+		if (magazine.getAuthors().isEmpty()) {
+			return true;
+		}
 		magazineTemp = magazine.insertAuthors();	
-		return ret && SqlHandler.getInstance().executeSqlStatement(magazineTemp);
+		return SqlHandler.getInstance().executeSqlStatement(magazineTemp);
 	}
 
 	@Override

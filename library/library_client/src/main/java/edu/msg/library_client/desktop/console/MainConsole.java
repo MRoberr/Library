@@ -279,10 +279,25 @@ public class MainConsole extends UiFactory {
 	}
 
 	private void createMagazin() {
-		System.out
-				.println("Title Article_Title Publisher Authors ReleaseDate(Year Month) Number of copies Copies left");
-		if (publicationService.insertMagazin(getLine(), getLine(), getLine(), scanner.nextInt(), scanner.nextInt(),
-				scanner.nextInt(), scanner.nextInt())) {
+		System.out.println("\nTitle Article-title Publisher ReleaseDate(Year Month) NumberOfCopies CopiesLeft");
+		String title = getLine();
+		String article_title = getLine();
+		String publisher = getLine();
+		Integer releaseDateYear = scanner.nextInt();
+		Integer releaseDateMonth = scanner.nextInt();
+		Integer nrOfCopyes = scanner.nextInt();
+		Integer copyesLeft = scanner.nextInt();
+		List<Entity> authorList = listAuthors();
+		System.out.println("\nPlease choose from author list. If finished please type '-1'");
+		int nr = 0;
+		List<Author> authorListforSetting = new ArrayList<>();
+		nr = scanner.nextInt();
+		while ((nr > -1) && (nr < authorList.size())) {
+			authorListforSetting.add((Author) authorList.get(nr));
+			nr = scanner.nextInt();
+		}
+		if (publicationService.insertMagazin(title, article_title, publisher, releaseDateYear, 
+											 releaseDateMonth, nrOfCopyes, copyesLeft, authorListforSetting)) {
 			System.out.println("Create successful");
 		} else {
 			System.out.println("Create not successful");
